@@ -16,7 +16,7 @@ public class OperationsDB {
 
     private static Connection conexion;
 
-    public static void openConnection() {
+    public void openConnection() {
         try {
             System.out.println("Abriendo conexion");
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -31,7 +31,7 @@ public class OperationsDB {
         conexion.close();
     }
 
-    public static void consultaProducto() throws SQLException {
+    public void consultaProducto() throws SQLException {
         System.out.println("Consulta producto");
         String select = "SELECT * from producto";
         Statement st = conexion.createStatement();

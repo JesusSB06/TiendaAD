@@ -37,13 +37,10 @@ public class MainJFrame extends javax.swing.JFrame {
 
         imageJLabel = new javax.swing.JLabel();
         loginJButton = new javax.swing.JButton();
-        startJButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         loginJButton.setText("Iniciar Sesión");
-
-        startJButton.setText("Empezar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -52,25 +49,21 @@ public class MainJFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(181, 181, 181)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(loginJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(startJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(143, 143, 143)
+                        .addComponent(imageJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(imageJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(117, Short.MAX_VALUE))
+                        .addGap(181, 181, 181)
+                        .addComponent(loginJButton)))
+                .addContainerGap(157, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(imageJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(imageJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
                 .addComponent(loginJButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(startJButton)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
 
         pack();
@@ -79,13 +72,13 @@ public class MainJFrame extends javax.swing.JFrame {
     public void setTamanhoImage(int width, int height) {
         imageJLabel.setSize(width, height);
     }
-    
+
     public void getImagetoLabel(ImageIcon image) {
         int width = imageJLabel.getWidth();
         int height = imageJLabel.getHeight();
-        
+
         Image newImage = image.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        
+
         imageJLabel.setIcon(new ImageIcon(newImage));
     }
     
@@ -98,36 +91,14 @@ public class MainJFrame extends javax.swing.JFrame {
         loginJButton.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
         loginJButton.setFocusPainted(false);
         loginJButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        
-        //Estilos para el botón de start
-        startJButton.setBackground(new Color(52, 152, 219));
-        startJButton.setForeground(Color.WHITE);
-        startJButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        startJButton.setBorder(BorderFactory.createEmptyBorder(8,15,8,15));
-        startJButton.setFocusPainted(false);
-        startJButton.setCursor(new Cursor(Cursor.HAND_CURSOR) {
-        });
     }
     
-    public void addLoginJButtonActionListener(ActionListener al) {
+    public void addLoginActionListener(ActionListener al){
         this.loginJButton.addActionListener(al);
-    }
-    
-    public void addStartJButtonActionListener(ActionListener al) {
-        this.startJButton.addActionListener(al);
-    }
-    
-    public void setVisibleStartJButton(boolean visible) {
-        this.startJButton.setVisible(visible);
-    }
-    
-    public void setVisibleLoginJButton(boolean visible) {
-        this.loginJButton.setVisible(visible);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel imageJLabel;
     private javax.swing.JButton loginJButton;
-    private javax.swing.JButton startJButton;
     // End of variables declaration//GEN-END:variables
 }

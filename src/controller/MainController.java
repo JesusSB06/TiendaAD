@@ -1,7 +1,7 @@
 package controller;
 
 import controller.loginRegister.LoginRegisterController;
-import controller.products.ProductsController;
+import controller.loginRegister.ProductsController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;

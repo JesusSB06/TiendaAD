@@ -11,13 +11,13 @@ public class Client {
     private String name;
     private String correoElectronico;
     private String password;
-    private int telephone;
+    private String telephone;
     private List<Sale> ventas;
 
     public Client() {
     }
 
-    public Client(String dni, String name, String correoElectronico, String password, int telephone, List<Sale> ventas) {
+    public Client(String dni, String name, String correoElectronico, String password, String telephone, List<Sale> ventas) {
         this.dni = dni;
         this.name = name;
         this.correoElectronico = correoElectronico;
@@ -58,11 +58,11 @@ public class Client {
         this.password = password;
     }
 
-    public int getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(int telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 
@@ -73,4 +73,6 @@ public class Client {
     public void setVentas(List<Sale> ventas) {
         this.ventas = ventas;
     }
+
+
 }

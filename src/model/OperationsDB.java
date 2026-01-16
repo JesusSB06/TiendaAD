@@ -1,8 +1,8 @@
 package model;
 
-import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import main.main;
 
 /**
@@ -25,20 +25,5 @@ public class OperationsDB {
 
     public static void closeConnection() throws SQLException {
         conexion.close();
-    }
-
-    public static int addProduct(Product product) throws SQLException {
-        int vId = product.getId();
-        String vName = product.getName();
-        int vStock = product.getStock();
-        String vState = product.getState();
-        Double vPrice = product.getPrice();
-        String vImg = product.getImg();
-        Category vCategory = product.getCategory();
-        String sentenciaSQL = "INSERT into Product (id, name, stock, state, price, img, category) values (?,?,?,?,?,?,?)";
-        PreparedStatement ps = conexion.prepareStatement(sentenciaSQL);
-        int resultado = ps.executeUpdate();
-        ps.close();
-        return resultado;
     }
 }

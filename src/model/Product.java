@@ -9,7 +9,7 @@ public class Product {
     private int id;
     private String name;
     private int stock;
-    private boolean state;
+    private String state;
     private Double price;
     private String img;
     private Category category;
@@ -17,7 +17,7 @@ public class Product {
     public Product() {
     }
     
-    public Product(int id, String name, int stock, boolean state, Double price, String img, Category category) {
+    public Product(int id, String name, int stock, String state, Double price, String img, Category category) {
         this.id = id;
         this.name = name;
         this.stock = stock;
@@ -51,11 +51,11 @@ public class Product {
         this.stock = stock;
     }
 
-    public boolean isState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(boolean state) {
+    public void setState(String state) {
         this.state = state;
     }
 

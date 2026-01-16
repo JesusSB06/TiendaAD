@@ -15,4 +15,3 @@ CREATE TABLE asiste ( id_cliente VARCHAR(9), id_empregado INT, primary key(id_cl
     FOREIGN KEY (id_empregado) REFERENCES asistente(id_empregado)); 
 CREATE TABLE repara (id_empregado INT, id_producto INT, stock INT, primary key(id_empregado, id_producto), FOREIGN KEY (id_empregado) REFERENCES tecnico(id_empregado),
     FOREIGN KEY (id_producto) REFERENCES producto(id_producto));
- 

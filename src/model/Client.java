@@ -8,21 +8,21 @@ import java.util.List;
  */
 public class Client {
     private String dni;
-    private String name;
-    private String correoElectronico;
-    private String password;
-    private int telephone;
+    private String nombre_cliente;
+    private String correo_electronico;
+    private String contrasenha;
+    private String telefono;
     private List<Sale> ventas;
 
     public Client() {
     }
 
-    public Client(String dni, String name, String correoElectronico, String password, int telephone, List<Sale> ventas) {
+    public Client(String dni, String name, String correoElectronico, String password, String telephone, List<Sale> ventas) {
         this.dni = dni;
-        this.name = name;
-        this.correoElectronico = correoElectronico;
-        this.password = password;
-        this.telephone = telephone;
+        this.nombre_cliente = "";
+        this.correo_electronico = correoElectronico;
+        this.contrasenha = "";
+        this.telefono = telephone;
         this.ventas = ventas;
     }
 
@@ -35,35 +35,35 @@ public class Client {
     }
 
     public String getName() {
-        return name;
+        return nombre_cliente;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.nombre_cliente = name;
     }
 
     public String getCorreoElectronico() {
-        return correoElectronico;
+        return correo_electronico;
     }
 
     public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
+        this.correo_electronico = correoElectronico;
     }
 
     public String getPassword() {
-        return password;
+        return contrasenha;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.contrasenha = password;
     }
 
-    public int getTelephone() {
-        return telephone;
+    public String getTelephone() {
+        return telefono;
     }
 
-    public void setTelephone(int telephone) {
-        this.telephone = telephone;
+    public void setTelephone(String telephone) {
+        this.telefono = telephone;
     }
 
     public List<Sale> getVentas() {
@@ -73,4 +73,6 @@ public class Client {
     public void setVentas(List<Sale> ventas) {
         this.ventas = ventas;
     }
+
+
 }

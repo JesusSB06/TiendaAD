@@ -1,11 +1,13 @@
 package controller;
 
 import controller.loginRegister.LoginRegisterController;
+import controller.loginRegister.ProductsController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import view.LoginRegisterJDialog;
 import view.MainJFrame;
+import view.ProductsJDialog;
 
 /**
  *
@@ -17,7 +19,8 @@ public class MainController {
 
     public MainController(MainJFrame view) {
         this.view = view;
-        this.view.addLoginActionListener(this.getLoginActionListener());
+        this.view.addLoginJButtonActionListener(this.getLoginJButtonActionListener());
+        this.view.addStartJButtonActionListener(this.getStartJButtonActionListener());
 
     }
 
@@ -30,7 +33,7 @@ public class MainController {
         view.getImagetoLabel(image);
     }
 
-    public ActionListener getLoginActionListener() {
+    public ActionListener getLoginJButtonActionListener() {
         ActionListener al = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -41,5 +44,18 @@ public class MainController {
             }
         };
         return al;
+    }
+
+    public ActionListener getStartJButtonActionListener() {
+        ActionListener al = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                ProductsJDialog pjd = new ProductsJDialog(view, true);
+                ProductsController pc = new ProductsController(pjd);
+                pjd.setVisible(true);
+            }
+        };
+        return al;
+
     }
 }

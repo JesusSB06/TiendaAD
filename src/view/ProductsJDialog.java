@@ -121,6 +121,7 @@ public class ProductsJDialog extends javax.swing.JDialog {
         return productsTable;
     }
 
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;

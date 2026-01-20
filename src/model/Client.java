@@ -8,10 +8,10 @@ import java.util.List;
  */
 public class Client {
     private String dni;
-    private String nombre_cliente;
-    private String correo_electronico;
-    private String contrasenha;
-    private String telefono;
+    private String name;
+    private String correoElectronico;
+    private String password;
+    private String telephone;
     private List<Sale> ventas;
 
     public Client() {
@@ -59,11 +59,11 @@ public class Client {
     }
 
     public String getTelephone() {
-        return telefono;
+        return telephone;
     }
 
     public void setTelephone(String telephone) {
-        this.telefono = telephone;
+        this.telephone = telephone;
     }
 
     public List<Sale> getVentas() {

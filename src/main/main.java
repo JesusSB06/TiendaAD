@@ -18,6 +18,7 @@ public class main {
         conexion.openConnection();
         conexion.consultaProducto();
         conexion.consultaCliente();
+        
         MainJFrame mainJFrame = new MainJFrame();
         mainJFrame.setVisible(true);
         MainController mc = new MainController(mainJFrame);

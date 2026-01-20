@@ -19,10 +19,10 @@ public class Client {
 
     public Client(String dni, String name, String correoElectronico, String password, String telephone, List<Sale> ventas) {
         this.dni = dni;
-        this.name = name;
-        this.correoElectronico = correoElectronico;
-        this.password = password;
-        this.telephone = telephone;
+        this.nombre_cliente = "";
+        this.correo_electronico = correoElectronico;
+        this.contrasenha = "";
+        this.telefono = telephone;
         this.ventas = ventas;
     }
 
@@ -35,27 +35,27 @@ public class Client {
     }
 
     public String getName() {
-        return name;
+        return nombre_cliente;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.nombre_cliente = name;
     }
 
     public String getCorreoElectronico() {
-        return correoElectronico;
+        return correo_electronico;
     }
 
     public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
+        this.correo_electronico = correoElectronico;
     }
 
     public String getPassword() {
-        return password;
+        return contrasenha;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.contrasenha = password;
     }
 
     public String getTelephone() {

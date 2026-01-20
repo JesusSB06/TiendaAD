@@ -120,6 +120,7 @@ public class ProductsJDialog extends javax.swing.JDialog {
     public JTable getProductsTable() {
         return productsTable;
     }
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

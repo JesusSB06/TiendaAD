@@ -17,6 +17,7 @@ public class main {
     public static void main(String[] args) throws SQLException {
         conexion.openConnection();
         conexion.consultaProducto();
+        conexion.consultaCliente();
         
         MainJFrame mainJFrame = new MainJFrame();
         mainJFrame.setVisible(true);

@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 import main.main;
 
 /**
@@ -48,6 +49,43 @@ public class OperationsDB {
         }
     }
 
+    public void consultaCliente() throws SQLException {
+        System.out.println("Consulta producto");
+        String select = "SELECT * from cliente";
+        Statement st = conexion.createStatement();
+        ResultSet rs = st.executeQuery(select);
+        while (rs.next()) {
+            System.out.println("-- Clientes --");
+            System.out.println("DNI: " + rs.getString("dni"));
+            System.out.println("Nombre: " + rs.getString("nombre_cliente"));
+            System.out.println("Correo: " + rs.getString("correo_electronico"));
+            System.out.println("Telefono: " + rs.getString("telefono"));
+            System.out.println("Contrasenha: " + rs.getString("contrasenha"));
+
+        }
+    }
+
+    public boolean usuarioInicioSesion(String nombre_introducido, String contrasenha_introducida) throws SQLException {
+        String select = "SELECT nombre_cliente, contrasenha FROM cliente";
+        Statement st = conexion.createStatement();
+        ResultSet rs = st.executeQuery(select);
+        while (rs.next()) {
+            String nombre_cliente = rs.getString("nombre_cliente");
+            String password = rs.getString("contrasenha");
+            System.out.println("===================================");
+            System.out.println("nombre esperado: " + nombre_cliente);
+            System.out.println("password esperado: " + password);
+            System.out.println("===================================");
+
+            if (nombre_cliente.contains(nombre_introducido) && contrasenha_introducida.contains(contrasenha_introducida)) {
+                return true;
+            } else if (!nombre_cliente.contains(nombre_introducido) || !contrasenha_introducida.contains(password)) {
+                return false;
+            }
+        }
+        return false;
+    }
+
     public int addProduct(Product product) throws SQLException {
         int vId = product.getId();
         String vName = product.getName();
@@ -62,4 +100,5 @@ public class OperationsDB {
         ps.close();
         return resultado;
     }
+
 }

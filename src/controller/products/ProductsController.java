@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import model.Category;
 import model.Product;
+import model.TiendaInf;
 import view.ProductsJDialog;
 
 /**
@@ -27,9 +28,10 @@ import view.ProductsJDialog;
 public class ProductsController {
 
     private ProductsJDialog view;
+    private TiendaInf model;
 
-
-    public ProductsController(ProductsJDialog view) {
+    public ProductsController(ProductsJDialog view, TiendaInf model) {
+        this.model = model;
         this.view = view;
         this.initComponents();
     }

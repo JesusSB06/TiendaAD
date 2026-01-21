@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import model.OperationsDB;
+import model.TiendaInf;
 import view.LoginRegisterJDialog;
 
 /**
@@ -19,9 +20,11 @@ import view.LoginRegisterJDialog;
 public class LoginRegisterController {
 
     private LoginRegisterJDialog view;
+    private TiendaInf model;
     private OperationsDB modelOperaciones = new OperationsDB();
 
-    public LoginRegisterController(LoginRegisterJDialog view) {
+    public LoginRegisterController(LoginRegisterJDialog view, TiendaInf model) {
+        this.model = model;
         this.view = view;
         changeImage();
         this.view.addSaveJButtonActionListener(this.addSaveJButtonActionListener());

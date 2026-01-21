@@ -36,27 +36,31 @@ public class ProductsController {
         this.initComponents();
     }
 
-    private void updateTable(JTable table) {
+    private void updateTable(JTable table) throws SQLException {
         view.clearTable(table);
-        Product d = new Product(123, "Motomami", 45, "deplorable", 56.89, "/imagenes/motomami.jpeg", new Category(3434, "·WWWWWW"));
+        List<Product> products = OperationsDB.obtenerProductos();
+        for (Product d : products) {
             Vector row = new Vector();
             ImageIcon icon = null;
             try {
                 URL imageUrl = getClass().getResource(d.getImg());
                 if (imageUrl != null) {
-                    icon = new ImageIcon(ImageIO.read(imageUrl));
+                    BufferedImage img = ImageIO.read(imageUrl);
+                    Image scaledImg = img.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+                    icon = new ImageIcon(scaledImg);
                 } else {
                     System.out.println("No se encontró la imagen");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-}
+            }
             row.add(icon);
             row.add(d.getName());
             row.add(d.getPrice());
             row.add(d.getStock());
             view.addRowTable(row, table);
-        
+        }
+
     }
 
     private void initComponents() {

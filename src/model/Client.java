@@ -7,6 +7,7 @@ import java.util.List;
  * @author dam2_alu03@inf.ald
  */
 public class Client {
+
     private String dni;
     private String nombre_cliente;
     private String correo_electronico;
@@ -14,7 +15,12 @@ public class Client {
     private String telefono;
     private List<Sale> ventas;
 
-    public Client() {
+    public Client(String dni, String nombre_cliente, String correo_electronico, String telefono, String contrasenha) {
+        this.dni = dni;
+        this.nombre_cliente = nombre_cliente;
+        this.correo_electronico = correo_electronico;
+        this.contrasenha = contrasenha;
+        this.telefono = telefono;
     }
 
     public Client(String dni, String nombre_cliente, String correo_electronico, String contrasenha, String telefono, List<Sale> ventas) {
@@ -73,7 +79,5 @@ public class Client {
     public void setVentas(List<Sale> ventas) {
         this.ventas = ventas;
     }
-
-
 
 }

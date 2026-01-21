@@ -51,7 +51,7 @@ public class LoginRegisterJDialog extends javax.swing.JDialog {
 
         passwordJLabel.setText("Contraseña:");
 
-        saveJButton.setText("Guardar");
+        saveJButton.setText("Iniciar");
 
         cancelJButton.setText("Cancelar");
 

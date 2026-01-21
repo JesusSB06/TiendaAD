@@ -65,7 +65,7 @@ public class OperationsDB {
         }
     }
 
-    public boolean usuarioInicioSesion(String nombre_introducido, String contrasenha_introducida) throws SQLException {
+    public String usuarioInicioSesion(String nombre_introducido, String contrasenha_introducida) throws SQLException {
         String select = "SELECT nombre_cliente, contrasenha FROM cliente";
         Statement st = conexion.createStatement();
         ResultSet rs = st.executeQuery(select);
@@ -77,13 +77,34 @@ public class OperationsDB {
             System.out.println("password esperado: " + password);
             System.out.println("===================================");
 
-            if (nombre_cliente.contains(nombre_introducido) && contrasenha_introducida.contains(contrasenha_introducida)) {
-                return true;
-            } else if (!nombre_cliente.contains(nombre_introducido) || !contrasenha_introducida.contains(password)) {
-                return false;
+            if (nombre_cliente.equals(nombre_introducido) && contrasenha_introducida.equals(password)) {
+                return "inicio";
+            } else if (!nombre_cliente.equals(nombre_introducido)) { 
+                return "registrarse";
+            }else if(!contrasenha_introducida.equals(password)){
+                return "noContrasenha";
             }
         }
-        return false;
+        return "no inicio";
+    }
+
+    public int anhadirCliente(Client cliente) throws SQLException {
+        String dni = cliente.getDni();
+        String nombre_cliente = cliente.getNombre_cliente();
+        String correo_electronico = cliente.getCorreo_electronico();
+        String telefono = cliente.getTelefono();
+        String contrasenha = cliente.getContrasenha();
+        String insert = "INSERT INTO cliente(dni, nombre_cliente, correo_electronico, telefono, contrasenha) VALUES (?,?,?,?,?)";
+        int resultado;
+        try (PreparedStatement anhadir = conexion.prepareStatement(insert)) {
+            anhadir.setString(1, dni);
+            anhadir.setString(2, nombre_cliente);
+            anhadir.setString(3, correo_electronico);
+            anhadir.setString(4, telefono);
+            anhadir.setString(5, contrasenha);
+            resultado = anhadir.executeUpdate();
+        }
+        return resultado;
     }
 
     public int addProduct(Product product) throws SQLException {

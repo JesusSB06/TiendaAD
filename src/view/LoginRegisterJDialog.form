@@ -108,7 +108,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="saveJButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Guardar"/>
+        <Property name="text" type="java.lang.String" value="Iniciar"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="cancelJButton">

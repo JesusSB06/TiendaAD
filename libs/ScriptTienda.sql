@@ -1,7 +1,7 @@
 CREATE DATABASE tienda_inf;
 USE tienda_inf;
 CREATE TABLE categoria(id_categoria INT, nombre_categoria VARCHAR(25), primary key(id_categoria));
-CREATE TABLE producto(id_producto INT, nombre_producto VARCHAR(25), stock INT, estado VARCHAR(25), precio DOUBLE, categoria INT, primary key(id_producto),FOREIGN KEY (categoria) REFERENCES categoria(id_categoria));
+CREATE TABLE producto(id_producto INT, nombre_producto VARCHAR(80), stock INT, estado VARCHAR(25), precio DOUBLE, categoria INT, primary key(id_producto),FOREIGN KEY (categoria) REFERENCES categoria(id_categoria));
 CREATE TABLE proveedor (id_proveedor INT, nombre_companhia VARCHAR(25), primary key(id_proveedor));
 CREATE TABLE cliente (dni INT, nombre_cliente VARCHAR(55),  correo_electronico VARCHAR(35), telefono VARCHAR(15), contrasenha VARCHAR(255), Primary key(dni));
 CREATE  TABLE empregado (id_empregado INT, dni VARCHAR(9), nombre VARCHAR(55), direccion VARCHAR(35), supervisor INT, horario_entrada VARCHAR(25), horario_salida VARCHAR(25), 

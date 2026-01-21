@@ -6,7 +6,10 @@ package view;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Font;
 import java.util.Vector;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JScrollBar;
@@ -28,8 +31,10 @@ public class ProductsJDialog extends javax.swing.JDialog {
     public ProductsJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        initComponentView(jScrollPane1, productsTable);
+        ApplyStylesTable(jScrollPane1, productsTable);
         addTableRenderer(productsTable);
+        applyStylesButton();
+        this.setTitle("Productos");
     }
 
     /**
@@ -41,13 +46,18 @@ public class ProductsJDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        productsLabel = new javax.swing.JLabel();
+        backgroundPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         productsTable = new javax.swing.JTable();
+        productsLabel = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        cancelButton = new javax.swing.JButton();
+        addButton = new javax.swing.JButton();
+        goToBagButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        productsLabel.setText("Products:");
+        backgroundPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         productsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -59,31 +69,68 @@ public class ProductsJDialog extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(productsTable);
 
+        productsLabel.setText("Products:");
+
+        jTextField1.setText("");
+
+        cancelButton.setText("Cancel...");
+
+        addButton.setText("Add...");
+
+        goToBagButton.setText("Go to the cart...");
+
+        javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
+        backgroundPanel.setLayout(backgroundPanelLayout);
+        backgroundPanelLayout.setHorizontalGroup(
+            backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(backgroundPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addComponent(productsLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
+                        .addComponent(goToBagButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(cancelButton)))
+                .addContainerGap())
+        );
+        backgroundPanelLayout.setVerticalGroup(
+            backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(productsLabel)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cancelButton)
+                    .addComponent(addButton)
+                    .addComponent(goToBagButton))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(productsLabel)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+            .addComponent(backgroundPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(productsLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+            .addComponent(backgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    private void initComponentView(JScrollPane scroll, JTable table) {
+    private void ApplyStylesTable(JScrollPane scroll, JTable table) {
         scroll.getViewport().setBackground(Color.WHITE);
         table.setBackground(Color.WHITE);
         table.setForeground(Color.BLACK);
@@ -97,6 +144,30 @@ public class ProductsJDialog extends javax.swing.JDialog {
         JScrollBar vertical = scroll.getVerticalScrollBar();
         vertical.setBackground(Color.WHITE);
         vertical.setForeground(Color.LIGHT_GRAY);
+ 
+    }
+
+    private void applyStylesButton() {
+        cancelButton.setBackground(new Color(231, 76, 60));
+        cancelButton.setForeground(Color.WHITE);
+        cancelButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        cancelButton.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
+        cancelButton.setFocusPainted(false);
+        cancelButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        addButton.setBackground(new Color(46, 204, 113));
+        addButton.setForeground(Color.WHITE);
+        addButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        addButton.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
+        addButton.setFocusPainted(false);
+        addButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        goToBagButton.setBackground(new Color(0,191,255));
+        goToBagButton.setForeground(Color.WHITE);
+        goToBagButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        goToBagButton.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
+        goToBagButton.setFocusPainted(false);
+        goToBagButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     private void addTableRenderer(JTable table) {
@@ -142,7 +213,12 @@ public class ProductsJDialog extends javax.swing.JDialog {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addButton;
+    private javax.swing.JPanel backgroundPanel;
+    private javax.swing.JButton cancelButton;
+    private javax.swing.JButton goToBagButton;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel productsLabel;
     private javax.swing.JTable productsTable;
     // End of variables declaration//GEN-END:variables

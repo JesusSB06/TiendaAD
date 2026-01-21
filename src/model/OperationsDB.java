@@ -58,21 +58,53 @@ public class OperationsDB {
         while (rs.next()) {
             if(rs.getString(4).equals("disponible")){
                 Product p = new Product(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getDouble(5), rs.getInt(6));
-                switch (p.getCategory()) {
-                    case 1 -> p.setImg("/imagenes/portatil.png");
-                    case 2 -> p.setImg("/imagenes/computadora.png");
-                    case 3 -> p.setImg("/imagenes/perifericos.png");
-                    case 4 -> p.setImg("/imagenes/componentes.jpeg");
-                    case 5 -> p.setImg("/imagenes/accesor.png");
-                    case 6 -> p.setImg("/imagenes/red.png");
-                    case 7 -> p.setImg("/imagenes/almacenamiento.png");
-                    default -> {
-
-                    }
-                }
-                products.add(p); 
+                setImageProducts(p, products);
             }
         }
+        st.close();                
+        rs.close();
+
+        return products;
+    }
+
+    private static void setImageProducts(Product p, List<Product> products) {
+        switch (p.getCategory()) {
+            case 1 ->
+                p.setImg("/imagenes/portatil.png");
+            case 2 ->
+                p.setImg("/imagenes/computadora.png");
+            case 3 ->
+                p.setImg("/imagenes/perifericos.png");
+            case 4 ->
+                p.setImg("/imagenes/componentes.jpeg");
+            case 5 ->
+                p.setImg("/imagenes/accesor.png");
+            case 6 ->
+                p.setImg("/imagenes/red.png");
+            case 7 ->
+                p.setImg("/imagenes/almacenamiento.png");
+            default -> {
+
+            }
+
+        }
+        products.add(p);
+    }
+
+    private static List<Product> ThreadSearch(String value) throws SQLException {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT * from producto WHERE nombre_producto LIKE '" + value + "%'";
+        Statement st = conexion.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        while (rs.next()) {
+            if (rs.getString(4).equals("disponible")) {
+                Product p = new Product(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getDouble(5), rs.getInt(6));
+                setImageProducts(p, products);
+            }
+        }
+        st.close();
+        rs.close();
+
         return products;
     }
 

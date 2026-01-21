@@ -4,32 +4,28 @@
  */
 package view;
 
-import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.ActionListener;
 import java.util.Vector;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 /**
  *
- * @author dam2_alu10@inf.ald
+ * @author dam2_alu03@inf.ald
  */
-public class ProductsJDialog extends javax.swing.JDialog {
+public class TecnicalJDialog extends javax.swing.JDialog {
 
     /**
-     * Creates new form productsJDialog
+     * Creates new form TecnicalJDialog
      */
-    public ProductsJDialog(java.awt.Frame parent, boolean modal) {
+    public TecnicalJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        initComponentView(jScrollPane1, productsTable);
-        addTableRenderer(productsTable);
     }
 
     /**
@@ -41,23 +37,40 @@ public class ProductsJDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        productsLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         productsTable = new javax.swing.JTable();
+        productsLabel = new javax.swing.JLabel();
+        fixButton = new javax.swing.JButton();
+        infButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        productsLabel.setText("Products:");
-
         productsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "image", "name", "price", "stock"
+                "Imagen", "Nombre", "Precio", "Stock", "Estado"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(productsTable);
+
+        productsLabel.setText("Productos:");
+
+        fixButton.setText("Reparar");
+
+        infButton.setText("Inf");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -66,38 +79,32 @@ public class ProductsJDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(productsLabel)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(productsLabel))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(infButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fixButton)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(7, 7, 7)
                 .addComponent(productsLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fixButton)
+                    .addComponent(infButton))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    private void initComponentView(JScrollPane scroll, JTable table) {
-        scroll.getViewport().setBackground(Color.WHITE);
-        table.setBackground(Color.WHITE);
-        table.setForeground(Color.BLACK);
-        table.setShowGrid(false);
-        JTableHeader header = table.getTableHeader();
-        header.setBackground(Color.WHITE);
-        header.setForeground(Color.BLACK);
-        header.setBorder(null);
-        table.setSelectionBackground(Color.BLACK);
-        table.setSelectionForeground(Color.WHITE);
-        JScrollBar vertical = scroll.getVerticalScrollBar();
-        vertical.setBackground(Color.WHITE);
-        vertical.setForeground(Color.LIGHT_GRAY);
-    }
 
     private void addTableRenderer(JTable table) {
         table.setRowHeight(80);
@@ -138,10 +145,34 @@ public class ProductsJDialog extends javax.swing.JDialog {
     public JTable getProductsTable() {
         return productsTable;
     }
-
     
+    public void addFixButtonActionListener(ActionListener listener){
+        this.fixButton.addActionListener(listener);
+    }
+    
+    public void addInfButtonActionListener(ActionListener listener){
+        this.infButton.addActionListener(listener);
+    }
+    
+    public void isFixed(){
+        this.productsTable.getColumnModel().getColumn(4);
+    }
+    
+    public void enableFixButton(boolean enable){
+        this.fixButton.setEnabled(enable);
+    }
+    
+    public void setState(String state){
+        
+    }
+    
+    public String getState(){
+        return (String) this.productsTable.getModel().getValueAt(4, WIDTH);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton fixButton;
+    private javax.swing.JButton infButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel productsLabel;
     private javax.swing.JTable productsTable;

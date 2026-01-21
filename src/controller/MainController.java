@@ -1,10 +1,11 @@
 package controller;
 
 import controller.loginRegister.LoginRegisterController;
-import controller.loginRegister.ProductsController;
+import controller.products.ProductsController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
+import model.TiendaInf;
 import view.LoginRegisterJDialog;
 import view.MainJFrame;
 import view.ProductsJDialog;
@@ -16,9 +17,11 @@ import view.ProductsJDialog;
 public class MainController {
 
     private MainJFrame view;
+    private TiendaInf model;
 
-    public MainController(MainJFrame view) {
+    public MainController(MainJFrame view, TiendaInf model) {
         this.view = view;
+        this.model = model;
         this.view.addLoginJButtonActionListener(this.getLoginJButtonActionListener());
         this.view.addStartJButtonActionListener(this.getStartJButtonActionListener());
 
@@ -38,7 +41,7 @@ public class MainController {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 LoginRegisterJDialog lrg = new LoginRegisterJDialog(view, true);
-                LoginRegisterController lrc = new LoginRegisterController(lrg);
+                LoginRegisterController lrc = new LoginRegisterController(lrg, model);
                 lrg.setVisible(true);
 
             }
@@ -51,7 +54,7 @@ public class MainController {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 ProductsJDialog pjd = new ProductsJDialog(view, true);
-                ProductsController pc = new ProductsController(pjd);
+                ProductsController pc = new ProductsController(pjd, model);
                 pjd.setVisible(true);
             }
         };

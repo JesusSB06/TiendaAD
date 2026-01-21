@@ -77,13 +77,30 @@ public class OperationsDB {
             System.out.println("password esperado: " + password);
             System.out.println("===================================");
 
-            if (nombre_cliente.contains(nombre_introducido) && contrasenha_introducida.contains(contrasenha_introducida)) {
+            if (nombre_cliente.equals(nombre_introducido) && contrasenha_introducida.equals(password)) {
                 return true;
-            } else if (!nombre_cliente.contains(nombre_introducido) || !contrasenha_introducida.contains(password)) {
-                return false;
             }
         }
         return false;
+    }
+    
+    public int anhadirCliente(Client cliente) throws SQLException {
+        String dni = cliente.getDni();
+        String nombre_cliente = cliente.getNombre_cliente();
+        String correo_electronico = cliente.getCorreo_electronico();
+        String telefono = cliente.getTelefono();
+        String contrasenha = cliente.getContrasenha();
+        String insert = "INSERT INTO cliente(dni, nombre_cliente, correo_electronico, telefono, contrasenha) VALUES (?,?,?,?,?)";
+        int resultado;
+        try (PreparedStatement anhadir = conexion.prepareStatement(insert)) {
+            anhadir.setString(1, dni);
+            anhadir.setString(2, nombre_cliente);
+            anhadir.setString(3, correo_electronico);
+            anhadir.setString(4, telefono);
+            anhadir.setString(5, contrasenha);
+            resultado = anhadir.executeUpdate();
+        }
+        return resultado;
     }
 
     public int addProduct(Product product) throws SQLException {

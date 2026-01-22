@@ -22,13 +22,14 @@ public class MainController {
     public MainController(MainJFrame view, TiendaInf model) {
         this.view = view;
         this.model = model;
+        initComponents();
         this.view.addLoginJButtonActionListener(this.getLoginJButtonActionListener());
         this.view.addStartJButtonActionListener(this.getStartJButtonActionListener());
 
     }
 
     public void initComponents() {
-
+        view.setVisibleStartJButton(false);
     }
 
     public void changeImage() {
@@ -41,7 +42,7 @@ public class MainController {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 LoginRegisterJDialog lrg = new LoginRegisterJDialog(view, true);
-                LoginRegisterController lrc = new LoginRegisterController(lrg, model);
+                LoginRegisterController lrc = new LoginRegisterController(lrg,view, model);
                 lrg.setVisible(true);
 
             }

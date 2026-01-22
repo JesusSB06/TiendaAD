@@ -65,7 +65,8 @@ public class OperationsDB {
         }
     }
 
-    public boolean usuarioInicioSesion(String nombre_introducido, String contrasenha_introducida) throws SQLException {
+    public String usuarioInicioSesion(String nombre_introducido, String contrasenha_introducida) throws SQLException {
+        boolean usuarioExiste = false;
         String select = "SELECT nombre_cliente, contrasenha FROM cliente";
         Statement st = conexion.createStatement();
         ResultSet rs = st.executeQuery(select);
@@ -77,13 +78,22 @@ public class OperationsDB {
             System.out.println("password esperado: " + password);
             System.out.println("===================================");
 
-            if (nombre_cliente.equals(nombre_introducido) && contrasenha_introducida.equals(password)) {
-                return true;
+            if (nombre_cliente.equals(nombre_introducido)) {
+                usuarioExiste = true;
+
+                if (password.equals(contrasenha_introducida)) {
+                    return "inicio";
+                } else {
+                    return "noContrasenha";
+                }
             }
         }
-        return false;
+        if(!usuarioExiste){
+            return "registrarse";
+        }
+        return "no inicio";
     }
-    
+
     public int anhadirCliente(Client cliente) throws SQLException {
         String dni = cliente.getDni();
         String nombre_cliente = cliente.getNombre_cliente();

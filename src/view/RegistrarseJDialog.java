@@ -4,14 +4,17 @@
  */
 package view;
 
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
 
 /**
  *
  * @author alumno
  */
 public class RegistrarseJDialog extends javax.swing.JDialog {
-    
 
     /**
      * Creates new form RegistrarseJDialog
@@ -19,6 +22,7 @@ public class RegistrarseJDialog extends javax.swing.JDialog {
     public RegistrarseJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        applyStylesButton();
     }
 
     /**
@@ -58,7 +62,7 @@ public class RegistrarseJDialog extends javax.swing.JDialog {
 
         passwordJLabel.setText("Contraseña:");
 
-        saveJButton.setText("Guardar");
+        saveJButton.setText("Registrarse");
 
         cancelJButton.setText("Cancelar");
 
@@ -128,38 +132,57 @@ public class RegistrarseJDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void addSaveJButtonActionListener(ActionListener al){
+    public void addSaveJButtonActionListener(ActionListener al) {
         this.saveJButton.addActionListener(al);
-    }   
-    
-    public void addCancelJButtonActionListener(ActionListener al){
+    }
+
+    public void addCancelJButtonActionListener(ActionListener al) {
         this.cancelJButton.addActionListener(al);
     }
-    
-    public void setNameJTextField(String name){
+
+    public void setNameJTextField(String name) {
         this.nameJTextField.setText(name);
     }
-    
-    public String getNameJTextField(){
+
+    public String getNameJTextField() {
         return this.nameJTextField.getText();
     }
-    
-    public String getDNIJTextField(){
+
+    public String getDNIJTextField() {
         return this.DNIJTextField.getText();
     }
-    
-    public String getEmailJTextField(){
+
+    public String getEmailJTextField() {
         return this.emailJTextField.getText();
     }
-    
-    public String getTelefonoJTextField(){
+
+    public String getTelefonoJTextField() {
         return this.phoneJTextField.getText();
     }
-    
-    public String getPasswordJField(){
+
+    public String getPasswordJField() {
         return new String(this.passwordJField.getPassword());
     }
-    
+
+    //Estilos de los botones:
+    private void applyStylesButton() {
+       
+        saveJButton.setBackground(new Color(46, 204, 113));
+        saveJButton.setForeground(Color.WHITE);
+        saveJButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        saveJButton.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
+        saveJButton.setFocusPainted(false);
+        saveJButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        cancelJButton.setBackground(new Color(231, 76, 60));
+        cancelJButton.setForeground(Color.WHITE);
+        cancelJButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        cancelJButton.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
+        cancelJButton.setFocusPainted(false);
+        cancelJButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField DNIJTextField;
     private javax.swing.JButton cancelJButton;

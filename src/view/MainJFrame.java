@@ -50,27 +50,27 @@ public class MainJFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(imageJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(181, 181, 181)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(loginJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(startJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(imageJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(117, Short.MAX_VALUE))
+                    .addComponent(loginJButton)
+                    .addComponent(startJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(imageJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(loginJButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(startJButton)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(71, 71, 71)
+                        .addComponent(loginJButton)
+                        .addGap(33, 33, 33)
+                        .addComponent(startJButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(imageJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
         pack();
@@ -92,15 +92,16 @@ public class MainJFrame extends javax.swing.JFrame {
     private void applyStylesButton() {
 
         //Estilos para el botón del login
-        loginJButton.setBackground(new Color(52, 152, 219));
+        loginJButton.setBackground(new Color(93, 173, 226));
         loginJButton.setForeground(Color.WHITE);
         loginJButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
         loginJButton.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
         loginJButton.setFocusPainted(false);
         loginJButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
+        
         //Estilos para el botón de start
-        startJButton.setBackground(new Color(52, 152, 219));
+        startJButton.setBackground(new Color(88, 214, 141));
         startJButton.setForeground(Color.WHITE);
         startJButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
         startJButton.setBorder(BorderFactory.createEmptyBorder(8,15,8,15));

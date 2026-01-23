@@ -7,16 +7,15 @@ package controller.products;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
-import model.Category;
+import model.OperationsDB;
+
 import model.Product;
 import model.TiendaInf;
 import view.ProductsJDialog;
@@ -30,15 +29,20 @@ public class ProductsController {
     private ProductsJDialog view;
     private TiendaInf model;
 
-    public ProductsController(ProductsJDialog view, TiendaInf model) {
+    public ProductsController(ProductsJDialog view, TiendaInf model){
         this.model = model;
         this.view = view;
         this.initComponents();
     }
 
-    private void updateTable(JTable table) throws SQLException {
+    private void updateTable(JTable table) {
         view.clearTable(table);
-        List<Product> products = OperationsDB.obtenerProductos();
+        List<Product> products = null;
+        try {
+            products = OperationsDB.obtenerProductos();
+        } catch (SQLException ex) {
+            System.getLogger(ProductsController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
         for (Product d : products) {
             Vector row = new Vector();
             ImageIcon icon = null;
@@ -63,7 +67,7 @@ public class ProductsController {
 
     }
 
-    private void initComponents() {
+    private void initComponents(){
         this.updateTable(view.getProductsTable());
     }
 }

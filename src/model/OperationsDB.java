@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import main.main;
 
@@ -171,7 +173,7 @@ public class OperationsDB {
         String vState = product.getState();
         Double vPrice = product.getPrice();
         String vImg = product.getImg();
-        Category vCategory = product.getCategory();
+        int vCategory = product.getCategory();
         String sentenciaSQL = "INSERT into Product (id_producto, nombre_producto, stock, estado, price, img, category) values (?,?,?,?,?,?,?)";
         PreparedStatement ps = conexion.prepareStatement(sentenciaSQL);
         int resultado = ps.executeUpdate();

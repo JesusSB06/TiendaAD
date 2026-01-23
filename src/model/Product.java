@@ -12,18 +12,18 @@ public class Product {
     private String state;
     private Double price;
     private String img;
-    private Category category;
+    private int category;
 
     public Product() {
     }
 
-    public Product(int id, String name, int stock, String state, Double price, String img, Category category) {
+    public Product(int id, String name, int stock, String state, Double price, int category) {
         this.id = id;
         this.name = name;
         this.stock = stock;
         this.state = state;
         this.price = price;
-        this.img = img;
+        this.img = "";
         this.category = category;
     }
 
@@ -75,13 +75,14 @@ public class Product {
         this.img = img;
     }
 
-    public Category getCategory() {
+    public int getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(int category) {
         this.category = category;
     }
-    
+
+
 
 }

@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import model.Client;
 import model.OperationsDB;
+import model.TiendaInf;
 import view.RegistrarseJDialog;
 
 /**
@@ -19,10 +20,11 @@ import view.RegistrarseJDialog;
 public class RegisterController {
 
     private RegistrarseJDialog view;
-    private static final OperationsDB operacions = new OperationsDB();
+    private TiendaInf model;
 
-    public RegisterController(RegistrarseJDialog view) {
+    public RegisterController(RegistrarseJDialog view, TiendaInf model) {
         this.view = view;
+        this.model = model;
         this.view.addSaveJButtonActionListener(this.getSaveJButtonActionListener());
         this.view.addCancelJButtonActionListener(this.getCancelJButtonActionListener());
     }
@@ -37,11 +39,12 @@ public class RegisterController {
                 String telefono = view.getTelefonoJTextField();
                 String contrasenha = view.getPasswordJField();
                 Client nuevoCliente = new Client(dni, nombre_cliente, correo_electronico, telefono, contrasenha);
+                model.setClient(nuevoCliente);
                 try {
                     if (dni.isEmpty() || nombre_cliente.isEmpty() || correo_electronico.isEmpty() || telefono.isEmpty() || contrasenha.isEmpty()) {
                         JOptionPane.showMessageDialog(view, "Algún campo está vacio, introduzca todos los datos", "Campos Vacíos", JOptionPane.ERROR_MESSAGE);
                     }else {
-                        operacions.anhadirCliente(nuevoCliente);
+                        OperationsDB.anhadirCliente(nuevoCliente);
                         JOptionPane.showMessageDialog(view, "Usuario introducido", "Usuario creado correctamente", JOptionPane.INFORMATION_MESSAGE);
                         view.dispose();
                     }

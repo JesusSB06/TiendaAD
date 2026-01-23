@@ -4,12 +4,24 @@
  */
 package view;
 
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.util.Vector;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 
 /**
@@ -24,6 +36,8 @@ public class ProductsJDialog extends javax.swing.JDialog {
     public ProductsJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        ApplyStylesTable(ScrollPane, productsTable);
+        applyStylesButton();
         addTableRenderer(productsTable);
     }
 
@@ -36,55 +50,131 @@ public class ProductsJDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        productsLabel = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        backgroundPanel = new javax.swing.JPanel();
+        ScrollPane = new javax.swing.JScrollPane();
         productsTable = new javax.swing.JTable();
+        productsLabel = new javax.swing.JLabel();
+        searchTextField = new javax.swing.JTextField();
+        cancelButton = new javax.swing.JButton();
+        addButton = new javax.swing.JButton();
+        goToBagButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        productsLabel.setText("Products:");
+        backgroundPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         productsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "img", "name", "price", "stock"
+                "image", "name", "price", "stock"
             }
         ));
-        jScrollPane1.setViewportView(productsTable);
+        ScrollPane.setViewportView(productsTable);
+
+        productsLabel.setText("Products:");
+
+        searchTextField.setText("");
+
+        cancelButton.setText("Cancel");
+
+        addButton.setText("Add...");
+
+        goToBagButton.setText("Go to the cart...");
+
+        javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
+        backgroundPanel.setLayout(backgroundPanelLayout);
+        backgroundPanelLayout.setHorizontalGroup(
+            backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(backgroundPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addComponent(productsLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(searchTextField))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
+                        .addComponent(goToBagButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(cancelButton)))
+                .addContainerGap())
+        );
+        backgroundPanelLayout.setVerticalGroup(
+            backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(productsLabel)
+                    .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cancelButton)
+                    .addComponent(addButton)
+                    .addComponent(goToBagButton))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(productsLabel)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+            .addComponent(backgroundPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(productsLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+            .addComponent(backgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    private void ApplyStylesTable(JScrollPane scroll, JTable table) {
+        scroll.getViewport().setBackground(Color.WHITE);
+        table.setBackground(Color.WHITE);
+        table.setForeground(Color.BLACK);
+        table.setShowGrid(false);
+        JTableHeader header = table.getTableHeader();
+        header.setBackground(Color.WHITE);
+        header.setForeground(Color.BLACK);
+        header.setBorder(null);
+        table.setSelectionBackground(Color.BLACK);
+        table.setSelectionForeground(Color.WHITE);
+        JScrollBar vertical = scroll.getVerticalScrollBar();
+        vertical.setBackground(Color.WHITE);
+        vertical.setForeground(Color.LIGHT_GRAY);
+ 
+    }
 
+    private void applyStylesButton() {
+        cancelButton.setBackground(new Color(231, 76, 60));
+        cancelButton.setForeground(Color.WHITE);
+        cancelButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        cancelButton.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
+        cancelButton.setFocusPainted(false);
+        cancelButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        addButton.setBackground(new Color(46, 204, 113));
+        addButton.setForeground(Color.WHITE);
+        addButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        addButton.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
+        addButton.setFocusPainted(false);
+        addButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        goToBagButton.setBackground(new Color(0,191,255));
+        goToBagButton.setForeground(Color.WHITE);
+        goToBagButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        goToBagButton.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
+        goToBagButton.setFocusPainted(false);
+        goToBagButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
     private void addTableRenderer(JTable table) {
         table.setRowHeight(80);
 
-        // Renderer de imágenes
         table.getColumnModel().getColumn(0).setCellRenderer(new TableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
@@ -102,6 +192,13 @@ public class ProductsJDialog extends javax.swing.JDialog {
                 return label;
             }
         });
+
+        DefaultTableCellRenderer textCentrado = new DefaultTableCellRenderer();
+        textCentrado.setHorizontalAlignment(SwingConstants.CENTER);
+
+        for (int i = 1; i < table.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(textCentrado);
+        }
     }
 
     public void clearTable(JTable table) {
@@ -121,11 +218,30 @@ public class ProductsJDialog extends javax.swing.JDialog {
         return productsTable;
     }
 
-    
+    public String getSearchTextField() {
+        return this.searchTextField.getText();
+    }
+
+    public void setSearchTextFieldListener(DocumentListener kl) {
+        this.searchTextField.getDocument().addDocumentListener(kl);
+    }
+
+    public void setCancelButtonListener(ActionListener al) {
+        this.cancelButton.addActionListener(al);
+    }
+    public void setAddButtonListener(ActionListener al){
+        this.addButton.addActionListener(al);
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane ScrollPane;
+    private javax.swing.JButton addButton;
+    private javax.swing.JPanel backgroundPanel;
+    private javax.swing.JButton cancelButton;
+    private javax.swing.JButton goToBagButton;
     private javax.swing.JLabel productsLabel;
     private javax.swing.JTable productsTable;
+    private javax.swing.JTextField searchTextField;
     // End of variables declaration//GEN-END:variables
 }

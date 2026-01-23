@@ -1,5 +1,7 @@
 package model;
 
+import java.util.HashMap;
+
 /**
  *
  * @author dam2_alu03@inf.ald
@@ -13,10 +15,8 @@ public class Product {
     private Double price;
     private String img;
     private int category;
-
-    public Product() {
-    }
-
+    
+    
     public Product(int id, String name, int stock, String state, Double price, int category) {
         this.id = id;
         this.name = name;

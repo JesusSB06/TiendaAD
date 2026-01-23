@@ -25,11 +25,12 @@ public class LoginRegisterController {
     private LoginRegisterJDialog view;
     private MainJFrame mainView;
     private TiendaInf model;
-    private OperationsDB modelOperaciones = new OperationsDB();
 
-    public LoginRegisterController(LoginRegisterJDialog view, TiendaInf model) {
+
+    public LoginRegisterController(LoginRegisterJDialog view, MainJFrame mainView, TiendaInf model) {
         this.model = model;
         this.view = view;
+        this.mainView = mainView;
         changeImage();
         this.view.addSaveJButtonActionListener(this.addSaveJButtonActionListener());
         this.view.addCancelJButtonActionListener(this.addCancelJButtonActionListener());
@@ -51,21 +52,25 @@ public class LoginRegisterController {
                 System.out.println(contrasenha_introducida);
 
                 try {
-                    String inicioSesion = modelOperaciones.usuarioInicioSesion(nombre_introducido, contrasenha_introducida);
+                    String inicioSesion = OperationsDB.usuarioInicioSesion(nombre_introducido, contrasenha_introducida);
+                   
                     if (inicioSesion.equals("inicio")) {
+                        model.setClient(OperationsDB.ObtenerCliente(nombre_introducido));
                         JOptionPane.showMessageDialog(view, "Inicio de sesión realizado", "Inicio de sesión", JOptionPane.INFORMATION_MESSAGE);
+                        view.dispose();
+                        mainView.setVisibleStartJButton(true);
                     } else if (inicioSesion.equals("registrarse")) {
                         int opcion = JOptionPane.showConfirmDialog(view, "El usuario no está en la base de datos \n ¿Desea Registrarse?", "¿Registrarse?", JOptionPane.YES_NO_OPTION, JOptionPane.NO_OPTION);
                         System.out.println(opcion);
                         if (opcion == 0) {
                             RegistrarseJDialog rjd = new RegistrarseJDialog(mainView, true);
-                            RegisterController rgc = new RegisterController(rjd);
+                            RegisterController rgc = new RegisterController(rjd, model);
                             rjd.setVisible(true);
                             view.setUserNameJTextField("");
                             view.setPasswordJPasswordFiel("");
 
                         }
-                    
+
                     } else if (inicioSesion.equals("noContrasenha")) {
                         JOptionPane.showMessageDialog(view, "La contraseña introducida no es válida", "Error", JOptionPane.ERROR_MESSAGE);
 

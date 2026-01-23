@@ -19,7 +19,7 @@ public class OperationsDB {
 
     private static Connection conexion;
 
-    public void openConnection() {
+    public static void openConnection() {
         try {
             System.out.println("Abriendo conexion");
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -30,11 +30,11 @@ public class OperationsDB {
         }
     }
 
-    public void closeConnection() throws SQLException {
+    public static void closeConnection() throws SQLException {
         conexion.close();
     }
 
-    public void consultaProducto() throws SQLException {
+    public static void consultaProducto() throws SQLException {
         System.out.println("Consulta producto");
         String select = "SELECT * from producto";
         Statement st = conexion.createStatement();
@@ -51,7 +51,7 @@ public class OperationsDB {
         }
     }
 
-    public void consultaCliente() throws SQLException {
+    public static void consultaCliente() throws SQLException {
         System.out.println("Consulta producto");
         String select = "SELECT * from cliente";
         Statement st = conexion.createStatement();
@@ -66,8 +66,19 @@ public class OperationsDB {
 
         }
     }
-
-    public String usuarioInicioSesion(String nombre_introducido, String contrasenha_introducida) throws SQLException {
+    public static Client ObtenerCliente(String nombre) throws SQLException {
+        Client client = null;
+        System.out.println("Consulta producto");
+        String select = "SELECT * from cliente WHERE nombre_cliente = ?";
+        PreparedStatement st = conexion.prepareStatement(select);
+        st.setString(1, nombre);
+        ResultSet rs = st.executeQuery(select);
+        while (rs.next()) {
+            client = new Client(rs.getString("dni"),rs.getString("nombre_cliente"),rs.getString("correo_electronico"),rs.getString("telefono"),rs.getString("contrasenha"));
+        }
+        return client;
+    }
+    public static String usuarioInicioSesion(String nombre_introducido, String contrasenha_introducida) throws SQLException {
         String select = "SELECT nombre_cliente, contrasenha FROM cliente";
         Statement st = conexion.createStatement();
         ResultSet rs = st.executeQuery(select);
@@ -90,7 +101,7 @@ public class OperationsDB {
         return "no inicio";
     }
 
-    public int anhadirCliente(Client cliente) throws SQLException {
+    public static int anhadirCliente(Client cliente) throws SQLException {
         String dni = cliente.getDni();
         String nombre_cliente = cliente.getNombre_cliente();
         String correo_electronico = cliente.getCorreo_electronico();
@@ -109,7 +120,7 @@ public class OperationsDB {
         return resultado;
     }
 
-        public static List<Product> obtenerProductos() throws SQLException{
+        public static List<Product> obtenerProductosCliente() throws SQLException{
         List<Product> products = new ArrayList<>();
         String select = "SELECT * from producto";
         Statement st = conexion.createStatement();
@@ -150,23 +161,8 @@ public class OperationsDB {
         products.add(p);
     }
 
-    private static List<Product> ThreadSearch(String value) throws SQLException {
-        List<Product> products = new ArrayList<>();
-        String sql = "SELECT * from producto WHERE nombre_producto LIKE '" + value + "%'";
-        Statement st = conexion.createStatement();
-        ResultSet rs = st.executeQuery(sql);
-        while (rs.next()) {
-            if (rs.getString(4).equals("disponible")) {
-                Product p = new Product(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getDouble(5), rs.getInt(6));
-                setImageProducts(p, products);
-            }
-        }
-        st.close();
-        rs.close();
 
-        return products;
-    }
-    public int addProduct(Product product) throws SQLException {
+    public static int addProduct(Product product) throws SQLException {
         int vId = product.getId();
         String vName = product.getName();
         int vStock = product.getStock();

@@ -165,6 +165,10 @@ public class LoginRegisterJDialog extends javax.swing.JDialog {
 
         titleJLabel.setIcon(new ImageIcon(newImage));
     }
+    
+    public String getSelectionComboBox(){
+        return (String) typeComboBox.getModel().getSelectedItem();
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

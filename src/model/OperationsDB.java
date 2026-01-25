@@ -66,6 +66,7 @@ public class OperationsDB {
 
         }
     }
+
     public static Client ObtenerCliente(String nombre) throws SQLException {
         Client client = null;
         System.out.println("Consulta producto");
@@ -74,10 +75,11 @@ public class OperationsDB {
         st.setString(1, nombre);
         ResultSet rs = st.executeQuery(select);
         while (rs.next()) {
-            client = new Client(rs.getString("dni"),rs.getString("nombre_cliente"),rs.getString("correo_electronico"),rs.getString("telefono"),rs.getString("contrasenha"));
+            client = new Client(rs.getString("dni"), rs.getString("nombre_cliente"), rs.getString("correo_electronico"), rs.getString("telefono"), rs.getString("contrasenha"));
         }
         return client;
     }
+
     public static String usuarioInicioSesion(String nombre_introducido, String contrasenha_introducida) throws SQLException {
         String select = "SELECT nombre_cliente, contrasenha FROM cliente";
         Statement st = conexion.createStatement();
@@ -92,9 +94,9 @@ public class OperationsDB {
 
             if (nombre_cliente.equals(nombre_introducido) && contrasenha_introducida.equals(password)) {
                 return "inicio";
-            } else if (!nombre_cliente.equals(nombre_introducido)) { 
+            } else if (!nombre_cliente.equals(nombre_introducido)) {
                 return "registrarse";
-            }else if(!contrasenha_introducida.equals(password)){
+            } else if (!contrasenha_introducida.equals(password)) {
                 return "noContrasenha";
             }
         }
@@ -120,18 +122,18 @@ public class OperationsDB {
         return resultado;
     }
 
-        public static List<Product> obtenerProductosCliente() throws SQLException{
+    public static List<Product> obtenerProductosCliente() throws SQLException {
         List<Product> products = new ArrayList<>();
         String select = "SELECT * from producto";
         Statement st = conexion.createStatement();
         ResultSet rs = st.executeQuery(select);
         while (rs.next()) {
-            if(rs.getString(4).equals("disponible")){
+            if (rs.getString(4).equals("disponible")) {
                 Product p = new Product(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getDouble(5), rs.getInt(6));
                 setImageProducts(p, products);
             }
         }
-        st.close();                
+        st.close();
         rs.close();
 
         return products;
@@ -161,7 +163,6 @@ public class OperationsDB {
         products.add(p);
     }
 
-
     public static int addProduct(Product product) throws SQLException {
         int vId = product.getId();
         String vName = product.getName();
@@ -177,4 +178,34 @@ public class OperationsDB {
         return resultado;
     }
 
+    public static List<Product> obtenerProductosTecnico() throws SQLException {
+        List<Product> products = new ArrayList<>();
+        String sentenceSQL = "SELECT * from producto WHERE estado != 'disponible'";
+        Statement st = conexion.createStatement();
+        ResultSet rs = st.executeQuery(sentenceSQL);
+        while (rs.next()) {
+            Product p = new Product(
+                    rs.getInt("id_producto"),
+                    rs.getString("nombre_producto"),
+                    rs.getInt("stock"),
+                    rs.getString("estado"),
+                    rs.getDouble("precio"),
+                    rs.getInt("categoria")
+            );
+            setImageProducts(p, products);
+        }
+        st.close();
+        rs.close();
+        return products;
+    }
+
+    public static int actualizarEstadoProducto(int idProducto, String nuevoEstado) throws SQLException {
+        String sentenceSQL = "UPDATE producto SET estado = ? WHERE id_producto = ?";
+        PreparedStatement ps = conexion.prepareStatement(sentenceSQL);
+        ps.setString(1, nuevoEstado);
+        ps.setInt(2, idProducto);
+        int resultado = ps.executeUpdate();
+        ps.close();
+        return resultado;
+    }
 }

@@ -4,21 +4,145 @@
  */
 package controller.products;
 
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import model.OperationsDB;
+
+import model.Product;
+import model.TiendaInf;
 import view.ProductsJDialog;
 
 /**
  *
- * @author dam2_alu10@inf.ald
+ * @author dam2_alu19@inf.ald
  */
 public class ProductsController {
-    
-    private ProductsJDialog view;
 
-    public ProductsController(ProductsJDialog view) {
+    private ProductsJDialog view;
+    private TiendaInf model;
+
+    public ProductsController(ProductsJDialog view, TiendaInf model) {
+        this.model = model;
         this.view = view;
+        this.initComponents();
+        this.view.setSearchTextFieldListener(this.setSearchTextFieldDocumentListener());
+        this.view.setCancelButtonListener(this.setCancelButtonActionListener());
+
+    }
+
+    private void initComponents() {
+        try {
+            model.setProducts(OperationsDB.obtenerProductosCliente());
+        } catch (SQLException ex) {
+            System.getLogger(ProductsController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        this.updateTable(view.getProductsTable(), model.getProducts());
+    }
+    private void updateTable(JTable table, List<Product> products) {
+        view.clearTable(table);
+        for (Product d : products) {
+            Vector row = new Vector();
+            ImageIcon icon = null;
+            try {
+                URL imageUrl = getClass().getResource(d.getImg());
+                if (imageUrl != null) {
+                    BufferedImage img = ImageIO.read(imageUrl);
+                    Image scaledImg = img.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+                    icon = new ImageIcon(scaledImg);
+                } else {
+                    System.out.println("No se encontró la imagen");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            row.add(icon);
+            row.add(d.getName());
+            row.add(d.getPrice());
+            row.add(d.getStock());
+            view.addRowTable(row, table);
+        }
+
     }
     
+    private DocumentListener setSearchTextFieldDocumentListener(){
+        DocumentListener dl = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                SearchProduct();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                SearchProduct();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                SearchProduct();
+            }
+        };
+        return dl;
+    }
+    private void SearchProduct() {
+        List<Product> finalProducts = new ArrayList<Product>();
+        String filter = view.getSearchTextField();
+        if (filter.isEmpty()) {
+            updateTable(view.getProductsTable(), model.getProducts());
+        } else {
+            for (Product p : model.getProducts()) {
+                if (p.getName().toLowerCase().contains(filter.toLowerCase())) {
+                    finalProducts.add(p);
+                }
+            }
+            updateTable(view.getProductsTable(), finalProducts);
+        }
+
+    }
     
-    
-    
+    private ActionListener setCancelButtonActionListener(){
+        ActionListener al = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                view.dispose();
+            }
+        };
+        return al;
+    }
+    private ActionListener setAddButtonActionListener(){
+        ActionListener al = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = view.getProductsTable().getSelectedRow();
+                if(row != 1){
+                    String stockString = JOptionPane.showInputDialog(view, "Introduzca la cantidad deseada del producto").trim();
+                    try{
+                        int stock = Integer.parseInt(stockString);
+                    }catch(NumberFormatException nfe){
+                        JOptionPane.showMessageDialog(view,"Error: el valor debe ser unicamente un número");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(view, "Error: seleccione un producto");
+                }
+                
+            }
+        };
+        return al;
+                
+    }
 }

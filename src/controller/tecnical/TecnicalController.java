@@ -3,6 +3,7 @@ package controller.tecnical;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import model.TiendaInf;
 import view.TecnicalJDialog;
 
 /**
@@ -12,8 +13,10 @@ import view.TecnicalJDialog;
 public class TecnicalController {
 
     private TecnicalJDialog view;
+    private TiendaInf model;
 
-    public TecnicalController(TecnicalJDialog view) {
+    public TecnicalController(TecnicalJDialog view, TiendaInf model) {
+        this.model = model;
         this.view = view;
         this.view.addFixButtonActionListener(this.getFixButtonActionListener());
         this.view.enableFixButton(false);

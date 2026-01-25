@@ -1,5 +1,6 @@
 package model;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -7,24 +8,23 @@ import java.util.List;
  * @author dam2_alu03@inf.ald
  */
 public class Client {
+
     private String dni;
-    private String name;
-    private String correoElectronico;
-    private String password;
-    private int telephone;
-    private List<Sale> ventas;
+    private String nombre_cliente;
+    private String correo_electronico;
+    private String contrasenha;
+    private String telefono;
+    private HashMap<Integer, Integer> carrito;
 
-    public Client() {
-    }
-
-    public Client(String dni, String name, String correoElectronico, String password, int telephone, List<Sale> ventas) {
+    public Client(String dni, String nombre_cliente, String correo_electronico, String telefono, String contrasenha) {
         this.dni = dni;
-        this.name = name;
-        this.correoElectronico = correoElectronico;
-        this.password = password;
-        this.telephone = telephone;
-        this.ventas = ventas;
+        this.nombre_cliente = nombre_cliente;
+        this.correo_electronico = correo_electronico;
+        this.contrasenha = contrasenha;
+        this.telefono = telefono;
+        this.carrito = new HashMap<Integer,Integer>();
     }
+
 
     public String getDni() {
         return dni;
@@ -34,43 +34,46 @@ public class Client {
         this.dni = dni;
     }
 
-    public String getName() {
-        return name;
+    public String getNombre_cliente() {
+        return nombre_cliente;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNombre_cliente(String nombre_cliente) {
+        this.nombre_cliente = nombre_cliente;
     }
 
-    public String getCorreoElectronico() {
-        return correoElectronico;
+    public String getCorreo_electronico() {
+        return correo_electronico;
     }
 
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
+    public void setCorreo_electronico(String correo_electronico) {
+        this.correo_electronico = correo_electronico;
     }
 
-    public String getPassword() {
-        return password;
+    public String getContrasenha() {
+        return contrasenha;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setContrasenha(String contrasenha) {
+        this.contrasenha = contrasenha;
     }
 
-    public int getTelephone() {
-        return telephone;
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setTelephone(int telephone) {
-        this.telephone = telephone;
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
-    public List<Sale> getVentas() {
-        return ventas;
+    public HashMap<Integer, Integer> getCarrito() {
+        return carrito;
     }
 
-    public void setVentas(List<Sale> ventas) {
-        this.ventas = ventas;
+    public void setCarrito(HashMap<Integer, Integer> carrito) {
+        this.carrito = carrito;
     }
+    
+
+
 }

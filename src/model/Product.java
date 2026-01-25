@@ -1,5 +1,7 @@
 package model;
 
+import java.util.HashMap;
+
 /**
  *
  * @author dam2_alu03@inf.ald
@@ -9,21 +11,19 @@ public class Product {
     private int id;
     private String name;
     private int stock;
-    private boolean state;
+    private String state;
     private Double price;
     private String img;
-    private Category category;
-
-    public Product() {
-    }
+    private int category;
     
-    public Product(int id, String name, int stock, boolean state, Double price, String img, Category category) {
+    
+    public Product(int id, String name, int stock, String state, Double price, int category) {
         this.id = id;
         this.name = name;
         this.stock = stock;
         this.state = state;
         this.price = price;
-        this.img = img;
+        this.img = "";
         this.category = category;
     }
 
@@ -51,11 +51,11 @@ public class Product {
         this.stock = stock;
     }
 
-    public boolean isState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(boolean state) {
+    public void setState(String state) {
         this.state = state;
     }
 
@@ -75,12 +75,14 @@ public class Product {
         this.img = img;
     }
 
-    public Category getCategory() {
+    public int getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(int category) {
         this.category = category;
     }
+
+
 
 }

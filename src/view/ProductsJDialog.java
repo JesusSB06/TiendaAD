@@ -8,6 +8,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -15,6 +17,9 @@ import javax.swing.JLabel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
@@ -31,10 +36,9 @@ public class ProductsJDialog extends javax.swing.JDialog {
     public ProductsJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        ApplyStylesTable(jScrollPane1, productsTable);
-        addTableRenderer(productsTable);
+        ApplyStylesTable(ScrollPane, productsTable);
         applyStylesButton();
-        this.setTitle("Productos");
+        addTableRenderer(productsTable);
     }
 
     /**
@@ -47,10 +51,10 @@ public class ProductsJDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         backgroundPanel = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        ScrollPane = new javax.swing.JScrollPane();
         productsTable = new javax.swing.JTable();
         productsLabel = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        searchTextField = new javax.swing.JTextField();
         cancelButton = new javax.swing.JButton();
         addButton = new javax.swing.JButton();
         goToBagButton = new javax.swing.JButton();
@@ -67,13 +71,13 @@ public class ProductsJDialog extends javax.swing.JDialog {
                 "image", "name", "price", "stock"
             }
         ));
-        jScrollPane1.setViewportView(productsTable);
+        ScrollPane.setViewportView(productsTable);
 
         productsLabel.setText("Products:");
 
-        jTextField1.setText("");
+        searchTextField.setText("");
 
-        cancelButton.setText("Cancel...");
+        cancelButton.setText("Cancel");
 
         addButton.setText("Add...");
 
@@ -86,11 +90,11 @@ public class ProductsJDialog extends javax.swing.JDialog {
             .addGroup(backgroundPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                    .addComponent(ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
                         .addComponent(productsLabel)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1))
+                        .addComponent(searchTextField))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
                         .addComponent(goToBagButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -105,9 +109,9 @@ public class ProductsJDialog extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(productsLabel)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelButton)
@@ -129,7 +133,6 @@ public class ProductsJDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
     private void ApplyStylesTable(JScrollPane scroll, JTable table) {
         scroll.getViewport().setBackground(Color.WHITE);
         table.setBackground(Color.WHITE);
@@ -169,11 +172,9 @@ public class ProductsJDialog extends javax.swing.JDialog {
         goToBagButton.setFocusPainted(false);
         goToBagButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
-
     private void addTableRenderer(JTable table) {
         table.setRowHeight(80);
 
-        // Renderer de imágenes
         table.getColumnModel().getColumn(0).setCellRenderer(new TableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
@@ -191,6 +192,13 @@ public class ProductsJDialog extends javax.swing.JDialog {
                 return label;
             }
         });
+
+        DefaultTableCellRenderer textCentrado = new DefaultTableCellRenderer();
+        textCentrado.setHorizontalAlignment(SwingConstants.CENTER);
+
+        for (int i = 1; i < table.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(textCentrado);
+        }
     }
 
     public void clearTable(JTable table) {
@@ -210,16 +218,30 @@ public class ProductsJDialog extends javax.swing.JDialog {
         return productsTable;
     }
 
-    
+    public String getSearchTextField() {
+        return this.searchTextField.getText();
+    }
+
+    public void setSearchTextFieldListener(DocumentListener kl) {
+        this.searchTextField.getDocument().addDocumentListener(kl);
+    }
+
+    public void setCancelButtonListener(ActionListener al) {
+        this.cancelButton.addActionListener(al);
+    }
+    public void setAddButtonListener(ActionListener al){
+        this.addButton.addActionListener(al);
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane ScrollPane;
     private javax.swing.JButton addButton;
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton goToBagButton;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel productsLabel;
     private javax.swing.JTable productsTable;
+    private javax.swing.JTextField searchTextField;
     // End of variables declaration//GEN-END:variables
 }

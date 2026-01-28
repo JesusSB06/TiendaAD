@@ -4,23 +4,47 @@
  */
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author dam2_alu19@inf.ald
  */
 public class TiendaInf {
-    private String nombre;
+    private List<Product> products;
+    private Client client;
+    private Employee employee;
 
     public TiendaInf() {
-        this.nombre = "";
+        this.products = new ArrayList<Product>();
+        this.client = null;
+        this.employee = null;
     }
 
-    public String getNombre() {
-        return nombre;
+
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
     
     

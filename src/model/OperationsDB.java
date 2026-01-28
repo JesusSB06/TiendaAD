@@ -19,7 +19,7 @@ public class OperationsDB {
 
     private static Connection conexion;
 
-    public void openConnection() {
+    public static void openConnection() {
         try {
             System.out.println("Abriendo conexion");
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -30,11 +30,11 @@ public class OperationsDB {
         }
     }
 
-    public void closeConnection() throws SQLException {
+    public static void closeConnection() throws SQLException {
         conexion.close();
     }
 
-    public void consultaProducto() throws SQLException {
+    public static void consultaProducto() throws SQLException {
         System.out.println("Consulta producto");
         String select = "SELECT * from producto";
         Statement st = conexion.createStatement();
@@ -50,7 +50,77 @@ public class OperationsDB {
 
         }
     }
-    public static List<Product> obtenerProductos() throws SQLException{
+
+    public static void consultaCliente() throws SQLException {
+        System.out.println("Consulta producto");
+        String select = "SELECT * from cliente";
+        Statement st = conexion.createStatement();
+        ResultSet rs = st.executeQuery(select);
+        while (rs.next()) {
+            System.out.println("-- Clientes --");
+            System.out.println("DNI: " + rs.getString("dni"));
+            System.out.println("Nombre: " + rs.getString("nombre_cliente"));
+            System.out.println("Correo: " + rs.getString("correo_electronico"));
+            System.out.println("Telefono: " + rs.getString("telefono"));
+            System.out.println("Contrasenha: " + rs.getString("contrasenha"));
+
+        }
+    }
+    public static Client ObtenerCliente(String nombre) throws SQLException {
+        Client client = null;
+        System.out.println("Consulta producto");
+        String select = "SELECT * from cliente WHERE nombre_cliente = ?";
+        PreparedStatement st = conexion.prepareStatement(select);
+        st.setString(1, nombre);
+        ResultSet rs = st.executeQuery(select);
+        while (rs.next()) {
+            client = new Client(rs.getString("dni"),rs.getString("nombre_cliente"),rs.getString("correo_electronico"),rs.getString("telefono"),rs.getString("contrasenha"));
+        }
+        return client;
+    }
+    public static String usuarioInicioSesion(String nombre_introducido, String contrasenha_introducida) throws SQLException {
+        String select = "SELECT nombre_cliente, contrasenha FROM cliente";
+        Statement st = conexion.createStatement();
+        ResultSet rs = st.executeQuery(select);
+        while (rs.next()) {
+            String nombre_cliente = rs.getString("nombre_cliente");
+            String password = rs.getString("contrasenha");
+            System.out.println("===================================");
+            System.out.println("nombre esperado: " + nombre_cliente);
+            System.out.println("password esperado: " + password);
+            System.out.println("===================================");
+
+            if (nombre_cliente.equals(nombre_introducido) && contrasenha_introducida.equals(password)) {
+                return "inicio";
+            } else if (!nombre_cliente.equals(nombre_introducido)) { 
+                return "registrarse";
+            }else if(!contrasenha_introducida.equals(password)){
+                return "noContrasenha";
+            }
+        }
+        return "no inicio";
+    }
+
+    public static int anhadirCliente(Client cliente) throws SQLException {
+        String dni = cliente.getDni();
+        String nombre_cliente = cliente.getNombre_cliente();
+        String correo_electronico = cliente.getCorreo_electronico();
+        String telefono = cliente.getTelefono();
+        String contrasenha = cliente.getContrasenha();
+        String insert = "INSERT INTO cliente(dni, nombre_cliente, correo_electronico, telefono, contrasenha) VALUES (?,?,?,?,?)";
+        int resultado;
+        try (PreparedStatement anhadir = conexion.prepareStatement(insert)) {
+            anhadir.setString(1, dni);
+            anhadir.setString(2, nombre_cliente);
+            anhadir.setString(3, correo_electronico);
+            anhadir.setString(4, telefono);
+            anhadir.setString(5, contrasenha);
+            resultado = anhadir.executeUpdate();
+        }
+        return resultado;
+    }
+
+        public static List<Product> obtenerProductosCliente() throws SQLException{
         List<Product> products = new ArrayList<>();
         String select = "SELECT * from producto";
         Statement st = conexion.createStatement();
@@ -91,61 +161,8 @@ public class OperationsDB {
         products.add(p);
     }
 
-    private static List<Product> ThreadSearch(String value) throws SQLException {
-        List<Product> products = new ArrayList<>();
-        String sql = "SELECT * from producto WHERE nombre_producto LIKE '" + value + "%'";
-        Statement st = conexion.createStatement();
-        ResultSet rs = st.executeQuery(sql);
-        while (rs.next()) {
-            if (rs.getString(4).equals("disponible")) {
-                Product p = new Product(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getDouble(5), rs.getInt(6));
-                setImageProducts(p, products);
-            }
-        }
-        st.close();
-        rs.close();
 
-        return products;
-    }
-
-    public void consultaCliente() throws SQLException {
-        System.out.println("Consulta producto");
-        String select = "SELECT * from cliente";
-        Statement st = conexion.createStatement();
-        ResultSet rs = st.executeQuery(select);
-        while (rs.next()) {
-            System.out.println("-- Clientes --");
-            System.out.println("DNI: " + rs.getString("dni"));
-            System.out.println("Nombre: " + rs.getString("nombre_cliente"));
-            System.out.println("Correo: " + rs.getString("correo_electronico"));
-            System.out.println("Telefono: " + rs.getString("telefono"));
-            System.out.println("Contrasenha: " + rs.getString("contrasenha"));
-
-        }
-    }
-
-    public boolean usuarioInicioSesion(String nombre_introducido, String contrasenha_introducida) throws SQLException {
-        String select = "SELECT nombre_cliente, contrasenha FROM cliente";
-        Statement st = conexion.createStatement();
-        ResultSet rs = st.executeQuery(select);
-        while (rs.next()) {
-            String nombre_cliente = rs.getString("nombre_cliente");
-            String password = rs.getString("contrasenha");
-            System.out.println("===================================");
-            System.out.println("nombre esperado: " + nombre_cliente);
-            System.out.println("password esperado: " + password);
-            System.out.println("===================================");
-
-            if (nombre_cliente.contains(nombre_introducido) && contrasenha_introducida.contains(contrasenha_introducida)) {
-                return true;
-            } else if (!nombre_cliente.contains(nombre_introducido) || !contrasenha_introducida.contains(password)) {
-                return false;
-            }
-        }
-        return false;
-    }
-
-    public int addProduct(Product product) throws SQLException {
+    public static int addProduct(Product product) throws SQLException {
         int vId = product.getId();
         String vName = product.getName();
         int vStock = product.getStock();
@@ -159,7 +176,5 @@ public class OperationsDB {
         ps.close();
         return resultado;
     }
-    
-
 
 }

@@ -5,20 +5,25 @@
 package controller.products;
 
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import model.Category;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import model.OperationsDB;
+
 import model.Product;
 import model.TiendaInf;
 import view.ProductsJDialog;
@@ -32,15 +37,25 @@ public class ProductsController {
     private ProductsJDialog view;
     private TiendaInf model;
 
-    public ProductsController(ProductsJDialog view, TiendaInf model) throws SQLException {
+    public ProductsController(ProductsJDialog view, TiendaInf model) {
         this.model = model;
         this.view = view;
         this.initComponents();
+        this.view.setSearchTextFieldListener(this.setSearchTextFieldDocumentListener());
+        this.view.setCancelButtonListener(this.setCancelButtonActionListener());
+
     }
 
-    private void updateTable(JTable table) throws SQLException {
+    private void initComponents() {
+        try {
+            model.setProducts(OperationsDB.obtenerProductosCliente());
+        } catch (SQLException ex) {
+            System.getLogger(ProductsController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        this.updateTable(view.getProductsTable(), model.getProducts());
+    }
+    private void updateTable(JTable table, List<Product> products) {
         view.clearTable(table);
-        List<Product> products = OperationsDB.obtenerProductos();
         for (Product d : products) {
             Vector row = new Vector();
             ImageIcon icon = null;
@@ -64,8 +79,70 @@ public class ProductsController {
         }
 
     }
+    
+    private DocumentListener setSearchTextFieldDocumentListener(){
+        DocumentListener dl = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                SearchProduct();
+            }
 
-    private void initComponents() throws SQLException {
-        this.updateTable(view.getProductsTable());
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                SearchProduct();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                SearchProduct();
+            }
+        };
+        return dl;
+    }
+    private void SearchProduct() {
+        List<Product> finalProducts = new ArrayList<Product>();
+        String filter = view.getSearchTextField();
+        if (filter.isEmpty()) {
+            updateTable(view.getProductsTable(), model.getProducts());
+        } else {
+            for (Product p : model.getProducts()) {
+                if (p.getName().toLowerCase().contains(filter.toLowerCase())) {
+                    finalProducts.add(p);
+                }
+            }
+            updateTable(view.getProductsTable(), finalProducts);
+        }
+
+    }
+    
+    private ActionListener setCancelButtonActionListener(){
+        ActionListener al = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                view.dispose();
+            }
+        };
+        return al;
+    }
+    private ActionListener setAddButtonActionListener(){
+        ActionListener al = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = view.getProductsTable().getSelectedRow();
+                if(row != 1){
+                    String stockString = JOptionPane.showInputDialog(view, "Introduzca la cantidad deseada del producto").trim();
+                    try{
+                        int stock = Integer.parseInt(stockString);
+                    }catch(NumberFormatException nfe){
+                        JOptionPane.showMessageDialog(view,"Error: el valor debe ser unicamente un número");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(view, "Error: seleccione un producto");
+                }
+                
+            }
+        };
+        return al;
+                
     }
 }

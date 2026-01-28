@@ -51,7 +51,7 @@ public class LoginRegisterJDialog extends javax.swing.JDialog {
 
         passwordJLabel.setText("Contraseña:");
 
-        saveJButton.setText("Guardar");
+        saveJButton.setText("Iniciar");
 
         cancelJButton.setText("Cancelar");
 
@@ -164,6 +164,10 @@ public class LoginRegisterJDialog extends javax.swing.JDialog {
         Image newImage = image.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
 
         titleJLabel.setIcon(new ImageIcon(newImage));
+    }
+    
+    public String getSelectionComboBox(){
+        return (String) typeComboBox.getModel().getSelectedItem();
     }
 
 

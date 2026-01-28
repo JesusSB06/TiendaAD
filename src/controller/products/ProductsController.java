@@ -129,7 +129,7 @@ public class ProductsController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int row = view.getProductsTable().getSelectedRow();
-                if(row != 1){
+                if(row != -1){
                     String stockString = JOptionPane.showInputDialog(view, "Introduzca la cantidad deseada del producto").trim();
                     try{
                         int stock = Integer.parseInt(stockString);

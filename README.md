@@ -48,3 +48,5 @@ TiendaAD
     ├── mysql-connector
     └── ScriptTienda.sql
 ``
+
+## Estructura del proyecto

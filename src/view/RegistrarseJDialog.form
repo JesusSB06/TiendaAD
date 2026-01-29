@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="3"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="tittleJLabel" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="saveJButton" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="dniJLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="nameJLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="emailJLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="phoneJLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="passwordJLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="creditLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="DNIJTextField" max="32767" attributes="0"/>
+                                  <Component id="nameJTextField" max="32767" attributes="0"/>
+                                  <Component id="emailJTextField" max="32767" attributes="0"/>
+                                  <Component id="phoneJTextField" max="32767" attributes="0"/>
+                                  <Component id="passwordJField" alignment="0" pref="162" max="32767" attributes="0"/>
+                                  <Component id="creditSpinner" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="cancelJButton" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="tittleJLabel" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="DNIJTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="dniJLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="nameJLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="nameJTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="emailJLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="emailJTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="phoneJLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="phoneJTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="passwordJLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="passwordJField" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="creditLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="creditSpinner" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="24" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="saveJButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cancelJButton" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="tittleJLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Registro"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="dniJLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="DNI:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="emailJLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Correo:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="nameJLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Nome:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="phoneJLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tel&#xe9;fono:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="passwordJLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Contrase&#xf1;a:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="DNIJTextField">
+    </Component>
+    <Component class="javax.swing.JTextField" name="nameJTextField">
+    </Component>
+    <Component class="javax.swing.JTextField" name="emailJTextField">
+    </Component>
+    <Component class="javax.swing.JTextField" name="phoneJTextField">
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="passwordJField">
+    </Component>
+    <Component class="javax.swing.JButton" name="saveJButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Guardar"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="cancelJButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cancelar"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="creditLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Saldo:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="creditSpinner">
+      <Properties>
+        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+          <SpinnerModel initial="0.0" minimum="0.0" numberType="java.lang.Double" stepSize="50.0" type="number"/>
+        </Property>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>

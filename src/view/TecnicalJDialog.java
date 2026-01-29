@@ -41,22 +41,23 @@ public class TecnicalJDialog extends javax.swing.JDialog {
         productsTable = new javax.swing.JTable();
         productsLabel = new javax.swing.JLabel();
         fixButton = new javax.swing.JButton();
-        cancelButton = new javax.swing.JButton();
-        stockSpinner = new javax.swing.JSpinner();
-        jLabel1 = new javax.swing.JLabel();
+        infButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         productsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Img", "Name", "Price", "Stock", "State"
+                "Imagen", "Nombre", "Precio", "Stock", "Estado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -67,11 +68,9 @@ public class TecnicalJDialog extends javax.swing.JDialog {
 
         productsLabel.setText("Productos:");
 
-        fixButton.setText("Repair");
+        fixButton.setText("Reparar");
 
-        cancelButton.setText("Cancel");
-
-        jLabel1.setText("Stock number:");
+        infButton.setText("Inf");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -80,41 +79,34 @@ public class TecnicalJDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(productsLabel))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(stockSpinner)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(fixButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cancelButton)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(productsLabel))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(infButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fixButton)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(7, 7, 7)
                 .addComponent(productsLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fixButton)
-                    .addComponent(cancelButton)
-                    .addComponent(stockSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(infButton))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void addTableRenderer(JTable table) {
+    private void addTableRenderer(JTable table) {
         table.setRowHeight(80);
 
         // Renderer de imágenes
@@ -153,42 +145,36 @@ public class TecnicalJDialog extends javax.swing.JDialog {
     public JTable getProductsTable() {
         return productsTable;
     }
-
-    public void addFixButtonActionListener(ActionListener listener) {
+    
+    public void addFixButtonActionListener(ActionListener listener){
         this.fixButton.addActionListener(listener);
     }
-
-    public void enableFixButton(boolean enable) {
+    
+    public void addInfButtonActionListener(ActionListener listener){
+        this.infButton.addActionListener(listener);
+    }
+    
+    public void isFixed(){
+        this.productsTable.getColumnModel().getColumn(4);
+    }
+    
+    public void enableFixButton(boolean enable){
         this.fixButton.setEnabled(enable);
     }
-
-    public int getSelectedRow() {
-        return this.productsTable.getSelectedRow();
+    
+    public void setState(String state){
+        
     }
-
-    public void addTableSelectionListener(javax.swing.event.ListSelectionListener listener) {
-        this.productsTable.getSelectionModel().addListSelectionListener(listener);
-    }
-
-    public void addCancelButtonActionListener(ActionListener listener) {
-        this.cancelButton.addActionListener(listener);
-    }
-
-    public String getState(int row) {
-        return (String) this.productsTable.getModel().getValueAt(row, 4);
-    }
-
-    public void setState(int row, String state) {
-        this.productsTable.getModel().setValueAt(state, row, 4);
+    
+    public String getState(){
+        return (String) this.productsTable.getModel().getValueAt(4, WIDTH);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cancelButton;
     private javax.swing.JButton fixButton;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton infButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel productsLabel;
     private javax.swing.JTable productsTable;
-    private javax.swing.JSpinner stockSpinner;
     // End of variables declaration//GEN-END:variables
 }

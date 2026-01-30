@@ -50,8 +50,55 @@ TiendaAD
 ```
 
 ## Estructura de la base de datos
-A continuación vamos a explicar las principales clases con sus atributos
+A continuación vamos a explicar las principales clases con sus atributos:
+### Entidades
+#### Empleado
+Los empleados son quienes gestionan la tienda. Puede haber diferentes tipos:
+- **Supervisor**: supervisa a los empleados.
+- **Asistente**: ayuda a los empleados.
+-  **Técnico**: repara productos de la tienda.
+   
+Además tienen una serie de atributos:
+| Atributo | Descripción |
+|----------|-------------|
+| **DNI** | Documento de identidad |
+| **Dirección** | Domicilio personal |
+| **Correo** | Email de contacto |
+| **Teléfono** | Número de contacto |
+| **Cargo** | Rol en la tienda |
+
+#### Producto
+Es lo que se vende en la tienda. Como cada tabla, contiene diferentes atributos:
+| Atributo | Descripción |
+|----------|-------------|
+| **ID** | Identificador único |
+| **Categoría** | Tipo de producto |
+| **Precio** | Valor de venta |
+| **Stock** | Cantidad disponible |
+| **Estado** | Disponible/Agotado |
+| **Nombre** | Nombre del producto |
+
+#### Proveedor
+Clasificación de los productos por tipo: 
+ Atributo | Descripción |
+|----------|-------------|
+| **ID** | Identificador único |
+| **Nombre** | Nombre de la categoría |
+
+#### Categoría
+Clasificación de los productos por tipo: 
+ Atributo | Descripción |
+|----------|-------------|
+| **ID** | Identificador único |
+| **Nombre** | Nombre de la categoría |
+
+### Relaciones entre tablas
+- Un **empleado técnico** puede **reparar** varios productos.
+- Un **producto** pertenece a una **categoría**.
+- Un **producto** puede ser **proveído** por un proveedor.
+- Un **producto** puede estar en varias **ventas**, y la realiza un **cliente**.
+
 ### Diagrama entidad-relación
- ![Peticion1](/imagenes/ImagenTienda.png)
+ ![Peticion1](/imagenes/DiagramaTienda.png)
 
 

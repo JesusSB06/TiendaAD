@@ -50,3 +50,8 @@ TiendaAD
 ```
 
 ## Estructura de la base de datos
+A continuación vamos a explicar las principales clases con sus atributos
+### Diagrama entidad-relación
+ ![Peticion1](/imagenes/ImagenTienda.png)
+
+

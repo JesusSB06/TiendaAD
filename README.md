@@ -333,3 +333,6 @@ Control de errores: si no hay producto seleccionado y cuando el producto ya se e
 
 ![Peticion1](/imagenes/aviso_selecciona_producto_a_reparar.png)
 ![Peticion1](/imagenes/aviso_producto_ya_reparado.png)
+
+### Vista Cliente
+Al iniciar sesión, se nos desplazara a la siguiente ventana en donde se podran observar todos los productos en condiciones de ser vendidos y un buscador dináminco:

@@ -114,7 +114,7 @@ Una vez dentro, tenemos que introducir los repectivos datos según seas cliente,
 
   ![Peticion1](/imagenes/inicioDeSesion.png)
 
-En caso de ser introducir un DNI del cliente, mostrará un mensaje de si se quiere registrar como cliente:
+En caso de introducir un DNI del cliente que no está registrado en la base de datos, nos mostrará un mensaje de si se quiere registrar:
 
   ![Peticion1](/imagenes/registro.png)
 

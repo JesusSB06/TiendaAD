@@ -267,7 +267,7 @@ Para poder entrar en la aplicación, lo primero que tenenos que hacer es iniciar
 
 Una vez dentro, tenemos que introducir los repectivos datos según seas cliente, técnico, asistente o administrador.
 
- ![Peticion1](/imagenes/combox.png)
+ ![Peticion1](/imagenes/combox.PNG)
 
  Cuando el usuario introduzca los datos correctamente se mostrá un mensaje, y ya podrá acceder a la aplicación.
 

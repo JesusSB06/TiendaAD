@@ -447,5 +447,7 @@ En conclusión, cada miembro del grupo a invertido una gran cantidad de tiempo e
 
 ## Autores
 Jesús Santos Baquero.
+
 Roi Conles Ferro.
+
 Nerea Salgado Martínez.

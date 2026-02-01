@@ -197,7 +197,69 @@ A continuación, mostramos cómo enlazamos el método anterior con el método qu
         return al;
     }
  ```
- 
+ Otra parte tambien a destacar es la interfaz **interfaceView**, las clases JDialog, JFrame, etc... siempre son heredadas por elementos de **Swing**, en otras palabras no se les puede heredar una clase, para evitar código duplicado en las vistas, se ha decidido crear esta interfaz la cual a traves del atributio **default** en los metodos, permitira acceder a estos:
+ ```
+public interface interfaceView {
+    void applyStylesButton();
+    default void addTableRenderer(JTable table, int column) {
+        table.setRowHeight(80);
+        table.getColumnModel().getColumn(column).setCellRenderer(new TableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+                JLabel label = new JLabel();
+                label.setHorizontalAlignment(JLabel.CENTER);
+
+                if (value instanceof ImageIcon) {
+                    label.setIcon((ImageIcon) value);
+                } else {
+                    label.setText(value != null ? value.toString() : "No Image");
+                }
+                return label;
+            }
+        });
+        DefaultTableCellRenderer textCentrado = new DefaultTableCellRenderer();
+        textCentrado.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            if (i != column) {
+                table.getColumnModel().getColumn(i).setCellRenderer(textCentrado);
+            }
+        }
+    }
+    default void ApplyStylesTable(JScrollPane scroll, JTable table) {
+        scroll.getViewport().setBackground(Color.WHITE);
+        table.setBackground(Color.WHITE);
+        table.setForeground(Color.BLACK);
+        table.setShowGrid(false);
+        JTableHeader header = table.getTableHeader();
+        header.setBackground(Color.WHITE);
+        header.setForeground(Color.BLACK);
+        header.setBorder(null);
+        table.setSelectionBackground(Color.BLACK);
+        table.setSelectionForeground(Color.WHITE);
+        JScrollBar vertical = scroll.getVerticalScrollBar();
+        vertical.setBackground(Color.WHITE);
+        vertical.setForeground(Color.LIGHT_GRAY);
+
+    }
+    default void clearTable(JTable table) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
+        table.clearSelection();
+        table.revalidate();
+        table.repaint();
+    }  
+    default void clearRow(JTable table){
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        int row = table.getSelectedRow();
+        model.removeRow(row);
+    } 
+    default void addRowTable(Vector row, JTable table) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.addRow(row);
+    }
+}
+```
 ## Manual de Usuario 
 Para poder entrar en la aplicación, lo primero que tenenos que hacer es iniciar sesión. La ventana principal es la siguiente:
 

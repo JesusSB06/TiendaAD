@@ -94,7 +94,7 @@ public class CartClientController {
                 if(model.getClient().getSaldo() > getTotalPrice()){
                     for(Map.Entry<Product,Integer> p : model.getCart().entrySet()){
                         try {
-                            Product pd = new Product(p.getKey().getName(), p.getValue(), "vendido", p.getKey().getPrice(),p.getKey().getCategory());
+                            Product pd = new Product(p.getKey().getId(),p.getKey().getName(), p.getValue(), "vendido", p.getKey().getPrice(),p.getKey().getCategory());
                             Sale sale = new Sale(model.getClient().getDni(),pd.getId(), Date.valueOf(LocalDate.now()));
                             OperationsDB.addProduct(pd);
                             OperationsDB.addSale(sale);       

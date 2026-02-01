@@ -4,6 +4,7 @@
  */
 package view;
 
+import interfaceView.interfaceView;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -28,7 +29,7 @@ import javax.swing.table.TableColumn;
  *
  * @author dam2_alu03@inf.ald
  */
-public class AsistantJDialog extends javax.swing.JDialog {
+public class AsistantJDialog extends javax.swing.JDialog implements interfaceView{
 
     /**
      * Creates new form TecnicalJDialog
@@ -36,9 +37,9 @@ public class AsistantJDialog extends javax.swing.JDialog {
     public AsistantJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        ApplyStylesTable(jScrollPane1, productsTable);
+        ApplyStylesTable(jScrollPane1, usersTable);
         applyStylesButton();
-        addTableRenderer(productsTable);
+        addTableRenderer(usersTable,1);
     }
 
     /**
@@ -54,7 +55,7 @@ public class AsistantJDialog extends javax.swing.JDialog {
         cancelButton = new javax.swing.JButton();
         addButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        productsTable = new javax.swing.JTable();
+        usersTable = new javax.swing.JTable();
         productsLabel = new javax.swing.JLabel();
         searchTextField = new javax.swing.JTextField();
 
@@ -66,25 +67,25 @@ public class AsistantJDialog extends javax.swing.JDialog {
 
         addButton.setText("Add product...");
 
-        productsTable.setModel(new javax.swing.table.DefaultTableModel(
+        usersTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "id", "image", "Nombre", "Precio", "Stock"
+                "Id", "Image", "Name", "Price", "Stock"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(productsTable);
+        jScrollPane1.setViewportView(usersTable);
 
-        productsLabel.setText("Productos:");
+        productsLabel.setText("Products:");
 
         searchTextField.setText("");
 
@@ -94,12 +95,15 @@ public class AsistantJDialog extends javax.swing.JDialog {
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backgroundPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(addButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cancelButton))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
                         .addComponent(productsLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -136,24 +140,9 @@ public class AsistantJDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ApplyStylesTable(JScrollPane scroll, JTable table) {
-        scroll.getViewport().setBackground(Color.WHITE);
-        table.setBackground(Color.WHITE);
-        table.setForeground(Color.BLACK);
-        table.setShowGrid(false);
-        JTableHeader header = table.getTableHeader();
-        header.setBackground(Color.WHITE);
-        header.setForeground(Color.BLACK);
-        header.setBorder(null);
-        table.setSelectionBackground(Color.BLACK);
-        table.setSelectionForeground(Color.WHITE);
-        JScrollBar vertical = scroll.getVerticalScrollBar();
-        vertical.setBackground(Color.WHITE);
-        vertical.setForeground(Color.LIGHT_GRAY);
 
-    }
 
-    private void applyStylesButton() {
+    public void applyStylesButton() {
         cancelButton.setBackground(new Color(231, 76, 60));
         cancelButton.setForeground(Color.WHITE);
         cancelButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
@@ -170,65 +159,20 @@ public class AsistantJDialog extends javax.swing.JDialog {
         addButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
-    private void addTableRenderer(JTable table) {
-        table.setRowHeight(80);
 
-        table.getColumnModel().getColumn(1).setCellRenderer(new TableCellRenderer() {
-
-
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value,
-                    boolean isSelected, boolean hasFocus, int row, int column) {
-
-                JLabel label = new JLabel();
-                label.setHorizontalAlignment(JLabel.CENTER);
-
-                if (value instanceof ImageIcon) {
-                    label.setIcon((ImageIcon) value);
-                } else {
-                    label.setText(value != null ? value.toString() : "No Image");
-                }
-
-                return label;
-            }
-        });
-
-        DefaultTableCellRenderer textCentrado = new DefaultTableCellRenderer();
-        textCentrado.setHorizontalAlignment(SwingConstants.CENTER);
-
-        for (int i = 0; i < table.getColumnCount(); i++) {
-            if(i != 1){
-                table.getColumnModel().getColumn(i).setCellRenderer(textCentrado);
-            }
-            
-        }
-    }
-
-    public void clearTable(JTable table) {
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.setRowCount(0);
-        table.clearSelection();
-        table.revalidate();
-        table.repaint();
-    }
-
-    public void addRowTable(Vector row, JTable table) {
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.addRow(row);
-    }
 
     public JTable getProductsTable() {
-        return productsTable;
+        return usersTable;
     }
 
 
 
     public int getSelectedRow() {
-        return this.productsTable.getSelectedRow();
+        return this.usersTable.getSelectedRow();
     }
 
     public void addTableSelectionListener(javax.swing.event.ListSelectionListener listener) {
-        this.productsTable.getSelectionModel().addListSelectionListener(listener);
+        this.usersTable.getSelectionModel().addListSelectionListener(listener);
     }
 
     public void addCancelButtonActionListener(ActionListener listener) {
@@ -254,7 +198,7 @@ public class AsistantJDialog extends javax.swing.JDialog {
     private javax.swing.JButton cancelButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel productsLabel;
-    private javax.swing.JTable productsTable;
     private javax.swing.JTextField searchTextField;
+    private javax.swing.JTable usersTable;
     // End of variables declaration//GEN-END:variables
 }

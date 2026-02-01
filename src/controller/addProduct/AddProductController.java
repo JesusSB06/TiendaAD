@@ -8,6 +8,7 @@ import controller.asistant.AsistantController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import model.Category;
 import model.OperationsDB;
 import model.Product;
@@ -31,6 +32,9 @@ public class AddProductController {
         this.model = model;
         this.parent = parent;
         this.initComponents();
+        this.view.setAddNewProductListener(this.setAddNewProductActionListener());
+        this.view.setAddExistentProductListener(this.setAddExistentProductActionListener());
+        this.view.setCancelButtonsActionListener(this.setCancelButtonActionListener());
     }
     
     
@@ -64,8 +68,8 @@ public class AddProductController {
             public void actionPerformed(ActionEvent e) {
 
                 try {
-                    String infProduct[] = view.getProduct().split(".");
-                    String infSupplier[] = view.getSupplierExistentProduct().split(".");
+                    String infProduct[] = view.getProduct().split("\\.");
+                    String infSupplier[] = view.getSupplierExistentProduct().split("\\.");
                     OperationsDB.sumarStock(Integer.parseInt(infProduct[0]), view.getStockExistentProduct());
                     OperationsDB.addProvee(Integer.parseInt(infProduct[0]), Integer.parseInt(infSupplier[0]), view.getStockExistentProduct());
                     parent.updateTable(model.getProducts());
@@ -84,7 +88,7 @@ public class AddProductController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(isFormValid()){
-                    String infCategory[] = view.getCategory().split("."); 
+                    String infCategory[] = view.getCategory().split("\\."); 
                     Product p = new Product(view.getNameProduct(), view.getStockNewProduct(), "nuevo", view.getPriceNewProduct(),Integer.parseInt(infCategory[0]));
                     try {
                         OperationsDB.addProduct(p);
@@ -93,7 +97,18 @@ public class AddProductController {
                     } catch (SQLException ex) {
                         System.getLogger(AddProductController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
                     }
+                }else{
+                    JOptionPane.showConfirmDialog(view, "Error: algunos datos estan vacios", "ERROR",JOptionPane.ERROR_MESSAGE);
                 }
+            }
+        };
+        return al;
+    }
+    private ActionListener setCancelButtonActionListener(){
+        ActionListener al = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                view.dispose();
             }
         };
         return al;
@@ -120,5 +135,6 @@ public class AddProductController {
 
         return true;
     }
+
 
 }

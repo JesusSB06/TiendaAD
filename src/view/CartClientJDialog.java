@@ -43,7 +43,7 @@ public class CartClientJDialog extends javax.swing.JDialog implements interfaceV
         initComponents();
         ApplyStylesTable(jScrollPane1, cartTable);
         applyStylesButton();
-        addTableRenderer(cartTable);
+        addTableRenderer(cartTable,1);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -131,12 +131,17 @@ public class CartClientJDialog extends javax.swing.JDialog implements interfaceV
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(totalPriceLabel)
                     .addComponent(creditLabel))
-                .addGap(18, 18, 18)
-                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addButton)
-                    .addComponent(cancelButton)
-                    .addComponent(deleteButton))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(deleteButton)
+                        .addContainerGap(35, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cancelButton)
+                            .addComponent(addButton))
+                        .addGap(22, 22, 22))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

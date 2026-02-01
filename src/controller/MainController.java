@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import model.Asistant;
+import model.Supervisor;
 import model.Technician;
 import model.TiendaInf;
 import view.AsistantJDialog;
@@ -72,10 +73,13 @@ public class MainController {
                         TecnicalController tc = new TecnicalController(td,model);
                         td.setVisible(true);
                     }
-                    if(model.getEmployee()instanceof Asistant){
+                    else if(model.getEmployee()instanceof Asistant){
                         AsistantJDialog ad = new AsistantJDialog(view,true);
                         AsistantController ac = new AsistantController(ad,model);
                         ad.setVisible(true);
+                    }
+                    else if(model.getEmployee() instanceof Supervisor){
+                        
                     }
                 }else{
                     JOptionPane.showMessageDialog(view, "Error crítico en la aplicacion, reinicio requerido");

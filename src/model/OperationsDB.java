@@ -228,15 +228,20 @@ public class OperationsDB {
     }
 
     public static int addProduct(Product product) throws SQLException {
-        int vId = product.getId();
         String vName = product.getName();
         int vStock = product.getStock();
         String vState = product.getState();
         Double vPrice = product.getPrice();
         String vImg = product.getImg();
         int vCategory = product.getCategory();
-        String sentenciaSQL = "INSERT into Product  (nombre_producto, stock, estado, price, img, category) values (?,?,?,?,?,?)";
+        String sentenciaSQL = "INSERT into producto (nombre_producto, stock, estado, price, img, category) values (?,?,?,?,?,?)";
         PreparedStatement ps = conexion.prepareStatement(sentenciaSQL);
+        ps.setString(1, vName);
+        ps.setInt(2, vStock);
+        ps.setString(3, vState);
+        ps.setDouble(4, vPrice);
+        ps.setString(5, vImg);
+        ps.setInt(6, vCategory);
         int resultado = ps.executeUpdate();
         ps.close();
         return resultado;
@@ -333,10 +338,13 @@ public class OperationsDB {
         }
         return categories;
     }
-    public static void addProvee (int id_producto, int id_proveedor, int stock){
-        String setenciaSQL ="INSERT INTRO provee(id_producto, id_proveedor,stock) VALUES (?,?,?)";
+
+    public static void addProvee(int id_producto, int id_proveedor, int stock) {
+        String sentenciaSQL= "INSERT INTO provee (id_producto, id_proveedor, stock) "
+                + "VALUES (?, ?, ?) "
+                + "ON DUPLICATE KEY UPDATE stock = stock + VALUES(stock)";
         try {
-            PreparedStatement ps = conexion.prepareStatement(setenciaSQL);
+            PreparedStatement ps = conexion.prepareStatement(sentenciaSQL);
             ps.setInt(1, id_producto);
             ps.setInt(2, id_proveedor);
             ps.setInt(3, stock);

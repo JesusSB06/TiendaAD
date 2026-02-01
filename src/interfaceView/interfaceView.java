@@ -24,10 +24,10 @@ import javax.swing.table.TableCellRenderer;
  */
 public interface interfaceView {
     void applyStylesButton();
-    default void addTableRenderer(JTable table) {
+    default void addTableRenderer(JTable table, int column) {
         table.setRowHeight(80);
 
-        table.getColumnModel().getColumn(1).setCellRenderer(new TableCellRenderer() {
+        table.getColumnModel().getColumn(column).setCellRenderer(new TableCellRenderer() {
 
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
@@ -50,7 +50,7 @@ public interface interfaceView {
         textCentrado.setHorizontalAlignment(SwingConstants.CENTER);
 
         for (int i = 0; i < table.getColumnCount(); i++) {
-            if (i != 1) {
+            if (i != column) {
                 table.getColumnModel().getColumn(i).setCellRenderer(textCentrado);
             }
 

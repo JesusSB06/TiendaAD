@@ -59,7 +59,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addContainerGap(46, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(startJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(loginJButton))
                 .addGap(133, 133, 133))
@@ -119,8 +119,9 @@ public class MainJFrame extends javax.swing.JFrame {
         startJButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
         startJButton.setBorder(BorderFactory.createEmptyBorder(8,15,8,15));
         startJButton.setFocusPainted(false);
-        startJButton.setCursor(new Cursor(Cursor.HAND_CURSOR) {
-        });
+        startJButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        startJButton.setBackground(new Color(52, 152, 219));
+               
     }
     
     public void addLoginJButtonActionListener(ActionListener al) {

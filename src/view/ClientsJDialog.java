@@ -33,7 +33,7 @@ public class ClientsJDialog extends javax.swing.JDialog implements interfaceView
         initComponents();
         ApplyStylesTable(ScrollPane, productsTable);
         applyStylesButton();
-        addTableRenderer(productsTable);
+        addTableRenderer(productsTable,1);
     }
 
     /**

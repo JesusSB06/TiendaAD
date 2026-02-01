@@ -37,6 +37,7 @@ public class TecnicalJDialog extends javax.swing.JDialog implements interfaceVie
         initComponents();
         ApplyStylesTable(jScrollPane1, productsTable);
         applyStylesButton();
+        addTableRenderer(productsTable, 0);
     }
 
     /**

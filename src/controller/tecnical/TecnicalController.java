@@ -47,7 +47,6 @@ public class TecnicalController {
 
     private void loadProducts(List<Product> products) {
         view.clearTable(view.getProductsTable());
-        view.addTableRenderer(view.getProductsTable());
         for (Product p : products) {
 
             

@@ -73,9 +73,10 @@ public class LoginRegisterController {
                             if (OperationsDB.empleadoInicioSesion(id, contrasenha_introducida, view.getSelectionComboBox())) {
                                 if (view.getSelectionComboBox().equalsIgnoreCase("técnico")) {
                                     model.setEmployee(OperationsDB.getEmployee(id, "técnico"));
-
                                 } else if (view.getSelectionComboBox().equalsIgnoreCase("asistente")) {
                                     model.setEmployee(OperationsDB.getEmployee(id, "asistente"));
+                                }else if(view.getSelectionComboBox().equalsIgnoreCase("supervisor")){
+                                    model.setEmployee(OperationsDB.getEmployee(id, "supervisor"));
                                 }
                                 JOptionPane.showMessageDialog(view, "Inicio de sesión realizado", "Inicio de sesión", JOptionPane.INFORMATION_MESSAGE);
                                 view.dispose();

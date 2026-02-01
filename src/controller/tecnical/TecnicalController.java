@@ -40,6 +40,7 @@ public class TecnicalController {
         loadProducts(model.getProducts());
 
         this.view.addFixButtonActionListener(this.getFixButtonActionListener());
+        this.view.setSearchTextFieldListener(this.setSearchTextFieldDocumentListener());
         this.view.addCancelButtonActionListener(this.getCancelButtonActionListener());
         this.view.enableFixButton(true);
 

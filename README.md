@@ -198,7 +198,7 @@ A continuación, mostramos cómo enlazamos el método anterior con el método qu
     }
  ```
  Otra parte tambien a destacar es la interfaz **interfaceView**, las clases JDialog, JFrame, etc... siempre son heredadas por elementos de **Swing**, en otras palabras no se les puede heredar una clase, para evitar código duplicado en las vistas, se ha decidido crear esta interfaz la cual a traves del atributio **default** en los metodos, permitira acceder a estos:
- ```
+ ```java
 public interface interfaceView {
     void applyStylesButton();
     default void addTableRenderer(JTable table, int column) {

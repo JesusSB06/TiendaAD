@@ -14,11 +14,16 @@ TiendaAD
 ├── src/
 │   ├── controller/
 │   │   ├── MainController.java
-│   │   │
 │   │   ├── loginRegister/
 │   │   │   └── LoginRegisterController.java
-│   │   ├── products/
-│   │   │   └── ProductsController.java
+│   │   ├── asistant/
+│   │   │   └── AsistantController.java
+│   │   ├── addProduct/
+│   │   │   └── AddProductController.java
+│   │   ├── client/
+│   │   │   └── ClientController.java
+│   │   ├── cart/
+│   │   │   └── CartClientController.java
 │   │   ├── register/
 │   │   │   └── RegisterController.java
 │   │   └── tecnical/
@@ -37,8 +42,11 @@ TiendaAD
 │   ├── view/
 │   │   ├── MainJFrame.java
 │   │   ├── LoginRegisterJDialog.java
-│   │   ├── ProductsJDialog.java
+│   │   ├── ClientsJDialog.java
 │   │   ├── RegisterJDialog.java
+│   │   ├── CartClientJDialog.java
+│   │   ├── AsistantJDialog.java
+│   │   ├── AddProductJDialog.java
 │   │   └── TecnicalJDialog.java
 │   ├── main/
 │   │    └── Main.java

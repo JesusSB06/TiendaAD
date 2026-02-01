@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Vector;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import model.OperationsDB;
@@ -42,6 +43,7 @@ public class AsistantController {
         this.view.addCancelButtonActionListener(this.setCancelButtonActionListener());
         this.view.setSearchTextFieldListener(this.setSearchTextFieldDocumentListener());
         this.view.setAddButtonListener(this.setAddProductButtonActionListener());
+        this.view.setDeleteButtonListener(this.setDeleteProductButtonActionListener());
     }
 
     private void initComponents() {
@@ -148,6 +150,28 @@ public class AsistantController {
                 AddProductController apc =  new AddProductController(apd, model, AsistantController.this);
                 apd.setVisible(true);
             }
+        };
+        return al;
+    }
+    private ActionListener setDeleteProductButtonActionListener(){
+        ActionListener al = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = view.getSelectedRow();
+                if(row != -1){
+                    int id = (int) view.getProductsTable().getModel().getValueAt(row, 0);
+                    try {
+                        OperationsDB.deleteProduct(id);
+                        model.setProducts(OperationsDB.obtenerProductos());
+                        updateTable(model.getProducts());
+                    } catch (SQLException ex) {
+                        System.getLogger(AsistantController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(view, "Error: seleccione un producto");
+                }
+            }
+            
         };
         return al;
     }

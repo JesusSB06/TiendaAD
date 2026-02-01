@@ -58,6 +58,7 @@ public class AsistantJDialog extends javax.swing.JDialog implements interfaceVie
         usersTable = new javax.swing.JTable();
         productsLabel = new javax.swing.JLabel();
         searchTextField = new javax.swing.JTextField();
+        deleteButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -89,6 +90,8 @@ public class AsistantJDialog extends javax.swing.JDialog implements interfaceVie
 
         searchTextField.setText("");
 
+        deleteButton.setText("Delete Product");
+
         javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(backgroundPanelLayout);
         backgroundPanelLayout.setHorizontalGroup(
@@ -97,7 +100,8 @@ public class AsistantJDialog extends javax.swing.JDialog implements interfaceVie
                 .addContainerGap()
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(deleteButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(addButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cancelButton))
@@ -122,7 +126,8 @@ public class AsistantJDialog extends javax.swing.JDialog implements interfaceVie
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelButton)
-                    .addComponent(addButton))
+                    .addComponent(addButton)
+                    .addComponent(deleteButton))
                 .addContainerGap())
         );
 
@@ -149,7 +154,13 @@ public class AsistantJDialog extends javax.swing.JDialog implements interfaceVie
         cancelButton.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
         cancelButton.setFocusPainted(false);
         cancelButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
+        
+        deleteButton.setBackground(new Color(231, 76, 60));
+        deleteButton.setForeground(Color.WHITE);
+        deleteButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        deleteButton.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
+        deleteButton.setFocusPainted(false);
+        deleteButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         addButton.setBackground(new Color(0, 191, 255));
         addButton.setForeground(Color.WHITE);
@@ -191,11 +202,15 @@ public class AsistantJDialog extends javax.swing.JDialog implements interfaceVie
     public void setAddButtonListener (ActionListener al){
         this.addButton.addActionListener(al);
     }
+    public void setDeleteButtonListener(ActionListener al){
+        this.deleteButton.addActionListener(al);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JButton cancelButton;
+    private javax.swing.JButton deleteButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel productsLabel;
     private javax.swing.JTextField searchTextField;

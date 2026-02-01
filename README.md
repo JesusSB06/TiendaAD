@@ -1,5 +1,28 @@
 # TiendaAD
-
+## Índice
+- [Descripción del Proyecto](#descripción-del-proyecto)
+- [Características principales](#características-principales)
+- [Requisitos Previos](#requisitos-previos)
+- [Estructura del proyecto](#estructura-del-proyecto)
+- [Estructura de la base de datos](#estructura-de-la-base-de-datos)
+  - [Entidades](#entidades)
+    - [Empleado](#empleado)
+    - [Producto](#producto)
+    - [Proveedor](#proveedor)
+    - [Categoría](#categoría)
+  - [Relaciones entre tablas](#relaciones-entre-tablas)
+  - [Diagrama entidad-relación](#diagrama-entidad-relación)
+- [Explicación del código](#explicación-del-código)
+- [Manual de Usuario](#manual-de-usuario)
+  - [Vista Técnico](#vista-tecnico)
+  - [Vista Cliente](#vista-cliente)
+  - [Vista Asistente](#vista-asistente)
+- [Metodología de trabajo y uso de git](#metodología-de-trabajo-y-uso-de-git)
+- [Reparto de tareas](#reparto-de-tareas)
+- [Cosas a mejorar](#cosas-a-mejorar)
+- [Conclusión](#conclusión)
+- [Autores](#autores)
+  
 ## Descripción del Proyecto
 El proyecto consiste en la creación de una aplicación basandonos en el modelo **MVC** (Modelo-Vista-Controlador), esta aplicación consistira en la gestión de una tienda informática en la cúal podran acceder tanto **clientes y personal de la tienda**, todos los datos, usuarios, productos, etc... seran manejados a traves de la conexión a una **base de datos MySQL** a traves de un controlador JDBC, el cliente podra comprar varios productos, el técnico podra reparar los productos en estado defectuoso, el asistente podra manejar el stock y el Administrador sera el unico con la capacidad de borrar, crear y modificar usuarios, incluyendo clientes y empleados.
 

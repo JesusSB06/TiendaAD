@@ -83,7 +83,7 @@ Es lo que se vende en la tienda. Como cada tabla, contiene diferentes atributos:
 | **Categoría** | Tipo de producto |
 | **Precio** | Valor de venta |
 | **Stock** | Cantidad disponible |
-| **Estado** | Disponible/Agotado |
+| **Estado** | Disponible/Vendido/Nuevo/Defectuoso|
 | **Nombre** | Nombre del producto |
 
 #### Proveedor
@@ -335,11 +335,12 @@ Control de errores: si no hay producto seleccionado y cuando el producto ya se e
 ![Peticion1](/imagenes/aviso_producto_ya_reparado.png)
 
 ### Vista Cliente
-Al iniciar sesión, se nos desplazara a la siguiente ventana en donde se podran observar todos los productos en condiciones de ser vendidos y un buscador dináminco:
+Al iniciar sesión, se nos desplazará a la siguiente ventana, en donde se podrán observar todos los productos en condiciones de ser vendidos y un buscador dinámico:
 
 ![Peticion1](/imagenes/clienteTabla.PNG)
 
-Despues, existiran tres opciones, cancelar, ir al carrito, esta opción no puede ser usada a menos que exista un producto en el carrito y la opción de añadir un producto al carrito, si pulsamos añadir al carrito, nos saltara el siguiente **JOptionPane** con sus respectivas comprobaciones, ademas, si un producto llega a 0 de stock sera automaticamente eliminado de la base de datos:
+Después, existirán tres opciones: cancelar, ir al carrito (esta opción no puede ser usada a menos que exista un producto en el carrito) y la opción de añadir un producto al carrito.
+Si pulsamos añadir al carrito, nos saltará el siguiente **JOptionPane** con sus respectivas comprobaciones. Además, si un producto llega a 0 de stock, será automáticamente eliminado de la base de datos:
 
 ![Peticion1](/imagenes/stock.PNG)
 ![Peticion1](/imagenes/saldoError.PNG)
@@ -349,4 +350,33 @@ Finalmente si clickamos en el carrito con un producto, nos saltara a la siguient
 
 ![Peticion1](/imagenes/Cart.PNG)
 
-En esta ventana, estara la opción de comprar con sus respectivas comprobaciones y el boton eliminar producto del carrito, este botón no solo eliminara el producto, **si no que devolvera el stock que hemos ocupado**, si todo sale bien, se cerrara la ventana con la compra ya realizada devolviendonos a la anterior.
+En esta ventana estará la opción de comprar, con sus respectivas comprobaciones, y el **botón eliminar producto del carrito**. Este botón no solo eliminará el producto, sino que **devolverá el stock que hemos ocupado**. Si todo sale bien, se cerrará la ventana con la compra ya realizada, devolviéndonos a la anterior.
+
+### Vista Asistente
+Al iniciar, sesión se nos mostrara una nueva ventana que sera la ventana principal de asistente, el asistente podra eliminar, añadir productos o aumentar el stock de productos ya existentes a partir de las siguientes opciones: ***añadir producto** y **borrar producto**.
+
+![Peticion1](/imagenes/asistantTable.PNG)
+
+Si presionamos el botón **delete product** y tenemos una columna seleccionada, se nos borrara tanto de la tabla como de la base de datos ese producto, y si seleccionamos el botón de **add product**, nos desplazara a la siguiente ventana:
+
+![Peticion1](/imagenes/existentP.PNG)
+
+Como se puede observar en la ventana anterior, esta esta conformada por un **TabbedPane** con dos paneles con diferentes opciones, la primera opción sera que un proovedor nos proporciones stock de un producto ya existente en la base de datos:
+
+![Peticion1](/imagenes/existentP.PNG)
+
+La segunda opción, por otro lado, consiste en que un proveedor nos proporciones un producto completamente nuevo, esto quiere decir que se le debe asignar su nombre, precio, stock y categoría para que se incluya de forma correcta en la base de datos:
+
+![Peticion1](/imagenes/newP.PNG) 
+
+### Metodología de trabajo y uso de git
+Nuestra metodología de trabajo ha sido uno de los aspectos mas importantes para realizar este proyecto, esta consistio en:
+- **Planteamiento y discusión de ideas**: en esta fase inicial, el enfoque era desarrollar una idea, dejar claro los objetivos del trabajo y plantear posibiladades y discutirlas en grupo.
+- **División de responsabilidades**: despues del anterior paso, en este se definiran unas tareas claras para cada uno de los intengrantes del proyecto, para asi poder comenzar a trabajar.
+- **Desarrollo paralelo**: esta es la fase de desarrollo, gracias a **gitHub** se nos permite trabajar de forma paralela independientemente del lugar, aunque siempre se haya dispuesto de una forma de **comunicarse** entre los miembros del grupo para plantear dudas o problemas en el desarrollo.
+
+### Reparto de tareas
+El reparto de tareas se ha realizado de manera equitativa en todas las partes del proyecto. Los tres miembros han concordado en dividirse el trabajo de forma adecuada y sin discusiones posteriores, siendo el siguiente:
+- **Jesús**: script de creación y insercción de datos, creación de las vistas y controladores del asistente, parte de los métodos de OperationsDB, creación de las vistas y controladores del cliente y modelo principal.
+- **Nerea** : creación de la gestión de usuarios de la aplicación, creación de OperationsDB junto a una parte de sus métodos y junto a Roi el correcto funcionamiento de la conexión a la base de datos.
+- **Roi**: creación de las vistas y controladores de técnico, parte de los métodos de OperationDB y creación inicial de los POJOS.

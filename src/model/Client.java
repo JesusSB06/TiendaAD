@@ -13,16 +13,18 @@ public class Client {
     private String nombre_cliente;
     private String correo_electronico;
     private String contrasenha;
+    private double saldo;
     private String telefono;
-    private HashMap<Integer, Integer> carrito;
+    private HashMap<Product, Integer> cart;
 
-    public Client(String dni, String nombre_cliente, String correo_electronico, String telefono, String contrasenha) {
+    public Client(String dni, String nombre_cliente, String correo_electronico,  String telefono,double saldo, String contrasenha) {
         this.dni = dni;
         this.nombre_cliente = nombre_cliente;
         this.correo_electronico = correo_electronico;
         this.contrasenha = contrasenha;
+        this.saldo = saldo;
         this.telefono = telefono;
-        this.carrito = new HashMap<Integer,Integer>();
+        this.cart = new HashMap<Product, Integer>();
     }
 
 
@@ -66,12 +68,20 @@ public class Client {
         this.telefono = telefono;
     }
 
-    public HashMap<Integer, Integer> getCarrito() {
-        return carrito;
+    public HashMap<Product, Integer> getCart() {
+        return cart;
     }
 
-    public void setCarrito(HashMap<Integer, Integer> carrito) {
-        this.carrito = carrito;
+    public void setCart(HashMap<Product, Integer> cart) {
+        this.cart = cart;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
     }
     
 

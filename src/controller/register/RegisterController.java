@@ -37,14 +37,16 @@ public class RegisterController {
                 String nombre_cliente = view.getNameJTextField();
                 String correo_electronico = view.getEmailJTextField();
                 String telefono = view.getTelefonoJTextField();
+                Double saldo = view.getSpinnerValue();
                 String contrasenha = view.getPasswordJField();
-                Client nuevoCliente = new Client(dni, nombre_cliente, correo_electronico, telefono, contrasenha);
+                Client nuevoCliente = new Client(dni, nombre_cliente, correo_electronico,  telefono, saldo, contrasenha);
                 model.setClient(nuevoCliente);
                 try {
                     if (dni.isEmpty() || nombre_cliente.isEmpty() || correo_electronico.isEmpty() || telefono.isEmpty() || contrasenha.isEmpty()) {
                         JOptionPane.showMessageDialog(view, "Algún campo está vacio, introduzca todos los datos", "Campos Vacíos", JOptionPane.ERROR_MESSAGE);
                     }else {
                         OperationsDB.anhadirCliente(nuevoCliente);
+                        model.setClient(nuevoCliente);
                         JOptionPane.showMessageDialog(view, "Usuario introducido", "Usuario creado correctamente", JOptionPane.INFORMATION_MESSAGE);
                         view.dispose();
                     }

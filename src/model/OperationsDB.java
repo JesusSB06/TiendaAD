@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.JOptionPane;
 import main.main;
@@ -66,41 +68,91 @@ public class OperationsDB {
 
         }
     }
-    public static Client ObtenerCliente(String nombre) throws SQLException {
+
+    public static Client ObtenerCliente(String dni) throws SQLException {
         Client client = null;
-        System.out.println("Consulta producto");
-        String select = "SELECT * from cliente WHERE nombre_cliente = ?";
+        String select = "SELECT * from cliente WHERE dni = ?";
         PreparedStatement st = conexion.prepareStatement(select);
-        st.setString(1, nombre);
-        ResultSet rs = st.executeQuery(select);
+        st.setString(1, dni);
+        ResultSet rs = st.executeQuery();
         while (rs.next()) {
-            client = new Client(rs.getString("dni"),rs.getString("nombre_cliente"),rs.getString("correo_electronico"),rs.getString("telefono"),rs.getString("contrasenha"));
+            client = new Client(rs.getString("dni"), rs.getString("nombre_cliente"), rs.getString("correo_electronico"), rs.getString("telefono"),rs.getDouble("saldo"), rs.getString("contrasenha"));
         }
         return client;
     }
-    public static String usuarioInicioSesion(String nombre_introducido, String contrasenha_introducida) throws SQLException {
-        String select = "SELECT nombre_cliente, contrasenha FROM cliente";
+
+    public static String usuarioInicioSesion(String dni, String contrasenha_introducida) throws SQLException {
+        boolean usuarioExiste = false;
+        String select = "SELECT dni, contrasenha FROM cliente";
         Statement st = conexion.createStatement();
         ResultSet rs = st.executeQuery(select);
         while (rs.next()) {
-            String nombre_cliente = rs.getString("nombre_cliente");
+            String nombre_cliente = rs.getString("dni");
             String password = rs.getString("contrasenha");
-            System.out.println("===================================");
-            System.out.println("nombre esperado: " + nombre_cliente);
-            System.out.println("password esperado: " + password);
-            System.out.println("===================================");
+            if (nombre_cliente.equals(dni)) {
+                usuarioExiste = true;
 
-            if (nombre_cliente.equals(nombre_introducido) && contrasenha_introducida.equals(password)) {
-                return "inicio";
-            } else if (!nombre_cliente.equals(nombre_introducido)) { 
-                return "registrarse";
-            }else if(!contrasenha_introducida.equals(password)){
-                return "noContrasenha";
+                if (password.equals(contrasenha_introducida)) {
+                    return "inicio";
+                } else {
+                    return "noContrasenha";
+                }
             }
+        }
+        if (!usuarioExiste) {
+            return "registrarse";
         }
         return "no inicio";
     }
+    
 
+    
+    public static boolean empleadoInicioSesion(int id, String password, String type) throws SQLException{
+        String sql = "";
+        boolean existeUsuario =false;
+        if(type.equalsIgnoreCase("técnico")){
+            sql = "SELECT empleado.id_empleado, contrasenha FROM empleado JOIN tecnico ON empleado.id_empleado = tecnico.id_empleado";
+        }else if (type.equalsIgnoreCase("asistente")){
+            sql = "SELECT empleado.id_empleado, contrasenha FROM empleado JOIN asistente ON empleado.id_empleado = asistente.id_empleado";
+        }
+        Statement st = conexion.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        while(rs.next()){
+            if(rs.getInt("empleado.id_empleado") == id && password.equalsIgnoreCase(rs.getString("contrasenha"))){
+                existeUsuario = true;
+            }
+        }
+        return existeUsuario;
+    }
+
+    public static Employee getEmployee(int id_empleado, String type) {
+        Employee tec = null;
+        try {
+            String select = "SELECT * from empleado WHERE id_empleado  = ?";
+            PreparedStatement st = conexion.prepareStatement(select);
+            st.setInt(1, id_empleado);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int empId = rs.getInt("id_empleado");
+                String dni = rs.getString("dni");
+                String name = rs.getString("nombre");
+                String email = rs.getString("correo_electronico");
+                String direction = rs.getString("direccion");
+                LocalTime startHour = LocalTime.parse(rs.getString("horario_entrada"));
+                LocalTime exitTime = LocalTime.parse(rs.getString("horario_salida"));
+                int supervisorId = rs.getInt("supervisor");
+                if(type.equalsIgnoreCase("técnico")){
+                    tec = new Technician(empId,dni,name,email,direction,supervisorId,startHour,exitTime);
+                }else if(type.equalsIgnoreCase("asistente")){
+                    tec = new Asistant(empId,dni,name,email,direction,supervisorId,startHour,exitTime);
+                }
+                
+            }
+        } catch (SQLException ex) {
+            System.getLogger(OperationsDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        return tec;
+    }
     public static int anhadirCliente(Client cliente) throws SQLException {
         String dni = cliente.getDni();
         String nombre_cliente = cliente.getNombre_cliente();
@@ -119,19 +171,33 @@ public class OperationsDB {
         }
         return resultado;
     }
-
-        public static List<Product> obtenerProductosCliente() throws SQLException{
+    
+    public static void deleteProduct(int idProducto) throws SQLException{
+        String sentenciaSQL = "DELETE FROM producto WHERE id_producto = ? ";
+        PreparedStatement ps = conexion.prepareStatement(sentenciaSQL);
+        ps.executeUpdate();
+    }
+    
+    public static void addSale(Sale sale) throws SQLException{
+        String sentenciaSQL = "INSERT INTO venta(id_cliente, id_producto, fecha_venta) VALUES (?,?,?,?)";
+        PreparedStatement ps = conexion.prepareStatement(sentenciaSQL);
+        ps.setString(1,sale.getClient());
+        ps.setInt(2, sale.getProduct());
+        ps.setDate(3, sale.getDateSale());
+        ps.executeUpdate();
+    }
+    public static List<Product> obtenerProductosCliente() throws SQLException {
         List<Product> products = new ArrayList<>();
         String select = "SELECT * from producto";
         Statement st = conexion.createStatement();
         ResultSet rs = st.executeQuery(select);
         while (rs.next()) {
-            if(rs.getString(4).equals("disponible")){
+            if (rs.getString(4).equals("disponible")) {
                 Product p = new Product(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getDouble(5), rs.getInt(6));
                 setImageProducts(p, products);
             }
         }
-        st.close();                
+        st.close();
         rs.close();
 
         return products;
@@ -161,7 +227,6 @@ public class OperationsDB {
         products.add(p);
     }
 
-
     public static int addProduct(Product product) throws SQLException {
         int vId = product.getId();
         String vName = product.getName();
@@ -170,11 +235,84 @@ public class OperationsDB {
         Double vPrice = product.getPrice();
         String vImg = product.getImg();
         int vCategory = product.getCategory();
-        String sentenciaSQL = "INSERT into Product (id_producto, nombre_producto, stock, estado, price, img, category) values (?,?,?,?,?,?,?)";
+        String sentenciaSQL = "INSERT into Product  (nombre_producto, stock, estado, price, img, category) values (?,?,?,?,?,?)";
         PreparedStatement ps = conexion.prepareStatement(sentenciaSQL);
         int resultado = ps.executeUpdate();
         ps.close();
         return resultado;
     }
 
+    public static List<Product> obtenerProductosTecnico() throws SQLException {
+        List<Product> products = new ArrayList<>();
+        String sentenceSQL = "SELECT * from producto WHERE estado != 'disponible'";
+        Statement st = conexion.createStatement();
+        ResultSet rs = st.executeQuery(sentenceSQL);
+        while (rs.next()) {
+            Product p = new Product(
+                    rs.getInt("id_producto"),
+                    rs.getString("nombre_producto"),
+                    rs.getInt("stock"),
+                    rs.getString("estado"),
+                    rs.getDouble("precio"),
+                    rs.getInt("id_categoria")
+            );
+            setImageProducts(p, products);
+        }
+        st.close();
+        rs.close();
+        return products;
+    }
+
+    public static int actualizarEstadoProducto(int idProducto, String nuevoEstado) throws SQLException {
+        String sentenceSQL = "UPDATE producto SET estado = ? WHERE id_producto = ?";
+        PreparedStatement ps = conexion.prepareStatement(sentenceSQL);
+        ps.setString(1, nuevoEstado);
+        ps.setInt(2, idProducto);
+        int resultado = ps.executeUpdate();
+        ps.close();
+        return resultado;
+    }
+
+    public static void restarStock(int idProducto, int stock) throws SQLException {
+        String sentenceSQL = "UPDATE producto SET stock = stock - ? WHERE id_producto = ?";
+        PreparedStatement ps = conexion.prepareStatement(sentenceSQL);
+        ps.setInt(1, stock);
+        ps.setInt(2, idProducto);
+        ps.executeUpdate();
+        ps.close();
+    }
+    public static void sumarStock(int idProducto, int stock) throws SQLException {
+        String sentenceSQL = "UPDATE producto SET stock = stock + ? WHERE id_producto = ?";
+        PreparedStatement ps = conexion.prepareStatement(sentenceSQL);
+        ps.setInt(1, stock);
+        ps.setInt(2, idProducto);
+        ps.executeUpdate();
+        ps.close();
+    }
+    public static void restarSaldo(String dni, double totalPrecio) throws SQLException {
+        String sentenceSQL = "UPDATE cliente SET saldo = saldo - ? WHERE dni = ?";
+        PreparedStatement ps = conexion.prepareStatement(sentenceSQL);
+        ps.setDouble(1, totalPrecio);
+        ps.setString(2, dni);
+        ps.executeUpdate();
+        ps.close();
+    }
+    public static List<Supplier> ObtenerProveedores(){
+        List<Supplier> suppliers = new ArrayList<>();
+        String sentenciaSQL = "SELECT * FROM proveedor";
+        Statement stmnt;
+        try {
+            stmnt = conexion.createStatement();
+            ResultSet rs = stmnt.executeQuery(sentenciaSQL);
+            while(rs.next()){
+                Supplier sp = new Supplier(rs.getInt(1), rs.getString(2));
+                suppliers.add(sp);
+                
+            }
+        } catch (SQLException ex) {
+            System.getLogger(OperationsDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        
+        return suppliers;
+    }
 }

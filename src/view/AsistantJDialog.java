@@ -16,7 +16,9 @@ import javax.swing.JLabel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
@@ -26,16 +28,17 @@ import javax.swing.table.TableColumn;
  *
  * @author dam2_alu03@inf.ald
  */
-public class TecnicalJDialog extends javax.swing.JDialog {
+public class AsistantJDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form TecnicalJDialog
      */
-    public TecnicalJDialog(java.awt.Frame parent, boolean modal) {
+    public AsistantJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         ApplyStylesTable(jScrollPane1, productsTable);
         applyStylesButton();
+        addTableRenderer(productsTable);
     }
 
     /**
@@ -49,7 +52,7 @@ public class TecnicalJDialog extends javax.swing.JDialog {
 
         backgroundPanel = new javax.swing.JPanel();
         cancelButton = new javax.swing.JButton();
-        fixButton = new javax.swing.JButton();
+        addButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         productsTable = new javax.swing.JTable();
         productsLabel = new javax.swing.JLabel();
@@ -61,18 +64,18 @@ public class TecnicalJDialog extends javax.swing.JDialog {
 
         cancelButton.setText("Cancel");
 
-        fixButton.setText("Repair");
+        addButton.setText("Add product...");
 
         productsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Imagen", "Nombre", "Precio", "Stock", "Estado"
+                "id", "image", "Nombre", "Precio", "Stock"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, true, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -93,7 +96,7 @@ public class TecnicalJDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
-                        .addComponent(fixButton)
+                        .addComponent(addButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cancelButton))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -115,7 +118,7 @@ public class TecnicalJDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelButton)
-                    .addComponent(fixButton))
+                    .addComponent(addButton))
                 .addContainerGap())
         );
 
@@ -159,19 +162,20 @@ public class TecnicalJDialog extends javax.swing.JDialog {
         cancelButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 
-        fixButton.setBackground(new Color(0, 191, 255));
-        fixButton.setForeground(Color.WHITE);
-        fixButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        fixButton.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
-        fixButton.setFocusPainted(false);
-        fixButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        addButton.setBackground(new Color(0, 191, 255));
+        addButton.setForeground(Color.WHITE);
+        addButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        addButton.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
+        addButton.setFocusPainted(false);
+        addButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
-    public void addTableRenderer(JTable table) {
+    private void addTableRenderer(JTable table) {
         table.setRowHeight(80);
 
-        // Renderer de imágenes
-        table.getColumnModel().getColumn(0).setCellRenderer(new TableCellRenderer() {
+        table.getColumnModel().getColumn(1).setCellRenderer(new TableCellRenderer() {
+
+
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
                     boolean isSelected, boolean hasFocus, int row, int column) {
@@ -188,6 +192,16 @@ public class TecnicalJDialog extends javax.swing.JDialog {
                 return label;
             }
         });
+
+        DefaultTableCellRenderer textCentrado = new DefaultTableCellRenderer();
+        textCentrado.setHorizontalAlignment(SwingConstants.CENTER);
+
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            if(i != 1){
+                table.getColumnModel().getColumn(i).setCellRenderer(textCentrado);
+            }
+            
+        }
     }
 
     public void clearTable(JTable table) {
@@ -207,13 +221,7 @@ public class TecnicalJDialog extends javax.swing.JDialog {
         return productsTable;
     }
 
-    public void addFixButtonActionListener(ActionListener listener) {
-        this.fixButton.addActionListener(listener);
-    }
 
-    public void enableFixButton(boolean enable) {
-        this.fixButton.setEnabled(enable);
-    }
 
     public int getSelectedRow() {
         return this.productsTable.getSelectedRow();
@@ -227,13 +235,6 @@ public class TecnicalJDialog extends javax.swing.JDialog {
         this.cancelButton.addActionListener(listener);
     }
 
-    public String getState(int row) {
-        return (String) this.productsTable.getModel().getValueAt(row, 4);
-    }
-
-    public void setState(int row, String state) {
-        this.productsTable.getModel().setValueAt(state, row, 4);
-    }
 
     public void setSearchTextFieldListener(DocumentListener kl) {
         this.searchTextField.getDocument().addDocumentListener(kl);
@@ -243,11 +244,14 @@ public class TecnicalJDialog extends javax.swing.JDialog {
         return this.searchTextField.getText();
     }
     
+    public void setAddButtonListener (ActionListener al){
+        this.addButton.addActionListener(al);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addButton;
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JButton cancelButton;
-    private javax.swing.JButton fixButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel productsLabel;
     private javax.swing.JTable productsTable;

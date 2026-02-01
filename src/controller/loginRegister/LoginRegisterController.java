@@ -26,7 +26,6 @@ public class LoginRegisterController {
     private MainJFrame mainView;
     private TiendaInf model;
 
-
     public LoginRegisterController(LoginRegisterJDialog view, MainJFrame mainView, TiendaInf model) {
         this.model = model;
         this.view = view;
@@ -45,40 +44,52 @@ public class LoginRegisterController {
         ActionListener al = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                String nombre_introducido = view.getUserNameJTextField();
-                String contrasenha_introducida = view.getPasswordJPasswordField();
-
-                System.out.println(nombre_introducido);
-                System.out.println(contrasenha_introducida);
-
                 try {
-                    String inicioSesion = OperationsDB.usuarioInicioSesion(nombre_introducido, contrasenha_introducida);
-                   
-                    if (inicioSesion.equals("inicio")) {
-                        model.setClient(OperationsDB.ObtenerCliente(nombre_introducido));
-                        JOptionPane.showMessageDialog(view, "Inicio de sesión realizado", "Inicio de sesión", JOptionPane.INFORMATION_MESSAGE);
-                        view.dispose();
-                        mainView.setVisibleStartJButton(true);
-                    } else if (inicioSesion.equals("registrarse")) {
-                        int opcion = JOptionPane.showConfirmDialog(view, "El usuario no está en la base de datos \n ¿Desea Registrarse?", "¿Registrarse?", JOptionPane.YES_NO_OPTION, JOptionPane.NO_OPTION);
-                        System.out.println(opcion);
-                        if (opcion == 0) {
-                            RegistrarseJDialog rjd = new RegistrarseJDialog(mainView, true);
-                            RegisterController rgc = new RegisterController(rjd, model);
-                            rjd.setVisible(true);
-                            view.setUserNameJTextField("");
-                            view.setPasswordJPasswordFiel("");
-
+                    String usuario = view.getUserNameJTextField();
+                    String contrasenha_introducida = view.getPasswordJPasswordField();
+                    if (view.getSelectionComboBox().equalsIgnoreCase("cliente")) {
+                        String inicioSesion = OperationsDB.usuarioInicioSesion(usuario, contrasenha_introducida);
+                        if (inicioSesion.equals("inicio")) {
+                            JOptionPane.showMessageDialog(view, "Inicio de sesión realizado", "Inicio de sesión", JOptionPane.INFORMATION_MESSAGE);
+                            model.setClient(OperationsDB.ObtenerCliente(usuario));
+                            view.dispose();
+                            mainView.setVisibleStartJButton(true);
+                        } else if (inicioSesion.equals("registrarse")) {
+                            int opcion = JOptionPane.showConfirmDialog(view, "El usuario no está en la base de datos \n ¿Desea Registrarse?", "¿Registrarse?", JOptionPane.YES_NO_OPTION, JOptionPane.NO_OPTION);
+                            System.out.println(opcion);
+                            if (opcion == 0) {
+                                RegistrarseJDialog rjd = new RegistrarseJDialog(mainView, true);
+                                RegisterController rgc = new RegisterController(rjd, model);
+                                rjd.setVisible(true);
+                                view.setUserNameJTextField("");
+                                view.setPasswordJPasswordFiel("");
+                            }
+                        } else if (inicioSesion.equals("noContrasenha")) {
+                            JOptionPane.showMessageDialog(view, "La contraseña introducida no es válida", "Error", JOptionPane.ERROR_MESSAGE);
                         }
+                    } else {
+                        try {
+                            int id = Integer.parseInt(usuario);
+                            if (OperationsDB.empleadoInicioSesion(id, contrasenha_introducida, view.getSelectionComboBox())) {
+                                if (view.getSelectionComboBox().equalsIgnoreCase("técnico")) {
+                                    model.setEmployee(OperationsDB.getEmployee(id, "técnico"));
 
-                    } else if (inicioSesion.equals("noContrasenha")) {
-                        JOptionPane.showMessageDialog(view, "La contraseña introducida no es válida", "Error", JOptionPane.ERROR_MESSAGE);
-
+                                } else if (view.getSelectionComboBox().equalsIgnoreCase("asistente")) {
+                                    model.setEmployee(OperationsDB.getEmployee(id, "asistente"));
+                                }
+                                JOptionPane.showMessageDialog(view, "Inicio de sesión realizado", "Inicio de sesión", JOptionPane.INFORMATION_MESSAGE);
+                                view.dispose();
+                                mainView.setVisibleStartJButton(true);
+                            }
+                        } catch (NumberFormatException nfe) {
+                            JOptionPane.showMessageDialog(view, "Error: el id es incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
                     }
 
                 } catch (SQLException ex) {
-                    System.out.println("Error: " + ex.getMessage());
+                    System.getLogger(LoginRegisterController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
                 }
+
             }
         };
         return al;
@@ -94,5 +105,6 @@ public class LoginRegisterController {
         };
         return al;
     }
+
 
 }

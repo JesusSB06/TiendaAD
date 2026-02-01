@@ -26,6 +26,14 @@ public class Product {
         this.img = "";
         this.category = category;
     }
+    public Product( String name, int stock, String state, Double price, int category) {
+        this.name = name;
+        this.stock = stock;
+        this.state = state;
+        this.price = price;
+        this.img = "";
+        this.category = category;
+    }    
 
     public int getId() {
         return id;

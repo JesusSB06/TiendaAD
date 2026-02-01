@@ -12,11 +12,11 @@ public abstract class Employee {
     private String name;
     private String email;
     private String direction;
-    private Employee supervisor;
+    private int supervisor;
     private LocalTime startHour;
     private LocalTime exitTime;
 
-    public Employee(int id, String dni, String name, String email, String direction, Employee supervisor, LocalTime startHour, LocalTime exitTime) {
+    public Employee(int id, String dni, String name, String email, String direction, int supervisor, LocalTime startHour, LocalTime exitTime) {
         this.id = id;
         this.dni = dni;
         this.name = name;
@@ -67,11 +67,11 @@ public abstract class Employee {
         this.direction = direction;
     }
 
-    public Employee getSupervisor() {
+    public int getSupervisor() {
         return supervisor;
     }
 
-    public void setSupervisor(Employee supervisor) {
+    public void setSupervisor(int supervisor) {
         this.supervisor = supervisor;
     }
 

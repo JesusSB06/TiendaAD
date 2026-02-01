@@ -8,7 +8,7 @@ import java.time.LocalTime;
  */
 public class Technician extends Employee {
     
-    public Technician(int id, String dni, String name, String email, String direction, Employee supervisor, LocalTime startHour, LocalTime exitTime) {
+    public Technician(int id, String dni, String name, String email, String direction, int supervisor, LocalTime startHour, LocalTime exitTime) {
         super(id, dni, name, email, direction, supervisor, startHour, exitTime);
     }
     

@@ -108,6 +108,95 @@ Clasificación de los productos por tipo:
 
 ### Diagrama entidad-relación
  ![Peticion1](/imagenes/DiagramaTienda.png)
+
+ ### Explicación del código
+Teniendo en cuenta que el inicio de sesión para cada tabla es el mismo pero cambiando la sentencia SQL, tomamos la decisión de mostrar solo el código si eres un cliente. Está dentro del paquete **Model**, en una clase llamada **OperationsBD** que se dedicar exclusivamente a la conexión con la base de datos, y hacer las consultas necesarias con sus respectivos métodos:
+
+```java
+ public static String usuarioInicioSesion(String dni, String contrasenha_introducida) throws SQLException {
+        boolean usuarioExiste = false;
+        String select = "SELECT dni, contrasenha FROM cliente";
+        Statement st = conexion.createStatement();
+        ResultSet rs = st.executeQuery(select);
+        while (rs.next()) {
+            String nombre_cliente = rs.getString("dni");
+            String password = rs.getString("contrasenha");
+            if (nombre_cliente.equals(dni)) {
+                usuarioExiste = true;
+
+                if (password.equals(contrasenha_introducida)) {
+                    return "inicio";
+                } else {
+                    return "noContrasenha";
+                }
+            }
+        }
+        if (!usuarioExiste) {
+            return "registrarse";
+        }
+        return "no inicio";
+    }
+```
+A continuación, mostramos cómo enlazamos el método anterior con el método que le da acción al botón de **Iniciar** en la vista de inicio de sesión. Indicar que la clase **LoginRegisterController** está dentro del paquete **Controller-LoginRegister**:
+```java
+ public ActionListener addSaveJButtonActionListener() {
+        ActionListener al = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                try {
+                    String usuario = view.getUserNameJTextField();
+                    String contrasenha_introducida = view.getPasswordJPasswordField();
+                    if (view.getSelectionComboBox().equalsIgnoreCase("cliente")) {
+                        String inicioSesion = OperationsDB.usuarioInicioSesion(usuario, contrasenha_introducida);
+                        if (inicioSesion.equals("inicio")) {
+                            JOptionPane.showMessageDialog(view, "Inicio de sesión realizado", "Inicio de sesión", JOptionPane.INFORMATION_MESSAGE);
+                            model.setClient(OperationsDB.ObtenerCliente(usuario));
+                            view.dispose();
+                            mainView.setVisibleStartJButton(true);
+                        } else if (inicioSesion.equals("registrarse")) {
+                            int opcion = JOptionPane.showConfirmDialog(view, "El usuario no está en la base de datos \n ¿Desea Registrarse?", "¿Registrarse?", JOptionPane.YES_NO_OPTION, JOptionPane.NO_OPTION);
+                            System.out.println(opcion);
+                            if (opcion == 0) {
+                                RegistrarseJDialog rjd = new RegistrarseJDialog(mainView, true);
+                                RegisterController rgc = new RegisterController(rjd, model);
+                                rjd.setVisible(true);
+                                view.setUserNameJTextField("");
+                                view.setPasswordJPasswordFiel("");
+                            }
+                        } else if (inicioSesion.equals("noContrasenha")) {
+                            JOptionPane.showMessageDialog(view, "La contraseña introducida no es válida", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else {
+                        try {
+                            int id = Integer.parseInt(usuario);
+                            if (OperationsDB.empleadoInicioSesion(id, contrasenha_introducida, view.getSelectionComboBox())) {
+                                if (view.getSelectionComboBox().equalsIgnoreCase("técnico")) {
+                                    model.setEmployee(OperationsDB.getEmployee(id, "técnico"));
+                                } else if (view.getSelectionComboBox().equalsIgnoreCase("asistente")) {
+                                    model.setEmployee(OperationsDB.getEmployee(id, "asistente"));
+                                }else if(view.getSelectionComboBox().equalsIgnoreCase("supervisor")){
+                                    model.setEmployee(OperationsDB.getEmployee(id, "supervisor"));
+                                }
+                                JOptionPane.showMessageDialog(view, "Inicio de sesión realizado", "Inicio de sesión", JOptionPane.INFORMATION_MESSAGE);
+                                view.dispose();
+                                mainView.setVisibleStartJButton(true);
+                            }else{
+                                JOptionPane.showMessageDialog(view, "Error: contraseña incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } catch (NumberFormatException nfe) {
+                            JOptionPane.showMessageDialog(view, "Error: el id es incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+
+                } catch (SQLException ex) {
+                    System.getLogger(LoginRegisterController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                }
+
+            }
+        };
+        return al;
+    }
+ ```
  
 ## Manual de Usuario 
 Para poder entrar en la aplicación, lo primero que tenenos que hacer es iniciar sesión. La ventana principal es la siguiente:

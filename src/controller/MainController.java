@@ -1,17 +1,20 @@
 package controller;
 
+import controller.asistant.AsistantController;
 import controller.loginRegister.LoginRegisterController;
-import controller.products.ProductsController;
+import controller.client.ClientController;
 import controller.tecnical.TecnicalController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import model.Asistant;
 import model.Technician;
 import model.TiendaInf;
+import view.AsistantJDialog;
 import view.LoginRegisterJDialog;
 import view.MainJFrame;
-import view.ProductsJDialog;
+import view.ClientsJDialog;
 import view.TecnicalJDialog;
 
 /**
@@ -59,8 +62,8 @@ public class MainController {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 if (model.getClient() != null && model.getEmployee() == null) {
-                    ProductsJDialog pjd = new ProductsJDialog(view, true);
-                    ProductsController pc = new ProductsController(pjd, model);
+                    ClientsJDialog pjd = new ClientsJDialog(view, true);
+                    ClientController pc = new ClientController(pjd, model);
                     pjd.setVisible(true);
                 }
                 else if (model.getClient() == null && model.getEmployee() != null){
@@ -69,6 +72,12 @@ public class MainController {
                         TecnicalController tc = new TecnicalController(td,model);
                         td.setVisible(true);
                     }
+                    else if(model.getEmployee()instanceof Asistant){
+                        AsistantJDialog ad = new AsistantJDialog(view,true);
+                        AsistantController ac = new AsistantController(ad,model);
+                        ad.setVisible(true);
+                    }
+
                 }else{
                     JOptionPane.showMessageDialog(view, "Error crítico en la aplicacion, reinicio requerido");
                 }

@@ -4,40 +4,36 @@
  */
 package view;
 
+
 import interfaceView.interfaceView;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
 
 /**
  *
- * @author dam2_alu03@inf.ald
+ * @author dam2_alu10@inf.ald
  */
-public class TecnicalJDialog extends javax.swing.JDialog implements interfaceView{
+public class ClientsJDialog extends javax.swing.JDialog implements interfaceView{
 
     /**
-     * Creates new form TecnicalJDialog
+     * Creates new form productsJDialog
      */
-    public TecnicalJDialog(java.awt.Frame parent, boolean modal) {
+    public ClientsJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        ApplyStylesTable(jScrollPane1, productsTable);
+        ApplyStylesTable(ScrollPane, productsTable);
         applyStylesButton();
-        addTableRenderer(productsTable, 0);
+        addTableRenderer(productsTable,1);
     }
 
     /**
@@ -50,42 +46,45 @@ public class TecnicalJDialog extends javax.swing.JDialog implements interfaceVie
     private void initComponents() {
 
         backgroundPanel = new javax.swing.JPanel();
-        cancelButton = new javax.swing.JButton();
-        fixButton = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        ScrollPane = new javax.swing.JScrollPane();
         productsTable = new javax.swing.JTable();
         productsLabel = new javax.swing.JLabel();
         searchTextField = new javax.swing.JTextField();
+        cancelButton = new javax.swing.JButton();
+        addButton = new javax.swing.JButton();
+        goToCartButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         backgroundPanel.setBackground(new java.awt.Color(255, 255, 255));
-
-        cancelButton.setText("Cancel");
-
-        fixButton.setText("Repair");
 
         productsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Imagen", "Nombre", "Precio", "Stock", "Estado"
+                "id", "image", "name", "price", "stock"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class
             };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(productsTable);
+        ScrollPane.setViewportView(productsTable);
 
-        productsLabel.setText("Productos:");
+        productsLabel.setText("Products:");
 
         searchTextField.setText("");
+
+        cancelButton.setText("Cancel");
+
+        addButton.setText("Add...");
+
+        goToCartButton.setText("Go to the cart...");
 
         javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(backgroundPanelLayout);
@@ -93,31 +92,34 @@ public class TecnicalJDialog extends javax.swing.JDialog implements interfaceVie
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backgroundPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
-                        .addComponent(fixButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cancelButton))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
                         .addComponent(productsLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchTextField)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(searchTextField))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
+                        .addComponent(goToCartButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(cancelButton)))
+                .addContainerGap())
         );
         backgroundPanelLayout.setVerticalGroup(
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
-                .addContainerGap(9, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(productsLabel)
                     .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelButton)
-                    .addComponent(fixButton))
+                    .addComponent(addButton)
+                    .addComponent(goToCartButton))
                 .addContainerGap())
         );
 
@@ -145,61 +147,52 @@ public class TecnicalJDialog extends javax.swing.JDialog implements interfaceVie
         cancelButton.setFocusPainted(false);
         cancelButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
+        addButton.setBackground(new Color(46, 204, 113));
+        addButton.setForeground(Color.WHITE);
+        addButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        addButton.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
+        addButton.setFocusPainted(false);
+        addButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        fixButton.setBackground(new Color(0, 191, 255));
-        fixButton.setForeground(Color.WHITE);
-        fixButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        fixButton.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
-        fixButton.setFocusPainted(false);
-        fixButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        goToCartButton.setBackground(new Color(0,191,255));
+        goToCartButton.setForeground(Color.WHITE);
+        goToCartButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        goToCartButton.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
+        goToCartButton.setFocusPainted(false);
+        goToCartButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
-    
+
+
+
     public JTable getProductsTable() {
         return productsTable;
     }
 
-    public void addFixButtonActionListener(ActionListener listener) {
-        this.fixButton.addActionListener(listener);
-    }
-
-    public void enableFixButton(boolean enable) {
-        this.fixButton.setEnabled(enable);
-    }
-
-    public int getSelectedRow() {
-        return this.productsTable.getSelectedRow();
-    }
-
-    public void addTableSelectionListener(javax.swing.event.ListSelectionListener listener) {
-        this.productsTable.getSelectionModel().addListSelectionListener(listener);
-    }
-
-    public void addCancelButtonActionListener(ActionListener listener) {
-        this.cancelButton.addActionListener(listener);
-    }
-
-    public String getState(int row) {
-        return (String) this.productsTable.getModel().getValueAt(row, 4);
-    }
-
-    public void setState(int row, String state) {
-        this.productsTable.getModel().setValueAt(state, row, 4);
+    public String getSearchTextField() {
+        return this.searchTextField.getText();
     }
 
     public void setSearchTextFieldListener(DocumentListener kl) {
         this.searchTextField.getDocument().addDocumentListener(kl);
     }
-    
-    public String getSearchTextField(){
-        return this.searchTextField.getText();
+
+    public void setCancelButtonListener(ActionListener al) {
+        this.cancelButton.addActionListener(al);
     }
-    
+    public void setAddButtonListener(ActionListener al){
+        this.addButton.addActionListener(al);
+    }
+    public void setGoToCartButtonListener(ActionListener al){
+        this.goToCartButton.addActionListener(al);
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane ScrollPane;
+    private javax.swing.JButton addButton;
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JButton cancelButton;
-    private javax.swing.JButton fixButton;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton goToCartButton;
     private javax.swing.JLabel productsLabel;
     private javax.swing.JTable productsTable;
     private javax.swing.JTextField searchTextField;

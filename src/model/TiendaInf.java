@@ -15,11 +15,15 @@ import java.util.Map;
  */
 public class TiendaInf {
     private List<Product> products;
+    private List<Supplier> suppliers;
+    private List<Category> categories;
     private Client client;
     private Employee employee;
 
     public TiendaInf() {
         this.products = new ArrayList<Product>();
+        this.suppliers = new ArrayList<Supplier>();
+        this.categories = new ArrayList<Category>();
         this.client = null;
         this.employee = null;
     }
@@ -75,6 +79,22 @@ public class TiendaInf {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public List<Supplier> getSuppliers() {
+        return suppliers;
+    }
+
+    public void setSuppliers(List<Supplier> suppliers) {
+        this.suppliers = suppliers;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
     
     

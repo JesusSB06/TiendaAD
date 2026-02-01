@@ -4,6 +4,7 @@
  */
 package view;
 
+import interfaceView.interfaceView;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -26,7 +27,7 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author alumno
  */
-public class CartClientJDialog extends javax.swing.JDialog {
+public class CartClientJDialog extends javax.swing.JDialog implements interfaceView{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CartClientJDialog.class.getName());
 
@@ -42,7 +43,7 @@ public class CartClientJDialog extends javax.swing.JDialog {
         initComponents();
         ApplyStylesTable(jScrollPane1, cartTable);
         applyStylesButton();
-        addTableRenderer(cartTable);
+        addTableRenderer(cartTable,1);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -130,12 +131,17 @@ public class CartClientJDialog extends javax.swing.JDialog {
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(totalPriceLabel)
                     .addComponent(creditLabel))
-                .addGap(18, 18, 18)
-                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addButton)
-                    .addComponent(cancelButton)
-                    .addComponent(deleteButton))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(deleteButton)
+                        .addContainerGap(35, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cancelButton)
+                            .addComponent(addButton))
+                        .addGap(22, 22, 22))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -152,24 +158,9 @@ public class CartClientJDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ApplyStylesTable(JScrollPane scroll, JTable table) {
-        scroll.getViewport().setBackground(Color.WHITE);
-        table.setBackground(Color.WHITE);
-        table.setForeground(Color.BLACK);
-        table.setShowGrid(false);
-        JTableHeader header = table.getTableHeader();
-        header.setBackground(Color.WHITE);
-        header.setForeground(Color.BLACK);
-        header.setBorder(null);
-        table.setSelectionBackground(Color.BLACK);
-        table.setSelectionForeground(Color.WHITE);
-        JScrollBar vertical = scroll.getVerticalScrollBar();
-        vertical.setBackground(Color.WHITE);
-        vertical.setForeground(Color.LIGHT_GRAY);
- 
-    }
 
-    private void applyStylesButton() {
+
+    public void applyStylesButton() {
         deleteButton.setBackground(new Color(231, 76, 60));
         deleteButton.setForeground(Color.WHITE);
         deleteButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
@@ -192,56 +183,7 @@ public class CartClientJDialog extends javax.swing.JDialog {
         cancelButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
-    private void addTableRenderer(JTable table) {
-        table.setRowHeight(80);
 
-        table.getColumnModel().getColumn(1).setCellRenderer(new TableCellRenderer() {
-
-
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value,
-                    boolean isSelected, boolean hasFocus, int row, int column) {
-
-                JLabel label = new JLabel();
-                label.setHorizontalAlignment(JLabel.CENTER);
-
-                if (value instanceof ImageIcon) {
-                    label.setIcon((ImageIcon) value);
-                } else {
-                    label.setText(value != null ? value.toString() : "No Image");
-                }
-
-                return label;
-            }
-        });
-
-        DefaultTableCellRenderer textCentrado = new DefaultTableCellRenderer();
-        textCentrado.setHorizontalAlignment(SwingConstants.CENTER);
-
-        for (int i = 0; i < table.getColumnCount(); i++) {
-            if(i != 1){
-                table.getColumnModel().getColumn(i).setCellRenderer(textCentrado);
-            }
-
-        }
-    }
-
-    public void clearTable(JTable table) {
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.setRowCount(0);
-        table.clearSelection();
-        table.revalidate();
-        table.repaint();
-    }
-    public void clearRow(JTable table){
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        int row = table.getSelectedRow();
-        model.removeRow(row);
-    }
-    public void addRowTable(Vector row, JTable table) {
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.addRow(row);
-    }
 
     public JTable getCartTable() {
         return cartTable;

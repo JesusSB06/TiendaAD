@@ -67,20 +67,26 @@ public class LoginRegisterController {
                         } else if (inicioSesion.equals("noContrasenha")) {
                             JOptionPane.showMessageDialog(view, "La contraseña introducida no es válida", "Error", JOptionPane.ERROR_MESSAGE);
                         }
-                    } else if (view.getSelectionComboBox().equalsIgnoreCase("técnico")) {
+                    } else {
                         try {
                             int id = Integer.parseInt(usuario);
                             if (OperationsDB.empleadoInicioSesion(id, contrasenha_introducida, view.getSelectionComboBox())) {
-                                model.setEmployee(OperationsDB.getTechnician(id));
+                                if (view.getSelectionComboBox().equalsIgnoreCase("técnico")) {
+                                    model.setEmployee(OperationsDB.getEmployee(id, "técnico"));
+                                } else if (view.getSelectionComboBox().equalsIgnoreCase("asistente")) {
+                                    model.setEmployee(OperationsDB.getEmployee(id, "asistente"));
+                                }else if(view.getSelectionComboBox().equalsIgnoreCase("supervisor")){
+                                    model.setEmployee(OperationsDB.getEmployee(id, "supervisor"));
+                                }
                                 JOptionPane.showMessageDialog(view, "Inicio de sesión realizado", "Inicio de sesión", JOptionPane.INFORMATION_MESSAGE);
                                 view.dispose();
                                 mainView.setVisibleStartJButton(true);
+                            }else{
+                                JOptionPane.showMessageDialog(view, "Error: contraseña incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
                             }
                         } catch (NumberFormatException nfe) {
-                             JOptionPane.showMessageDialog(view, "Error: el id es incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(view, "Error: el id es incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
                         }
-                    } else if (view.getSelectionComboBox().equalsIgnoreCase("asistente")) {
-                        OperationsDB.empleadoInicioSesion(Integer.parseInt(usuario), contrasenha_introducida, view.getSelectionComboBox());
                     }
 
                 } catch (SQLException ex) {

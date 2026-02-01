@@ -2,27 +2,31 @@ package model;
 
 import java.time.LocalDate;
 import java.util.List;
-
+import java.sql.Date;
 /**
  *
  * @author dam2_alu03@inf.ald
  */
 public class Sale {
     private int id;
-    private LocalDate dateSale;
-    private Client client;
-    private List<Product> products;
+    private Date dateSale;
+    private String client;
+    private int product;
 
     public Sale() {
     }
 
-    public Sale(int id, LocalDate dateSale, Client client, List<Product> products) {
-        this.id = id;
-        this.dateSale = dateSale;
+    public Sale(int id, Date dateSale, String client,int product) {
+        this.id = id;      
         this.client = client;
-        this.products = products;
+        this.product = product;
+        this.dateSale = dateSale;
     }
-
+    public Sale(String client,int product, Date dateSale) {     
+        this.client = client;
+        this.product = product;
+        this.dateSale = dateSale;
+    }
     public int getId() {
         return id;
     }
@@ -31,28 +35,28 @@ public class Sale {
         this.id = id;
     }
 
-    public LocalDate getDateSale() {
+    public Date getDateSale() {
         return dateSale;
     }
 
-    public void setDateSale(LocalDate dateSale) {
+    public void setDateSale(Date dateSale) {
         this.dateSale = dateSale;
     }
 
-    public Client getClient() {
+    public String getClient() {
         return client;
     }
 
-    public void setClient(Client client) {
+    public void setClient(String client) {
         this.client = client;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public int getProduct() {
+        return product;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setProduct(int product) {
+        this.product = product;
     }
 
 }

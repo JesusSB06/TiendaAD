@@ -17,7 +17,9 @@ import javax.swing.JLabel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
@@ -27,17 +29,17 @@ import javax.swing.table.TableColumn;
  *
  * @author dam2_alu03@inf.ald
  */
-public class TecnicalJDialog extends javax.swing.JDialog implements interfaceView{
+public class AsistantJDialog extends javax.swing.JDialog implements interfaceView{
 
     /**
      * Creates new form TecnicalJDialog
      */
-    public TecnicalJDialog(java.awt.Frame parent, boolean modal) {
+    public AsistantJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        ApplyStylesTable(jScrollPane1, productsTable);
+        ApplyStylesTable(jScrollPane1, usersTable);
         applyStylesButton();
-        addTableRenderer(productsTable, 0);
+        addTableRenderer(usersTable,1);
     }
 
     /**
@@ -51,9 +53,9 @@ public class TecnicalJDialog extends javax.swing.JDialog implements interfaceVie
 
         backgroundPanel = new javax.swing.JPanel();
         cancelButton = new javax.swing.JButton();
-        fixButton = new javax.swing.JButton();
+        addButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        productsTable = new javax.swing.JTable();
+        usersTable = new javax.swing.JTable();
         productsLabel = new javax.swing.JLabel();
         searchTextField = new javax.swing.JTextField();
 
@@ -63,27 +65,27 @@ public class TecnicalJDialog extends javax.swing.JDialog implements interfaceVie
 
         cancelButton.setText("Cancel");
 
-        fixButton.setText("Repair");
+        addButton.setText("Add product...");
 
-        productsTable.setModel(new javax.swing.table.DefaultTableModel(
+        usersTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Imagen", "Nombre", "Precio", "Stock", "Estado"
+                "Id", "Image", "Name", "Price", "Stock"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(productsTable);
+        jScrollPane1.setViewportView(usersTable);
 
-        productsLabel.setText("Productos:");
+        productsLabel.setText("Products:");
 
         searchTextField.setText("");
 
@@ -93,12 +95,15 @@ public class TecnicalJDialog extends javax.swing.JDialog implements interfaceVie
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backgroundPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
-                        .addComponent(fixButton)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(addButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cancelButton))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
                         .addComponent(productsLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -117,7 +122,7 @@ public class TecnicalJDialog extends javax.swing.JDialog implements interfaceVie
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelButton)
-                    .addComponent(fixButton))
+                    .addComponent(addButton))
                 .addContainerGap())
         );
 
@@ -136,7 +141,7 @@ public class TecnicalJDialog extends javax.swing.JDialog implements interfaceVie
     }// </editor-fold>//GEN-END:initComponents
 
 
-    @Override
+
     public void applyStylesButton() {
         cancelButton.setBackground(new Color(231, 76, 60));
         cancelButton.setForeground(Color.WHITE);
@@ -146,45 +151,34 @@ public class TecnicalJDialog extends javax.swing.JDialog implements interfaceVie
         cancelButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 
-        fixButton.setBackground(new Color(0, 191, 255));
-        fixButton.setForeground(Color.WHITE);
-        fixButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        fixButton.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
-        fixButton.setFocusPainted(false);
-        fixButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        addButton.setBackground(new Color(0, 191, 255));
+        addButton.setForeground(Color.WHITE);
+        addButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        addButton.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
+        addButton.setFocusPainted(false);
+        addButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
-    
+
+
+
     public JTable getProductsTable() {
-        return productsTable;
+        return usersTable;
     }
 
-    public void addFixButtonActionListener(ActionListener listener) {
-        this.fixButton.addActionListener(listener);
-    }
 
-    public void enableFixButton(boolean enable) {
-        this.fixButton.setEnabled(enable);
-    }
 
     public int getSelectedRow() {
-        return this.productsTable.getSelectedRow();
+        return this.usersTable.getSelectedRow();
     }
 
     public void addTableSelectionListener(javax.swing.event.ListSelectionListener listener) {
-        this.productsTable.getSelectionModel().addListSelectionListener(listener);
+        this.usersTable.getSelectionModel().addListSelectionListener(listener);
     }
 
     public void addCancelButtonActionListener(ActionListener listener) {
         this.cancelButton.addActionListener(listener);
     }
 
-    public String getState(int row) {
-        return (String) this.productsTable.getModel().getValueAt(row, 4);
-    }
-
-    public void setState(int row, String state) {
-        this.productsTable.getModel().setValueAt(state, row, 4);
-    }
 
     public void setSearchTextFieldListener(DocumentListener kl) {
         this.searchTextField.getDocument().addDocumentListener(kl);
@@ -194,14 +188,17 @@ public class TecnicalJDialog extends javax.swing.JDialog implements interfaceVie
         return this.searchTextField.getText();
     }
     
+    public void setAddButtonListener (ActionListener al){
+        this.addButton.addActionListener(al);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addButton;
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JButton cancelButton;
-    private javax.swing.JButton fixButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel productsLabel;
-    private javax.swing.JTable productsTable;
     private javax.swing.JTextField searchTextField;
+    private javax.swing.JTable usersTable;
     // End of variables declaration//GEN-END:variables
 }

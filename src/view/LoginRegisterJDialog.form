@@ -127,7 +127,7 @@
                 <StringItem index="0" value="Cliente"/>
                 <StringItem index="1" value="T&#xe9;cnico"/>
                 <StringItem index="2" value="Asistente"/>
-                <StringItem index="3" value="Administrador"/>
+                <StringItem index="3" value="Supervisor"/>
               </StringArray>
             </Property>
           </Properties>

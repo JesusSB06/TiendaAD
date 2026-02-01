@@ -9,7 +9,6 @@ import java.sql.Statement;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 import main.main;
 
 /**
@@ -22,7 +21,6 @@ public class OperationsDB {
 
     public static void openConnection() {
         try {
-            System.out.println("Abriendo conexion");
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/tienda_inf";
             conexion = DriverManager.getConnection(url, "root", "abc123.");
@@ -124,8 +122,8 @@ public class OperationsDB {
         return existeUsuario;
     }
 
-    public static Technician getTechnician(int id_empleado) {
-        Technician tec = null;
+    public static Employee getEmployee(int id_empleado, String type) {
+        Employee tec = null;
         try {
             String select = "SELECT * from empleado WHERE id_empleado  = ?";
             PreparedStatement st = conexion.prepareStatement(select);
@@ -140,14 +138,18 @@ public class OperationsDB {
                 LocalTime startHour = LocalTime.parse(rs.getString("horario_entrada"));
                 LocalTime exitTime = LocalTime.parse(rs.getString("horario_salida"));
                 int supervisorId = rs.getInt("supervisor");
-                tec = new Technician(empId,dni,name,email,direction,supervisorId,startHour,exitTime);
+                if(type.equalsIgnoreCase("técnico")){
+                    tec = new Technician(empId,dni,name,email,direction,supervisorId,startHour,exitTime);
+                }else if(type.equalsIgnoreCase("asistente")){
+                    tec = new Asistant(empId,dni,name,email,direction,supervisorId,startHour,exitTime);
+                }
+                
             }
         } catch (SQLException ex) {
             System.getLogger(OperationsDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
         return tec;
     }
-
     public static int anhadirCliente(Client cliente) throws SQLException {
         String dni = cliente.getDni();
         String nombre_cliente = cliente.getNombre_cliente();
@@ -166,7 +168,21 @@ public class OperationsDB {
         }
         return resultado;
     }
-
+    
+    public static void deleteProduct(int idProducto) throws SQLException{
+        String sentenciaSQL = "DELETE FROM producto WHERE id_producto = ? ";
+        PreparedStatement ps = conexion.prepareStatement(sentenciaSQL);
+        ps.executeUpdate();
+    }
+    
+    public static void addSale(Sale sale) throws SQLException{
+        String sentenciaSQL = "INSERT INTO venta(dni_cliente, id_producto, fecha_venta) VALUES (?,?,?)";
+        PreparedStatement ps = conexion.prepareStatement(sentenciaSQL);
+        ps.setString(1,sale.getClient());
+        ps.setInt(2, sale.getProduct());
+        ps.setDate(3, sale.getDateSale());
+        ps.executeUpdate();
+    }
     public static List<Product> obtenerProductosCliente() throws SQLException {
         List<Product> products = new ArrayList<>();
         String select = "SELECT * from producto";
@@ -209,15 +225,19 @@ public class OperationsDB {
     }
 
     public static int addProduct(Product product) throws SQLException {
-        int vId = product.getId();
         String vName = product.getName();
         int vStock = product.getStock();
         String vState = product.getState();
         Double vPrice = product.getPrice();
         String vImg = product.getImg();
         int vCategory = product.getCategory();
-        String sentenciaSQL = "INSERT into Product  (nombre_producto, stock, estado, price, img, category) values (?,?,?,?,?,?)";
+        String sentenciaSQL = "INSERT into producto (nombre_producto, stock, estado, precio, id_categoria) values (?,?,?,?,?)";
         PreparedStatement ps = conexion.prepareStatement(sentenciaSQL);
+        ps.setString(1, vName);
+        ps.setInt(2, vStock);
+        ps.setString(3, vState);
+        ps.setDouble(4, vPrice);
+        ps.setInt(5, vCategory);
         int resultado = ps.executeUpdate();
         ps.close();
         return resultado;
@@ -244,6 +264,26 @@ public class OperationsDB {
         return products;
     }
 
+    public static List<Product> obtenerProductos() throws SQLException {
+        List<Product> products = new ArrayList<>();
+        String sentenceSQL = "SELECT * from producto";
+        Statement st = conexion.createStatement();
+        ResultSet rs = st.executeQuery(sentenceSQL);
+        while (rs.next()) {
+            Product p = new Product(
+                    rs.getInt("id_producto"),
+                    rs.getString("nombre_producto"),
+                    rs.getInt("stock"),
+                    rs.getString("estado"),
+                    rs.getDouble("precio"),
+                    rs.getInt("id_categoria")
+            );
+            setImageProducts(p, products);
+        }
+        st.close();
+        rs.close();
+        return products;
+    }
     public static int actualizarEstadoProducto(int idProducto, String nuevoEstado) throws SQLException {
         String sentenceSQL = "UPDATE producto SET estado = ? WHERE id_producto = ?";
         PreparedStatement ps = conexion.prepareStatement(sentenceSQL);
@@ -277,5 +317,56 @@ public class OperationsDB {
         ps.setString(2, dni);
         ps.executeUpdate();
         ps.close();
+    }
+    public static List<Supplier> obtenerProveedores(){
+        List<Supplier> suppliers = new ArrayList<>();
+        String sentenciaSQL = "SELECT * FROM proveedor";
+        Statement stmnt;
+        try {
+            stmnt = conexion.createStatement();
+            ResultSet rs = stmnt.executeQuery(sentenciaSQL);
+            while(rs.next()){
+                Supplier sp = new Supplier(rs.getInt(1), rs.getString(2));
+                suppliers.add(sp);
+                
+            }
+        } catch (SQLException ex) {
+            System.getLogger(OperationsDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        
+        return suppliers;
+    }
+
+    public static List<Category> obtenerCategorias() {
+        List<Category> categories = new ArrayList<>();
+        String sentenciaSQL = "SELECT * FROM categoria";
+        Statement stmnt;
+        try {
+            stmnt = conexion.createStatement();
+            ResultSet rs = stmnt.executeQuery(sentenciaSQL);
+            while(rs.next()){
+                Category c = new Category(rs.getInt(1), rs.getString(2));
+                categories.add(c);
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            System.getLogger(OperationsDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        return categories;
+    }
+
+    public static void addProvee(int id_producto, int id_proveedor, int stock) {
+        String sentenciaSQL= "INSERT INTO provee (id_producto, id_proveedor, stock) "
+                + "VALUES (?, ?, ?) "
+                + "ON DUPLICATE KEY UPDATE stock = stock + VALUES(stock)";
+        try {
+            PreparedStatement ps = conexion.prepareStatement(sentenciaSQL);
+            ps.setInt(1, id_producto);
+            ps.setInt(2, id_proveedor);
+            ps.setInt(3, stock);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.getLogger(OperationsDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }
 }

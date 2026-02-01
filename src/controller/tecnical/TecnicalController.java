@@ -13,7 +13,6 @@ import java.util.Vector;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import model.OperationsDB;
@@ -47,9 +46,18 @@ public class TecnicalController {
     }
 
     private void loadProducts(List<Product> products) {
+        List<Product> toRemove = new ArrayList<Product>();
         view.clearTable(view.getProductsTable());
-        view.addTableRenderer(view.getProductsTable());
         for (Product p : products) {
+            if (p.getStock() <= 0) {
+                toRemove.add(p);
+                try {
+                    OperationsDB.deleteProduct(p.getId());
+                } catch (SQLException ex) {
+                    System.getLogger(TecnicalController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                }
+            }
+
             Vector row = new Vector();
             ImageIcon icon = null;
             try {
@@ -70,6 +78,9 @@ public class TecnicalController {
             row.add(p.getStock());
             row.add(p.getState());
             view.addRowTable(row, view.getProductsTable());
+        }
+        for (Product p : toRemove) {
+            model.getProducts().remove(p);
         }
         if (model.getProducts().isEmpty()) {
             JOptionPane.showMessageDialog(view, "No hay productos para reparar");
@@ -138,6 +149,7 @@ public class TecnicalController {
         return dl;
     }
     private void SearchProduct() {
+        
         List<Product> finalProducts = new ArrayList<Product>();
         String filter = view.getSearchTextField();
         if (filter.isEmpty()) {
@@ -147,7 +159,9 @@ public class TecnicalController {
                 if (p.getName().toLowerCase().contains(filter.toLowerCase())) {
                     finalProducts.add(p);
                 }
+  
             }
+
             loadProducts(finalProducts);
         }
 

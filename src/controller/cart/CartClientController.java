@@ -4,6 +4,7 @@
  */
 package controller.cart;
 
+import controller.client.ClientController;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,9 +20,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import model.OperationsDB;
 import model.Product;
+import model.Sale;
 import model.TiendaInf;
 import view.CartClientJDialog;
-import view.ProductsJDialog;
+import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -30,10 +33,12 @@ import view.ProductsJDialog;
 public class CartClientController {
     private CartClientJDialog view;
     private TiendaInf model;
+    private ClientController parent;
 
-    public CartClientController(CartClientJDialog view, TiendaInf model) {
+    public CartClientController(CartClientJDialog view, TiendaInf model,ClientController parent) {
         this.view = view;
         this.model = model;
+        this.parent = parent;
         this.initComponents();
         this.view.setBuyButtonActionListener(this.setBuyButtonActionListener());
         this.view.setCancelButtonListener(this.setCancelButtonActionListener());
@@ -42,9 +47,13 @@ public class CartClientController {
     
     private void initComponents(){
         this.updateTable(view.getCartTable());
-        this.view.setTotalPriceLabel(String.valueOf(getTotalPrice()));
-        this.view.setCreditLabel(String.valueOf(model.getClient().getSaldo()));
+        this.updateLabels();
     }
+    private void updateLabels() {
+        this.view.setTotalPriceLabel("Precio total: " + String.format("%.2f", getTotalPrice()));
+        this.view.setCreditLabel(String.valueOf("Saldo actual: " + model.getClient().getSaldo()));
+    }
+
     private void updateTable(JTable table){
         view.clearTable(table);
         for(Map.Entry<Product,Integer> p : model.getCart().entrySet()){
@@ -85,8 +94,10 @@ public class CartClientController {
                 if(model.getClient().getSaldo() > getTotalPrice()){
                     for(Map.Entry<Product,Integer> p : model.getCart().entrySet()){
                         try {
-                            
-                            OperationsDB.addProduct(new Product(p.getKey().getName(), p.getValue(), "vendido", p.getKey().getPrice(),p.getKey().getCategory()));
+                            Product pd = new Product(p.getKey().getName(), p.getValue(), "vendido", p.getKey().getPrice(),p.getKey().getCategory());
+                            Sale sale = new Sale(model.getClient().getDni(),pd.getId(), Date.valueOf(LocalDate.now()));
+                            OperationsDB.addProduct(pd);
+                            OperationsDB.addSale(sale);       
                             model.getCart().remove(p.getKey());
                         } catch (SQLException ex) {
                             System.getLogger(CartClientController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
@@ -98,10 +109,12 @@ public class CartClientController {
                         System.getLogger(CartClientController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
                     }
                     JOptionPane.showMessageDialog(view, "Se ha realizado la compra sin problemas");
+                    parent.updateTable(model.getProducts());
                     view.dispose();
                 }else{
                     JOptionPane.showMessageDialog(view, "Error: saldo insuficiente","Error", JOptionPane.ERROR_MESSAGE);
                 }
+                updateLabels();
             }
         };
         return al;
@@ -121,18 +134,25 @@ public class CartClientController {
             public void actionPerformed(ActionEvent e) {
                 int row = view.getCartTable().getSelectedRow();
                 if(row != -1){
-                    int id = (int) view.getCartTable().getModel().getValueAt(row, 0);
-                    int stock = (int) view.getCartTable().getModel().getValueAt(row, 4);
                     try {
-                        OperationsDB.sumarStock(id,stock );
+                        int id = (int) view.getCartTable().getModel().getValueAt(row, 0);
+                        int stock = (int) view.getCartTable().getModel().getValueAt(row, 4);
+                        try {
+                            OperationsDB.sumarStock(id,stock );
+                        } catch (SQLException ex) {
+                            System.getLogger(CartClientController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                        }
+                        model.deleteToCart(model.getCartProduct(id));
+                        view.clearRow(view.getCartTable());
+                        model.setProducts(OperationsDB.obtenerProductosCliente());
+                        parent.updateTable(model.getProducts());
                     } catch (SQLException ex) {
                         System.getLogger(CartClientController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
                     }
-                    model.deleteToCart(model.getCartProduct(id));
-                    view.clearRow(view.getCartTable());
                 }else{
                     JOptionPane.showMessageDialog(view, "Error: seleccione un producto","Error", JOptionPane.ERROR_MESSAGE);
                 }
+                updateLabels();
             }
         };
         return al;

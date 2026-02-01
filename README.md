@@ -122,7 +122,21 @@ En caso de quere registrarse, tendrá que introducir los datos necesarios:
 
   ![Peticion1](/imagenes/datosRegistro.png)
 
+### Vista Tecnico
+Cuando iniciamos sesion con un usario que es tecnico tenemos acceso a una ventana la cual podemos ver los estados de los productos y la opcion de poder repararlos.
 
+![Peticion1](/imagenes/principal_tecnico.png)
 
- 
+Si elegimos un producto y le damos al boton para repararlo, nos pregunta si queremos que el producto seleccionado sea reparado.
 
+![Peticion1](/imagenes/confirmar_reparacion.png)
+![Peticion1](/imagenes/producto_reparado.png)
+
+Al confirmar el producto cambia su estado a "Disponible" para saber que se encuentra en condiciones para la venta de nuevo.
+
+![Peticion1](/imagenes/producto_disponible.png)
+
+Control de errores: si no hay producto seleccionado y cuando el producto ya se encuentra disponible.
+
+![Peticion1](/imagenes/aviso_selecciona_producto_a_reparar.png)
+![Peticion1](/imagenes/aviso_producto_ya_reparado.png)

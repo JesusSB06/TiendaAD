@@ -80,6 +80,8 @@ public class LoginRegisterController {
                                 JOptionPane.showMessageDialog(view, "Inicio de sesión realizado", "Inicio de sesión", JOptionPane.INFORMATION_MESSAGE);
                                 view.dispose();
                                 mainView.setVisibleStartJButton(true);
+                            }else{
+                                JOptionPane.showMessageDialog(view, "Error: contraseña incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
                             }
                         } catch (NumberFormatException nfe) {
                             JOptionPane.showMessageDialog(view, "Error: el id es incorrecto", "Error", JOptionPane.ERROR_MESSAGE);

@@ -100,5 +100,29 @@ Clasificación de los productos por tipo:
 
 ### Diagrama entidad-relación
  ![Peticion1](/imagenes/DiagramaTienda.png)
+ 
+## Manual de Usuario 
+Para poder entrar en la aplicación, lo primero que tenenos que hacer es iniciar sesión. La ventana principal es la siguiente:
 
+ ![Peticion1](/imagenes/ventanaPrincipal.png)
+
+Una vez dentro, tenemos que introducir los repectivos datos según seas cliente, técnico, asistente o administrador.
+
+ ![Peticion1](/imagenes/combox.png)
+
+ Cuando el usuario introduzca los datos correctamente se mostrá un mensaje, y ya podrá acceder a la aplicación.
+
+  ![Peticion1](/imagenes/inicioDeSesion.png)
+
+En caso de ser introducir un DNI del cliente, mostrará un mensaje de si se quiere registrar como cliente:
+
+  ![Peticion1](/imagenes/registro.png)
+
+En caso de quere registrarse, tendrá que introducir los datos necesarios:
+
+  ![Peticion1](/imagenes/datosRegistro.png)
+
+
+
+ 
 

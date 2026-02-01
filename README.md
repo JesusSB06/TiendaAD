@@ -40,9 +40,12 @@ El proyecto consiste en la creación de una aplicación basandonos en el modelo 
 
 - **JDK 25 o superior**
 - **Java Swing**
-- **Sistema gestor de bases de datos**
+- **MySQL: istema gestor de bases de datos**
 - **IDE de ejecución y compilación (Recomendacion: Apache NetBeans)**
+
 Todo lo demas que sea necesario para ejucatar la aplicación como el **conector a la base de datos** y la base de datos modelo **entidad-relación** te la proporcionara el proyecto.
+- **Conector a la base de datos(mysql-connector-j-8.1.0)**: se encontrara en la carpeta `libs`, al ser un proyecto en Ant
+- **Base de datos**: del mismo modo se encontrara en la carpeta `libs` en el archivo **ScriptTienda.sql**, en este tambien se incluiran datos *Demo* para probar la aplicación.
 ## Estructura del proyecto
 [Volver al índice](#índice)
 

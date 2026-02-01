@@ -55,7 +55,7 @@ A continuación vamos a explicar las principales clases con sus atributos:
 #### Empleado
 Los empleados son quienes gestionan la tienda. Puede haber diferentes tipos:
 - **Supervisor**: supervisa a los empleados.
-- **Asistente**: ayuda a los empleados.
+- **Asistente**: ayuda a los empleados y gestiona la entrada de los productos.
 -  **Técnico**: repara productos de la tienda.
    
 Además tienen una serie de atributos:

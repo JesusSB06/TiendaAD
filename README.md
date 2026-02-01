@@ -339,6 +339,14 @@ Al iniciar sesión, se nos desplazara a la siguiente ventana en donde se podran 
 
 ![Peticion1](/imagenes/clienteTabla.PNG)
 
-Despues, existiran tres opciones, cancelar, ir al carrito, esta opción no puede ser usada a menos que exista un producto en el carrito y la opción de añadir un producto al carrito, si pulsamos añadir al carrito, nos saltara el siguiente **JOptionPane**:
+Despues, existiran tres opciones, cancelar, ir al carrito, esta opción no puede ser usada a menos que exista un producto en el carrito y la opción de añadir un producto al carrito, si pulsamos añadir al carrito, nos saltara el siguiente **JOptionPane** con sus respectivas comprobaciones, ademas, si un producto llega a 0 de stock sera automaticamente eliminado de la base de datos:
 
 ![Peticion1](/imagenes/stock.PNG)
+![Peticion1](/imagenes/saldoError.PNG)
+![Peticion1](/imagenes/errorFormat.PNG)
+
+Finalmente si clickamos en el carrito con un producto, nos saltara a la siguiente ventana, en la cúal se nos mostrara: **los producto**, **el coste total** y **el saldo del cliente**:
+
+![Peticion1](/imagenes/Cart.PNG)
+
+En esta ventana, estara la opción de comprar con sus respectivas comprobaciones y el boton eliminar producto del carrito, este botón no solo eliminara el producto, **si no que devolvera el stock que hemos ocupado**, si todo sale bien, se cerrara la ventana con la compra ya realizada devolviendonos a la anterior.

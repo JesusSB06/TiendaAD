@@ -56,7 +56,7 @@ public class LoginRegisterJDialog extends javax.swing.JDialog {
 
         saveJButton.setText("Iniciar");
 
-        typeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente", "Técnico", "Asistente", "Supervisor" }));
+        typeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente", "Técnico", "Asistente" }));
 
         jLabel1.setText("Tipo usuario:");
 

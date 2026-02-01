@@ -336,3 +336,9 @@ Control de errores: si no hay producto seleccionado y cuando el producto ya se e
 
 ### Vista Cliente
 Al iniciar sesión, se nos desplazara a la siguiente ventana en donde se podran observar todos los productos en condiciones de ser vendidos y un buscador dináminco:
+
+![Peticion1](/imagenes/clienteTabla.PNG)
+
+Despues, existiran tres opciones, cancelar, ir al carrito, esta opción no puede ser usada a menos que exista un producto en el carrito y la opción de añadir un producto al carrito, si pulsamos añadir al carrito, nos saltara el siguiente **JOptionPane**:
+
+![Peticion1](/imagenes/stock.PNG)

@@ -190,7 +190,7 @@ public class OperationsDB {
         Statement st = conexion.createStatement();
         ResultSet rs = st.executeQuery(select);
         while (rs.next()) {
-            if (rs.getString(4).equals("disponible")) {
+            if (rs.getString(4).equals("disponible") || rs.getString(4).equals("nuevo")) {
                 Product p = new Product(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getDouble(5), rs.getInt(6));
                 setImageProducts(p, products);
             }

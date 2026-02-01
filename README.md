@@ -123,7 +123,7 @@ En caso de quere registrarse, tendrá que introducir los datos necesarios:
   ![Peticion1](/imagenes/datosRegistro.png)
 
 ### Vista Tecnico
-Cuando iniciamos sesion con un usario que es tecnico tenemos acceso a una ventana la cual podemos ver los estados de los productos y la opcion de poder repararlos.
+Cuando iniciamos sesion con un usuario que es tecnico tenemos acceso a una ventana la cual podemos ver los estados de los productos y la opcion de poder repararlos.
 
 ![Peticion1](/imagenes/principal_tecnico.png)
 

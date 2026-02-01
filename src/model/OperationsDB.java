@@ -172,6 +172,7 @@ public class OperationsDB {
     public static void deleteProduct(int idProducto) throws SQLException{
         String sentenciaSQL = "DELETE FROM producto WHERE id_producto = ? ";
         PreparedStatement ps = conexion.prepareStatement(sentenciaSQL);
+        ps.setInt(1, idProducto);
         ps.executeUpdate();
     }
     

@@ -260,6 +260,40 @@ public interface interfaceView {
     }
 }
 ```
+Y por último, un detalle interesante sería como se llego a crear el buscador de las **JTable**, el primer intento se realizo a traves de los **KeyListener**, pero era una opción que presentaba herrores constantes, por lo que tras una investigación se llego al uso del **DocumentListener**, el cual detecta la modificación en el modelo de datos que contiente el JTextField, eso y con un metodo a parte, nos permite crear un buscador dinámico:
+```java
+    private DocumentListener setSearchTextFieldDocumentListener(){
+        DocumentListener dl = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                SearchProduct();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                SearchProduct();
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                SearchProduct();
+            }
+        };
+        return dl;
+    }
+    private void SearchProduct() {        
+        List<Product> finalProducts = new ArrayList<>();
+        String filter = view.getSearchTextField();
+        if (filter.isEmpty()) {
+            updateTable( model.getProducts());
+        } else {
+            for (Product p : model.getProducts()) {
+                if (p.getName().toLowerCase().contains(filter.toLowerCase())) {
+                    finalProducts.add(p);
+                }
+            }
+            updateTable( finalProducts);
+        }
+    }
+```
 ## Manual de Usuario 
 Para poder entrar en la aplicación, lo primero que tenenos que hacer es iniciar sesión. La ventana principal es la siguiente:
 

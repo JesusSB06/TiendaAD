@@ -55,10 +55,10 @@ public class ClientController {
         } catch (SQLException ex) {
             System.getLogger(ClientController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
-        this.updateTable(view.getProductsTable(), model.getProducts());
+        this.updateTable( model.getProducts());
     }
-    private void updateTable(JTable table, List<Product> products) {
-        view.clearTable(table);
+    public void updateTable(List<Product> products) {
+        view.clearTable(view.getProductsTable());
         for (Product d : products) {
             
             Vector row = new Vector();
@@ -80,7 +80,7 @@ public class ClientController {
             row.add(d.getName());
             row.add(d.getPrice());
             row.add(d.getStock());
-            view.addRowTable(row, table);
+            view.addRowTable(row, view.getProductsTable());
         }
 
     }
@@ -104,18 +104,20 @@ public class ClientController {
         };
         return dl;
     }
+
     private void SearchProduct() {
-        List<Product> finalProducts = new ArrayList<Product>();
+        List<Product> toRemove = new ArrayList<>();
+        List<Product> finalProducts = new ArrayList<>();
         String filter = view.getSearchTextField();
         if (filter.isEmpty()) {
-            updateTable(view.getProductsTable(), model.getProducts());
+            updateTable( model.getProducts());
         } else {
             for (Product p : model.getProducts()) {
                 if (p.getName().toLowerCase().contains(filter.toLowerCase())) {
                     finalProducts.add(p);
                 }
-                if(p.getStock() <= 0){
-                    model.getProducts().remove(p);
+                if (p.getStock() <= 0) {
+                    toRemove.add(p);
                     try {
                         OperationsDB.deleteProduct(p.getId());
                     } catch (SQLException ex) {
@@ -123,7 +125,10 @@ public class ClientController {
                     }
                 }
             }
-            updateTable(view.getProductsTable(), finalProducts);
+            for (Product p : toRemove) {
+                model.getProducts().remove(p);
+            }
+            updateTable( finalProducts);
         }
 
     }
@@ -150,7 +155,7 @@ public class ClientController {
                         OperationsDB.restarStock(id , stock);
                         model.addToCart(model.getProduct(id), stock);
                         model.setProducts(OperationsDB.obtenerProductosCliente());
-                        updateTable(view.getProductsTable(), model.getProducts());
+                        updateTable(model.getProducts());
                     }catch(NumberFormatException nfe){
                         JOptionPane.showMessageDialog(view,"Error: el valor debe ser unicamente un número", "Error", JOptionPane.ERROR_MESSAGE);
                     } catch (SQLException ex) {
@@ -174,7 +179,7 @@ public class ClientController {
                     JOptionPane.showMessageDialog(view, "Error: el carro esta vacío", "Error", JOptionPane.ERROR_MESSAGE);
                 }else{
                     CartClientJDialog ccd = new CartClientJDialog(view, true);
-                    CartClientController ccc = new CartClientController(ccd, model);
+                    CartClientController ccc = new CartClientController(ccd, model, ClientController.this);
                     ccd.setVisible(true);
                 }
             }

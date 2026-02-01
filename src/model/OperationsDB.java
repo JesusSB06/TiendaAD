@@ -297,7 +297,7 @@ public class OperationsDB {
         ps.executeUpdate();
         ps.close();
     }
-    public static List<Supplier> ObtenerProveedores(){
+    public static List<Supplier> obtenerProveedores(){
         List<Supplier> suppliers = new ArrayList<>();
         String sentenciaSQL = "SELECT * FROM proveedor";
         Statement stmnt;
@@ -314,5 +314,35 @@ public class OperationsDB {
         }
         
         return suppliers;
+    }
+
+    public static List<Category> obtenerCategorias() {
+        List<Category> categories = new ArrayList<>();
+        String sentenciaSQL = "SELECT * FROM categoria";
+        Statement stmnt;
+        try {
+            stmnt = conexion.createStatement();
+            ResultSet rs = stmnt.executeQuery(sentenciaSQL);
+            while(rs.next()){
+                Category c = new Category(rs.getInt(1), rs.getString(2));
+                categories.add(c);
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            System.getLogger(OperationsDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        return categories;
+    }
+    public static void addProvee (int id_producto, int id_proveedor, int stock){
+        String setenciaSQL ="INSERT INTRO provee(id_producto, id_proveedor,stock) VALUES (?,?,?)";
+        try {
+            PreparedStatement ps = conexion.prepareStatement(setenciaSQL);
+            ps.setInt(1, id_producto);
+            ps.setInt(2, id_proveedor);
+            ps.setInt(3, stock);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.getLogger(OperationsDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }
 }

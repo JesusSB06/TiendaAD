@@ -4,6 +4,7 @@
  */
 package controller.cart;
 
+import controller.client.ClientController;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,10 +34,12 @@ import java.time.LocalDate;
 public class CartClientController {
     private CartClientJDialog view;
     private TiendaInf model;
+    private ClientController parent;
 
-    public CartClientController(CartClientJDialog view, TiendaInf model) {
+    public CartClientController(CartClientJDialog view, TiendaInf model,ClientController parent) {
         this.view = view;
         this.model = model;
+        this.parent = parent;
         this.initComponents();
         this.view.setBuyButtonActionListener(this.setBuyButtonActionListener());
         this.view.setCancelButtonListener(this.setCancelButtonActionListener());
@@ -45,9 +48,13 @@ public class CartClientController {
     
     private void initComponents(){
         this.updateTable(view.getCartTable());
-        this.view.setTotalPriceLabel(String.valueOf(getTotalPrice()));
-        this.view.setCreditLabel(String.valueOf(model.getClient().getSaldo()));
+        this.updateLabels();
     }
+    private void updateLabels() {
+        this.view.setTotalPriceLabel("Precio total: " + String.valueOf(getTotalPrice()));
+        this.view.setCreditLabel(String.valueOf("Saldo actual: " + model.getClient().getSaldo()));
+    }
+
     private void updateTable(JTable table){
         view.clearTable(table);
         for(Map.Entry<Product,Integer> p : model.getCart().entrySet()){
@@ -103,10 +110,12 @@ public class CartClientController {
                         System.getLogger(CartClientController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
                     }
                     JOptionPane.showMessageDialog(view, "Se ha realizado la compra sin problemas");
+                    parent.updateTable(model.getProducts());
                     view.dispose();
                 }else{
                     JOptionPane.showMessageDialog(view, "Error: saldo insuficiente","Error", JOptionPane.ERROR_MESSAGE);
                 }
+                updateLabels();
             }
         };
         return al;
@@ -138,6 +147,7 @@ public class CartClientController {
                 }else{
                     JOptionPane.showMessageDialog(view, "Error: seleccione un producto","Error", JOptionPane.ERROR_MESSAGE);
                 }
+                updateLabels();
             }
         };
         return al;

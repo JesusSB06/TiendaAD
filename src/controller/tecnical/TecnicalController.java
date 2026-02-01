@@ -1,6 +1,5 @@
 package controller.tecnical;
 
-import controller.client.ClientController;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -141,6 +140,7 @@ public class TecnicalController {
         return dl;
     }
     private void SearchProduct() {
+        List<Product> toRemove = new ArrayList<Product>();
         List<Product> finalProducts = new ArrayList<Product>();
         String filter = view.getSearchTextField();
         if (filter.isEmpty()) {
@@ -151,13 +151,16 @@ public class TecnicalController {
                     finalProducts.add(p);
                 }
                 if(p.getStock() <= 0){
-                    model.getProducts().remove(p);
+                    toRemove.add(p);
                     try {
                         OperationsDB.deleteProduct(p.getId());
                     } catch (SQLException ex) {
                         System.getLogger(TecnicalController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
                     }
                 }
+            }
+            for(Product p : toRemove){
+                model.getProducts().remove(p);
             }
             loadProducts(finalProducts);
         }

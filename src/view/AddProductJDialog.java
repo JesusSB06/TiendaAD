@@ -7,6 +7,7 @@ package view;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 
 /**
@@ -14,7 +15,7 @@ import javax.swing.BorderFactory;
  * @author alumno
  */
 public class AddProductJDialog extends javax.swing.JDialog {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AddProductJDialog.class.getName());
 
     /**
@@ -62,6 +63,8 @@ public class AddProductJDialog extends javax.swing.JDialog {
         stock2Spinner = new javax.swing.JSpinner();
         cancelButton = new javax.swing.JButton();
         save2Button = new javax.swing.JButton();
+        categoryLabel = new javax.swing.JLabel();
+        categoryComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -122,7 +125,7 @@ public class AddProductJDialog extends javax.swing.JDialog {
                 .addGroup(productsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(stock1Spinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
                 .addGroup(productsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancel1Button)
                     .addComponent(saveButton))
@@ -149,6 +152,8 @@ public class AddProductJDialog extends javax.swing.JDialog {
 
         save2Button.setText("Save");
 
+        categoryLabel.setText("Category:");
+
         javax.swing.GroupLayout newProductPanelLayout = new javax.swing.GroupLayout(newProductPanel);
         newProductPanel.setLayout(newProductPanelLayout);
         newProductPanelLayout.setHorizontalGroup(
@@ -165,11 +170,6 @@ public class AddProductJDialog extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addComponent(priceSpinner))
                     .addGroup(newProductPanelLayout.createSequentialGroup()
-                        .addComponent(supplier2Label)
-                        .addGap(18, 18, 18)
-                        .addComponent(supplier2ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(newProductPanelLayout.createSequentialGroup()
                         .addComponent(stock2Label)
                         .addGap(18, 18, 18)
                         .addComponent(stock2Spinner))
@@ -177,7 +177,17 @@ public class AddProductJDialog extends javax.swing.JDialog {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(save2Button)
                         .addGap(18, 18, 18)
-                        .addComponent(cancelButton)))
+                        .addComponent(cancelButton))
+                    .addGroup(newProductPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(newProductPanelLayout.createSequentialGroup()
+                            .addComponent(supplier2Label)
+                            .addGap(18, 18, 18)
+                            .addComponent(supplier2ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(newProductPanelLayout.createSequentialGroup()
+                            .addComponent(categoryLabel)
+                            .addGap(18, 18, 18)
+                            .addComponent(categoryComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         newProductPanelLayout.setVerticalGroup(
@@ -199,7 +209,11 @@ public class AddProductJDialog extends javax.swing.JDialog {
                 .addGroup(newProductPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(stock2Label)
                     .addComponent(stock2Spinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(newProductPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(categoryLabel)
+                    .addComponent(categoryComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(newProductPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelButton)
                     .addComponent(save2Button))
@@ -250,19 +264,71 @@ public class AddProductJDialog extends javax.swing.JDialog {
         save2Button.setFocusPainted(false);
         save2Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
-    
-    public void addSelectionComboBoxSupplier(String value){
+
+    public void addSelectionComboBoxSupplier(String value) {
         this.supplier1ComboBox.addItem(value);
         this.supplier2ComboBox.addItem(value);
     }
-    public void addSelectionComboBoxProducts(String value){
+
+    public void addSelectionComboBoxProducts(String value) {
         this.productsComboBox.addItem(value);
+    }
+
+    public void addSelectionComboBoxCategory(String value) {
+        this.categoryComboBox.addItem(value);
+    }
+
+    public void setCancelButtonsActionListener(ActionListener al) {
+        this.cancelButton.addActionListener(al);
+        this.cancel1Button.addActionListener(al);
+    }
+
+    public void setAddExistentProductListener(ActionListener al) {
+        this.saveButton.addActionListener(al);
+    }
+
+    public void setAddNewProductListener(ActionListener al) {
+        this.save2Button.addActionListener(al);
+    }
+
+    public int getStockExistentProduct() {
+        return (int) stock1Spinner.getModel().getValue();
+    }
+
+    public int getStockNewProduct() {
+        return (int) stock2Spinner.getModel().getValue();
+    }
+
+    public double getPriceNewProduct() {
+        return (double) priceSpinner.getModel().getValue();
+    }
+
+    public String getSupplierExistentProduct() {
+        return (String) supplier1ComboBox.getModel().getSelectedItem();
+    }
+
+    public String getSupplierNewObject() {
+        return (String) supplier2ComboBox.getModel().getSelectedItem();
+    }
+
+    public String getProduct() {
+        return (String) productsComboBox.getModel().getSelectedItem();
+    }
+
+    public String getCategory() {
+        return (String) categoryComboBox.getModel().getSelectedItem();
+    }
+    
+    public String getNameProduct(){
+        return nameTextField.getText();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ProductLabel;
     private javax.swing.JLabel SupplierLabel;
     private javax.swing.JButton cancel1Button;
     private javax.swing.JButton cancelButton;
+    private javax.swing.JComboBox<String> categoryComboBox;
+    private javax.swing.JLabel categoryLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTabbedPane jTabbedPane1;

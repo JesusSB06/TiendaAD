@@ -6,6 +6,7 @@ package controller.asistant;
 
 import controller.addProduct.AddProductController;
 import controller.client.ClientController;
+import controller.tecnical.TecnicalController;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -51,11 +52,11 @@ public class AsistantController {
         } catch (SQLException ex) {
             System.getLogger(ClientController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
-        this.updateTable(view.getProductsTable(), model.getProducts());
+        this.updateTable( model.getProducts());
     }
 
-    private void updateTable(JTable table, List<Product> products) {
-        view.clearTable(table);
+    public void updateTable( List<Product> products) {
+        view.clearTable(view.getProductsTable());
         for (Product d : products) {
             Vector row = new Vector();
             ImageIcon icon = null;
@@ -76,7 +77,7 @@ public class AsistantController {
             row.add(d.getName());
             row.add(d.getPrice());
             row.add(d.getStock());
-            view.addRowTable(row, table);
+            view.addRowTable(row, view.getProductsTable());
         }
 
     }
@@ -102,25 +103,29 @@ public class AsistantController {
     }
 
     private void SearchProduct() {
+        List<Product> toRemove = new ArrayList<Product>();
         List<Product> finalProducts = new ArrayList<Product>();
         String filter = view.getSearchTextField();
         if (filter.isEmpty()) {
-            updateTable(view.getProductsTable(), model.getProducts());
+            updateTable( model.getProducts());
         } else {
             for (Product p : model.getProducts()) {
                 if (p.getName().toLowerCase().contains(filter.toLowerCase())) {
                     finalProducts.add(p);
                 }
                 if (p.getStock() <= 0) {
-                    model.getProducts().remove(p);
-                    try {
+                    toRemove.add(p);
+                                        try {
                         OperationsDB.deleteProduct(p.getId());
                     } catch (SQLException ex) {
-                        System.getLogger(ClientController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                        System.getLogger(AsistantController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
                     }
                 }
             }
-            updateTable(view.getProductsTable(), finalProducts);
+            for(Product p : toRemove){
+                model.getProducts().remove(p);
+            }
+            updateTable( finalProducts);
         }
 
     }
@@ -140,7 +145,7 @@ public class AsistantController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 AddProductJDialog apd = new AddProductJDialog(view,true);
-                AddProductController apc =  new AddProductController(apd, model);
+                AddProductController apc =  new AddProductController(apd, model, AsistantController.this);
                 apd.setVisible(true);
             }
         };

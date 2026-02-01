@@ -141,26 +141,31 @@ public class ClientController {
         };
         return al;
     }
-    private ActionListener setAddButtonActionListener(){
+    private ActionListener setAddButtonActionListener() {
         ActionListener al = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int row = view.getProductsTable().getSelectedRow();
-                if(row != -1){
+                if (row != -1) {
                     String stockString = JOptionPane.showInputDialog(view, "Introduzca la cantidad deseada del producto").trim();
                     int id = (int) view.getProductsTable().getModel().getValueAt(row, 0);
-                    try{
+                    try {
                         int stock = Integer.parseInt(stockString);
-                        OperationsDB.restarStock(id , stock);
-                        model.addToCart(model.getProduct(id), stock);
-                        model.setProducts(OperationsDB.obtenerProductosCliente());
-                        updateTable(model.getProducts());
-                    }catch(NumberFormatException nfe){
-                        JOptionPane.showMessageDialog(view,"Error: el valor debe ser unicamente un número", "Error", JOptionPane.ERROR_MESSAGE);
+                        if (stock <= Integer.parseInt(view.getProductsTable().getModel().getValueAt(row, 4).toString())) {
+                            OperationsDB.restarStock(id, stock);
+                            model.addToCart(model.getProduct(id), stock);
+                            model.setProducts(OperationsDB.obtenerProductosCliente());
+                            updateTable(model.getProducts());
+                        }else{
+                            JOptionPane.showMessageDialog(view, "Error: el valor es mayor al stock", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+
+                    } catch (NumberFormatException nfe) {
+                        JOptionPane.showMessageDialog(view, "Error: el valor debe ser unicamente un número", "Error", JOptionPane.ERROR_MESSAGE);
                     } catch (SQLException ex) {
                         System.getLogger(ClientController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(view, "Error: seleccione un producto","Error", JOptionPane.ERROR_MESSAGE);
                 }
                 
